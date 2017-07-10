@@ -1,5 +1,8 @@
+#include "System.cpp"
+#define MAX 100
+
 struct VatTu{
-	int maVatTu;
+	string maVatTu;
 	string tenVatTu;
 	string donViTinh;
 	int soLuongTon;
@@ -7,12 +10,12 @@ struct VatTu{
 
 struct dsVatTu{
 	int soLuongVatTu;
-	VatTu dsVT[MAX];
+	VatTu nodesVT[MAX];
 };
-typedef struct dsVatTu ds_VatTu;
+typedef struct dsVatTu DSVatTu;
 
 struct ChiTiet_HD{
-	int maVT;
+	string maVT;
 	int soLuong;
 	long donGia;
 	double vat;
@@ -32,7 +35,7 @@ struct Date{
 typedef struct Date date;
 
 struct HoaDon{
-	int soHoaDon;
+	string soHoaDon;
 	date ngayLapHoaDon;
 	char loai;
 	PTR_CT_HoaDon CT_HD_First;
@@ -45,10 +48,10 @@ struct dsHoaDon{
 typedef struct dsHoaDon *PTRHoaDon;
 
 struct NhanVien{
-	int maNhanVien;
+	string maNhanVien;
 	string ho;
 	string ten;
-	string phai;
+	bool phai;
 	PTRHoaDon hoaDonFirst;
 };
 
@@ -57,8 +60,7 @@ struct dsNhanVien{
 	struct nhanVien *nvLeft;
 	struct nhanVien *nvRight;
 };
-typedef struct dsHoaDon *treeNhanVien;
+typedef struct dsHoaDon *TreeNhanVien;
 
 
 
-//void Xoa();
