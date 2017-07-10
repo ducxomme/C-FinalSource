@@ -1,0 +1,64 @@
+D01
+Den Loai 1
+Cai
+250
+D02
+Den Loai 2
+Cai
+270
+D03
+Den Loai 3
+Cai
+290
+D04
+Den Loai 4
+Cai
+301
+G01
+Gach Loai 1
+Vien
+1500
+G02
+Gach Loai 2
+Vien
+3000
+G03
+Gach Loai 3
+Vien
+2000
+G04
+Gach Loai 4
+Vien
+300
+S01
+Son Loai 1
+Thung
+50
+S02
+Son Loai 2
+Thung
+50
+S03
+Son Loai 3
+Thung
+50
+S04
+Son Loai 4
+Thung
+50
+X01
+Xi Mang Loai 1
+Bao
+300
+X02
+Xi Mang Loai 2
+Bao
+300
+X03
+Xi Mang Loai 3
+Bao
+3000
+X04
+Xi Mang Loai 4
+Bao
+1000

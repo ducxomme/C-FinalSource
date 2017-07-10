@@ -4,6 +4,7 @@
 #include <ctime>
 #include <mylib.h>
 #include <fstream>
+#include <sstream>
 
 // ma phim
 #define KEY_BACKSPACE 8
