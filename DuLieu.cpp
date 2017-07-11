@@ -23,7 +23,7 @@ struct ChiTiet_HD{
 
 struct ds_ChiTiet_HD{
 	ChiTiet_HD chiTietHD;
-	struct ChiTiet_HD *CT_HD_Next;	
+	struct ds_ChiTiet_HD *CT_HD_Next;	
 };
 typedef struct ds_ChiTiet_HD *PTR_CT_HoaDon;
 
@@ -43,7 +43,7 @@ struct HoaDon{
 
 struct dsHoaDon{
 	HoaDon hoaDon;
-	struct HoaDon *HD_Next;
+	struct dsHoaDon *HD_Next;
 };
 typedef struct dsHoaDon *PTRHoaDon;
 
@@ -57,10 +57,10 @@ struct NhanVien{
 
 struct dsNhanVien{
 	NhanVien nhanVien;
-	struct nhanVien *nvLeft;
-	struct nhanVien *nvRight;
+	struct dsNhanVien *nvLeft;
+	struct dsNhanVien *nvRight;
 };
-typedef struct dsHoaDon *TreeNhanVien;
+typedef struct dsNhanVien *TreeNhanVien;
 
 
 
