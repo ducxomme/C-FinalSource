@@ -30,9 +30,9 @@ void Insert_Node(TreeNhanVien &rootNV, NhanVien nv){
 			Insert_Node(rootNV->nvRight, nv);
 	}
 }
-TreeNhanVien rp;
+//TreeNhanVien rp;
 void timNodeNVTheMang(TreeNhanVien &nodeNVRight){ //Tim node trai nhat cua node NV ben phai
-	
+	TreeNhanVien rp;
 	if(nodeNVRight->nvLeft != NULL)
 		timNodeNVTheMang(nodeNVRight->nvLeft);
 	else{
@@ -43,6 +43,7 @@ void timNodeNVTheMang(TreeNhanVien &nodeNVRight){ //Tim node trai nhat cua node 
 }
 
 void xoaNodeNhanVien(TreeNhanVien &rootNV, string maNV){
+	TreeNhanVien rp;
 	if(rootNV == NULL)	return;
 	else{
 		if(rootNV->nhanVien.maNhanVien > maNV)
@@ -61,6 +62,8 @@ void xoaNodeNhanVien(TreeNhanVien &rootNV, string maNV){
 		}
 	}
 }
+
+
 
 TreeNhanVien search_NhanVien(TreeNhanVien &rootNV, string maNV){
 	TreeNhanVien p;
@@ -130,7 +133,7 @@ int main(){
 	nv6.phai = true;
 	nv6.hoaDonFirst = NULL;
 	Insert_Node(rootNV, nv6);
-	
+	xoaNodeNhanVien(rootNV, "NV8");
 	testLNR_MA_NhanVien(rootNV);
 	return 0;
 }
