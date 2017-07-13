@@ -99,47 +99,47 @@ void duyetDanhSach(PTR_CT_HoaDon first){
 	
 }
 
-
 int main(){
-	PTR_CT_HoaDon ctHoaDonFirst;
-	InitCTHoaDon(ctHoaDonFirst);
 	
-	ChiTiet_HD cthd1;
-	cthd1.maVT = "VT1";
-	cthd1.soLuong = 100;
-	cthd1.donGia = 200000;
-	cthd1.vat = 0.1;
-	insertCTHoaDonLast(ctHoaDonFirst, cthd1);
-
-	ChiTiet_HD cthd2;
-	cthd2.maVT = "VT2";
-	cthd2.soLuong = 400;
-	cthd2.donGia = 100000;
-	cthd2.vat = 0.1;
-	insertCTHoaDonLast(ctHoaDonFirst, cthd2);
-	
-	ChiTiet_HD cthd3;
-	cthd3.maVT = "VT3";
-	cthd3.soLuong = 300;
-	cthd3.donGia = 300000;
-	cthd3.vat = 0.1;
-	insertCTHoaDonLast(ctHoaDonFirst, cthd3);
-	
-	ChiTiet_HD cthd4;
-	cthd4.maVT = "VT4";
-	cthd4.soLuong = 200;
-	cthd4.donGia = 400000;
-	cthd4.vat = 0.1;
-	insertCTHoaDonLast(ctHoaDonFirst, cthd4);
-	
-	ChiTiet_HD cthd5;
-	cthd5.maVT = "VT5";
-	cthd5.soLuong = 100;
-	cthd5.donGia = 500000;
-	cthd5.vat = 0.1;
-	insertCTHoaDonLast(ctHoaDonFirst, cthd5);
-	
-	//deleteCTHoaDonTheoMaVT(ctHoaDonFirst, "VT8");
-	duyetDanhSach(ctHoaDonFirst);
+//	PTR_CT_HoaDon ctHoaDonFirst;
+//	InitCTHoaDon(ctHoaDonFirst);
+//	
+//	ChiTiet_HD cthd1;
+//	cthd1.maVT = "VT1";
+//	cthd1.soLuong = 100;
+//	cthd1.donGia = 200000;
+//	cthd1.vat = 0.1;
+//	insertCTHoaDonLast(ctHoaDonFirst, cthd1);
+//
+//	ChiTiet_HD cthd2;
+//	cthd2.maVT = "VT2";
+//	cthd2.soLuong = 400;
+//	cthd2.donGia = 100000;
+//	cthd2.vat = 0.1;
+//	insertCTHoaDonLast(ctHoaDonFirst, cthd2);
+//	
+//	ChiTiet_HD cthd3;
+//	cthd3.maVT = "VT3";
+//	cthd3.soLuong = 300;
+//	cthd3.donGia = 300000;
+//	cthd3.vat = 0.1;
+//	insertCTHoaDonLast(ctHoaDonFirst, cthd3);
+//	
+//	ChiTiet_HD cthd4;
+//	cthd4.maVT = "VT4";
+//	cthd4.soLuong = 200;
+//	cthd4.donGia = 400000;
+//	cthd4.vat = 0.1;
+//	insertCTHoaDonLast(ctHoaDonFirst, cthd4);
+//	
+//	ChiTiet_HD cthd5;
+//	cthd5.maVT = "VT5";
+//	cthd5.soLuong = 100;
+//	cthd5.donGia = 500000;
+//	cthd5.vat = 0.1;
+//	insertCTHoaDonLast(ctHoaDonFirst, cthd5);
+//	
+//	deleteCTHoaDonTheoMaVT(ctHoaDonFirst, "VT8");
+//	duyetDanhSach(ctHoaDonFirst);
 	return 0;
 }

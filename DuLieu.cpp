@@ -1,5 +1,4 @@
 #include "System.cpp"
-#define MAX 100
 
 struct VatTu{
 	string maVatTu;
@@ -27,16 +26,10 @@ struct ds_ChiTiet_HD{
 };
 typedef struct ds_ChiTiet_HD *PTR_CT_HoaDon;
 
-struct Date{
-	int ngay;
-	int thang;
-	int nam;
-};
-typedef struct Date date;
 
 struct HoaDon{
 	string soHoaDon;
-	date ngayLapHoaDon;
+	Date ngayLapHoaDon;
 	char loai;
 	PTR_CT_HoaDon CT_HD_First;
 };
