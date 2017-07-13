@@ -136,11 +136,11 @@ int main(){
 	hd4.CT_HD_First = NULL;
 	insertNodeHoaDon(hoaDonFirst, hd4);
 	
-	for(PTRHoaDon p = hoaDonFirst; p != NULL; p=p->HD_Next){
-		cout << p->hoaDon.soHoaDon << endl;
-	}
-	cout << "Sau khi xcoa "  << endl;
-	deleteInfoHD(hoaDonFirst, "HD8");
+//	for(PTRHoaDon p = hoaDonFirst; p != NULL; p=p->HD_Next){
+//		cout << p->hoaDon.soHoaDon << endl;
+//	}
+//	cout << "Sau khi xcoa "  << endl;
+	//deleteInfoHD(hoaDonFirst, "HD8");
 	for(PTRHoaDon p = hoaDonFirst; p != NULL; p=p->HD_Next){
 		cout << p->hoaDon.soHoaDon << endl;
 	}

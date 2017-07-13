@@ -17,7 +17,7 @@ typedef struct dsVatTu DSVatTu;
 struct ChiTiet_HD{
 	string maVT;
 	int soLuong;
-	long donGia;
+	int donGia;
 	double vat;
 };
 
