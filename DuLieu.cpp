@@ -67,8 +67,8 @@ int timViTriThemVatTu(DSVatTu ds_VT, string maVT);
 int themVatTuVaoViTri(DSVatTu &ds_VT, VatTu vatTu);
 int xoaVatTu(DSVatTu &ds_VT, string maVT);
 void sapXepTenVatTuTangDan(DSVatTu &ds_VT);
-int saveFileVatTu(DSVatTu &ds_VT, char tenFile[]);
-int loadFileVatTu(DSVatTu &ds_VT, char tenFile[]);
+void saveFileVatTu(DSVatTu &ds_VT);
+void loadFileVatTu(DSVatTu &ds_VT);
 
 
 //  Cac Functions cua ========== NHAN VIEN

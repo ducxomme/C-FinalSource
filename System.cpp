@@ -23,16 +23,15 @@
 #define KEY_F5 63+256
 
 // Mau
-#define BG_HEADER 6
 #define BLACK 0
-#define GRAY 8
 #define BLUE 1
-#define BG_BODY 7
+#define GREEEN 2
+#define CYAN 3
 #define RED 4
+#define GRAY 8
 #define YELLOW 14
-#define TEXT_COLOR 8
 #define WHITE 15
-#define GREEEN 10
+
 
 //vi tri dat form
 #define TOADOX 10
@@ -81,7 +80,6 @@
 #define TOADOY_KHUNG_XUAT_CT_HOA_DON 10
 #define MAX_LINE 250
 
-//VAT TU
 
 //KICH THUOC BANG
 #define MAX 100
@@ -100,7 +98,6 @@
 
 #define SL_VAT_TU_TRONG_TRANG 10
 
-#define FILE_VAT_TU "dsVatTu.txt"
 
 struct Date{
 	int ngay;
@@ -339,9 +336,9 @@ int kiemTraNgayGiua2Ngay(Date ngayBatDau, Date ngayKetThuc, Date ngayKiemTra){
 }
 
 int hopThoaiLuaChon(string message, int toaDoX, int toaDoY, int chieuDai, int chieuRong){
-	veHinhChuNhat(toaDoX, toaDoY, chieuDai, chieuRong, BG_HEADER);
+	veHinhChuNhat(toaDoX, toaDoY, chieuDai, chieuRong, RED);
 	gotoxy(toaDoX + (chieuDai - message.length())/2, toaDoY + chieuRong / 2 - 1);
-	SetBGColor(BG_HEADER);
+	SetBGColor(RED);
 	SetColor(WHITE);
 	cout << message;
 	gotoxy(toaDoX + chieuDai / 4 - 2, toaDoY + chieuRong / 2 + 1);
@@ -352,28 +349,28 @@ int hopThoaiLuaChon(string message, int toaDoX, int toaDoY, int chieuDai, int ch
 	int res = 0;
 	do{
 		if(res == 0){
-			veHinhChuNhat(toaDoX + chieuDai / 4 - 2, toaDoY + chieuRong / 2 + 1, 7, 1, BG_HEADER);
+			veHinhChuNhat(toaDoX + chieuDai / 4 - 2, toaDoY + chieuRong / 2 + 1, 7, 1, RED);
 			gotoxy(toaDoX + chieuDai / 4, toaDoY + chieuRong / 2 + 1);
-			SetBGColor(BG_HEADER);
+			SetBGColor(RED);
 			SetColor(WHITE);
 			cout << "CO";
 			
-			veHinhChuNhat(toaDoX +(chieuDai / 4) * 3-chieuDai / 8 - 1, toaDoY + chieuRong / 2 + 1, 7, 1, BG_BODY);
+			veHinhChuNhat(toaDoX +(chieuDai / 4) * 3-chieuDai / 8 - 1, toaDoY + chieuRong / 2 + 1, 7, 1, WHITE);
 			gotoxy(toaDoX +(chieuDai / 4) * 3-chieuDai / 8, toaDoY + chieuRong / 2 + 1);
-			SetBGColor(BG_BODY);
-			SetColor(BG_HEADER);
+			SetBGColor(WHITE);
+			SetColor(RED);
 			cout << "KHONG";
 		}else{
-			veHinhChuNhat(toaDoX +(chieuDai / 4) * 3-chieuDai / 8 - 1, toaDoY + chieuRong / 2 + 1, 7, 1, BG_HEADER);
+			veHinhChuNhat(toaDoX +(chieuDai / 4) * 3-chieuDai / 8 - 1, toaDoY + chieuRong / 2 + 1, 7, 1, RED);
 			gotoxy(toaDoX +(chieuDai / 4) * 3-chieuDai / 8, toaDoY + chieuRong / 2 + 1);
-			SetBGColor(BG_HEADER);
+			SetBGColor(RED);
 			SetColor(WHITE);
 			cout << "KHONG";
 			
-			veHinhChuNhat(toaDoX + chieuDai / 4- 2, toaDoY + chieuRong / 2 + 1, 7, 1, BG_BODY);
+			veHinhChuNhat(toaDoX + chieuDai / 4- 2, toaDoY + chieuRong / 2 + 1, 7, 1, WHITE);
 			gotoxy(toaDoX + chieuDai / 4, toaDoY + chieuRong / 2 + 1);
-			SetBGColor(BG_BODY);
-			SetColor(BG_HEADER);
+			SetBGColor(WHITE);
+			SetColor(RED);
 			cout << "CO";
 			
 		}
@@ -409,5 +406,8 @@ string dinhDangChuoiNhapVao(string s){
 		return chuoi += temp;
 	else return chuoi.erase(chuoi.length()-1);
 }
-
+//int main(){
+//	veHinhChuNhat(5, 10, 5, 5, 4);
+//	return 0;
+//}
 

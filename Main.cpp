@@ -2,18 +2,15 @@
 
 string dsChucNang[]={"VAT TU", "NHAN VIEN", "IN HOA DON", "DANH SACH VAT TU XUAT CAO NHAT"};
 
-
-
-const int so_item = 5;
+const int so_item = 6;
 const int dong = 11;
 const int cot = 40 ;
-const int Up = 72;
-const int Down = 80;
 char thucdon [so_item][50] = {"1. Vat Tu                        ",
 			                  "2. Nhan Vien                     ",
 			                  "3. In Hoa Don                    ",
 			                  "4. Thong Ke Hoa Don              ",
-			                  "5. Danh sach vat tu xuat cao nhat"
+			                  "5. Danh sach vat tu xuat cao nhat",
+			                  "6. Thoat                         "
 			                  };
 
 
@@ -27,72 +24,9 @@ void HighLight () {
 	SetColor(15);
 	SetBGColor(1);
 }
-int MenuDong(char td [so_item][50]){
-	  Normal();
-	  system("cls");   int chon =0;
-	  int i; 
-	  gotoxy(50, 8);
-	  SetColor(4);
-	  cout << "QUAN LY VAT TU";
-	  Normal();
-	  for ( i=0; i< so_item ; i++)
-	  { gotoxy(cot, dong +i);
-	    cout << td[i];
-	  }
-	  HighLight();
-	  gotoxy(cot,dong+chon);
-	  cout << td[chon];
-	  char kytu;
-	  do {
-	  kytu = getch();
-	  if (kytu==0) kytu = getch();
-	  switch (kytu) {
-	    case Up :if (chon+1 >1)
-	  			  {
-	  		              	Normal();
-	              	gotoxy(cot,dong+chon);
-	              	cout << td[chon];
-	              	chon --;
-	              	HighLight();
-	              	gotoxy(cot,dong+chon);
-	              	cout << td[chon];
-	  				
-	  			  }
-	  			  break;
-	  	case Down :if (chon+1 <so_item)
-	  			  {
-	  		        Normal();
-	              	gotoxy(cot,dong+chon);
-	              	cout << td[chon];
-	              	chon ++;
-	              	HighLight();
-	              	gotoxy(cot,dong+chon);
-	              	cout << td[chon];
-	  				
-	  			  }
-	  			  break;
-	  	case 13 : return chon+1;
-	  }  // end switch
-	  } while (1);
-}
 
-int Menu (char td [so_item][50]){
 
-  system("cls");   int chon =0;
-  int i;
-  for ( i=0; i< so_item ; i++)
-  { gotoxy(cot, dong +i);
-    cout << td[i];
-  }
-Nhaplai:
-  gotoxy (cot, dong + so_item);
-  cout << "Ban chon 1 so (1..10) :    ";
-  gotoxy (wherex()-4, wherey());
-  cin >> chon;
-  if (chon <1 || chon >so_item) goto Nhaplai;
-  return chon;
 
-}
 
 void LuuFile(TreeNhanVien &root){
 	ofstream myFile;
@@ -243,6 +177,80 @@ CTHOADON:
 	myFile.close();
 }
 
+void MenuDong(TreeNhanVien &rootNV, DSVatTu &dsVT, char td [so_item][50]){
+	Normal();
+	system("cls");   int chon =0;
+	int i; 
+	  
+	veHinhChuNhat(cot, 7, 33, 3, 4);
+	gotoxy(cot + 10, 8);
+	SetBGColor(4);
+	cout << "QUAN LY VAT TU";
+	Normal();
+	for ( i=0; i< so_item ; i++){ 
+		gotoxy(cot, dong +i);
+	    cout << td[i];
+	}
+	HighLight();
+	gotoxy(cot,dong+chon);
+	cout << td[chon];
+	int kytu;
+	do{
+		kytu = keyPressed();
+		if (kytu == KEY_UP) 
+		{
+		  	Normal();
+			gotoxy(cot,dong+chon);
+		    cout << td[chon];
+		    chon --;
+		    if (chon < 0)	chon = so_item - 1;
+		    HighLight();
+		    gotoxy(cot,dong+chon);
+		    cout << td[chon];
+		}
+		if (kytu == KEY_DOWN)  
+		  	{
+		  		Normal();
+		        gotoxy(cot,dong+chon);
+		        cout << td[chon];
+		        chon ++;
+		        if (chon == so_item) chon = 0;
+		        HighLight();
+		        gotoxy(cot,dong+chon);
+		        cout << td[chon];
+		  	}
+		if (kytu == KEY_ENTER)
+		{
+		  	switch(chon)
+			{
+		  		case 0:
+		  			// VAT TU
+		  			break;
+		  		case 1:
+				  	// NHAN VIEN
+					break;
+				case 2:
+					// HOA DON
+					break;
+				case 3:
+					// THONG KE HOA DON
+					break;
+				case 4:
+					// DS VAT TU XUAT CAO NHAT 	
+					break;
+				case 5:
+					// THOAT
+					LuuFile(rootNV);
+					saveFileVatTu(dsVT);
+					SetColor(WHITE);
+					SetBGColor(BLACK);
+					system("cls");
+					exit(1);
+			}
+		}
+	}while (1);
+}
+
 int main(){
 //	// Chi tiet HD
 //	PTR_CT_HoaDon ctHoaDonFirst1 = new Node_ChiTiet_HD;
@@ -326,12 +334,21 @@ int main(){
 	
 	//LuuFile(treeNV);
 	
-	TreeNhanVien root;
-	root = NULL;
+	TreeNhanVien rootNV;
+	rootNV = NULL;
+	DocFile(rootNV);
 	
-	DocFile(root);
-	testInorder(root);
-	return 0;
+	DSVatTu dsVT;
+	dsVT.soLuongVatTu = 0;
+	loadFileVatTu(dsVT);
+//	testInorder(root);
+
+  int chon;  
+    while  (1) {
+        MenuDong (rootNV, dsVT, thucdon);
+        
+        		
+    }
 }
 
 

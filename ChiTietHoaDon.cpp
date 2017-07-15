@@ -1,4 +1,4 @@
-#include "DuLieu.cpp"
+#include "VatTu.cpp"
 
 int kiemTraRongCTHoaDon(PTR_CT_HoaDon &ctHoaDonFirst){
 	return (ctHoaDonFirst == NULL ? 1 : 0);

@@ -60,12 +60,10 @@ void sapXepTenVatTuTangDan(DSVatTu &ds_VT){
 	}
 }
 
-int saveFileVatTu(DSVatTu &ds_VT, char tenFile[]){
+void saveFileVatTu(DSVatTu &ds_VT){
 	ofstream myFile;
-	myFile.open(tenFile, ios::out);
-	if(!myFile){
-		return 0;
-	}
+	myFile.open("dsVatTu.txt", ios::out);
+	
 	for(int i = 0; i < ds_VT.soLuongVatTu; i++){
 		VatTu vt = ds_VT.nodesVT[i];
 		myFile << vt.maVatTu << endl;
@@ -77,14 +75,14 @@ int saveFileVatTu(DSVatTu &ds_VT, char tenFile[]){
 		myFile << endl;
 	}
 	myFile.close();
-	return 1;
 }
 
-int loadFileVatTu(DSVatTu &ds_VT, char tenFile[]){
+void loadFileVatTu(DSVatTu &ds_VT){
 	ifstream myFile;
-	myFile.open(tenFile, ios::in);
+	myFile.open("dsVatTu.txt", ios::in);
 	if(!myFile){
-		return 0;
+		cout << "Khong the mo File ";
+		return;
 	}
 	string slt =""; 
 	VatTu vt;
@@ -98,7 +96,6 @@ int loadFileVatTu(DSVatTu &ds_VT, char tenFile[]){
 		themVatTuVaoViTri(ds_VT, vt);
 	}
 	myFile.close();
-	return 1;
 }
 
 int demSoLuongVatTu(DSVatTu &ds_VT){
