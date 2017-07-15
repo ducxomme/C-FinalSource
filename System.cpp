@@ -23,7 +23,7 @@
 #define KEY_F5 63+256
 
 // Mau
-#define BG_HEADER 4
+#define BG_HEADER 6
 #define BLACK 0
 #define GRAY 8
 #define BLUE 1
@@ -35,12 +35,12 @@
 #define GREEEN 10
 
 //vi tri dat form
-#define TOADOX 5
+#define TOADOX 10
 #define TOADOY 2
 #define HEIGHT_HEADER 3
-#define WIDTH_MENU_BAR 20
-#define SCREEN_WIDTH 150
-#define SCREEN_HEIGTH 36
+#define WIDTH_MENU_BAR 14
+#define SCREEN_WIDTH 100
+#define SCREEN_HEIGTH 25
 #define HEIGHT_FOOTER 3
 #define WIDTH_BODY SCREEN_WIDTH-WIDTH_MENU_BAR
 #define HEIGHT_BODY SCREEN_HEIGTH-HEIGHT_HEADER-HEIGHT_FOOTER
@@ -94,7 +94,7 @@
 #define HEIGHT_ITEM_MENU_BAR 3
 #define WIDTH_INPUT_TEXT 42
 
-#define SIZE_MENU 4
+#define SIZE_MENU 3
 #define SIZE_THUOC_TINH_VT 4
 #define SIZE_BANG_DANH_SACH_VT 5
 
@@ -274,6 +274,14 @@ string chuyenNgayThanhChuoi(Date d){
 	return s;
 }
 
+void HamTraVeCurrentTime(Date &d){
+	time_t theTime = time(NULL);
+	struct tm *aTime = localtime(&theTime);
+	d.ngay = aTime->tm_mday;
+	d.thang = aTime->tm_mon + 1;
+	d.nam = aTime->tm_year + 1900;
+}
+
 int kiemTraHopLeNgayThangNhapVao(int ngay, int thang, int nam, int namHienTai, int &viTriKhongHopLe){
 	if(nam > namHienTai || nam <= 0){
 		viTriKhongHopLe = 2;
@@ -401,4 +409,5 @@ string dinhDangChuoiNhapVao(string s){
 		return chuoi += temp;
 	else return chuoi.erase(chuoi.length()-1);
 }
+
 

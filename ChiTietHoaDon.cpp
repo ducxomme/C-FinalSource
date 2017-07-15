@@ -9,31 +9,36 @@ void InitCTHoaDon(PTR_CT_HoaDon &ctHoaDonFirst){
 }
 
 PTR_CT_HoaDon getNodeCTHoaDon(ChiTiet_HD ctHD){
-	PTR_CT_HoaDon p = new ds_ChiTiet_HD;
+	PTR_CT_HoaDon p = new Node_ChiTiet_HD;
 	p->chiTietHD = ctHD;
 	p->CT_HD_Next = NULL;
 }
 
-void insertCTHoaDonLast(PTR_CT_HoaDon &ctHoaDonFirst, ChiTiet_HD ctHD){
+int insertCTHoaDonLast(PTR_CT_HoaDon &ctHoaDonFirst, ChiTiet_HD ctHD){
 	PTR_CT_HoaDon p = getNodeCTHoaDon(ctHD);
+	if(p == NULL)	return 0;
 	PTR_CT_HoaDon q;
 	if(ctHoaDonFirst == NULL){
 		ctHoaDonFirst = p;
-		return;
+		return 1;
 	}
 	
 	for(q = ctHoaDonFirst; q->CT_HD_Next != NULL; q=q->CT_HD_Next);
 	q->CT_HD_Next = p;
+	return 1;
 }
 
-void insertCTHoaDonFirst(PTR_CT_HoaDon &ctHoaDonFirst, ChiTiet_HD ctHD){
+int insertCTHoaDonFirst(PTR_CT_HoaDon &ctHoaDonFirst, ChiTiet_HD ctHD){
 	PTR_CT_HoaDon p = getNodeCTHoaDon(ctHD);
+	if(p == NULL)	return 0;
 	if(ctHoaDonFirst == NULL){
 		ctHoaDonFirst = p;
+		return 1;
 	}
 	else{
 		p->CT_HD_Next = ctHoaDonFirst;
 		ctHoaDonFirst = p;
+		return 1;
 	}
 }
 
@@ -99,7 +104,7 @@ void duyetDanhSach(PTR_CT_HoaDon first){
 	
 }
 
-int main(){
+//int main(){
 	
 //	PTR_CT_HoaDon ctHoaDonFirst;
 //	InitCTHoaDon(ctHoaDonFirst);
@@ -141,5 +146,5 @@ int main(){
 //	
 //	deleteCTHoaDonTheoMaVT(ctHoaDonFirst, "VT8");
 //	duyetDanhSach(ctHoaDonFirst);
-	return 0;
-}
+//	return 0;
+//}

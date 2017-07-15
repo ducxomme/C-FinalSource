@@ -1,4 +1,4 @@
- #include "DuLieu.cpp"
+ #include "HoaDon.cpp"
 
 int EmptyTreeNV(TreeNhanVien &rootNV){
 	return (rootNV == NULL ? 1 : 0);
@@ -9,7 +9,7 @@ void InitNhanVien(TreeNhanVien &rootNV){
 }
 
 TreeNhanVien getNodeNhanVien(NhanVien nv){
-	TreeNhanVien treeNV = new dsNhanVien;
+	TreeNhanVien treeNV = new NodeNhanVien;
 	treeNV->nhanVien = nv;
 	treeNV->nvLeft = NULL;
 	treeNV->nvRight = NULL;
@@ -63,8 +63,6 @@ void xoaNodeNhanVien(TreeNhanVien &rootNV, string maNV){
 	}
 }
 
-
-
 TreeNhanVien search_NhanVien(TreeNhanVien &rootNV, string maNV){
 	TreeNhanVien p;
 	p = rootNV;
@@ -80,61 +78,59 @@ void testLNR_MA_NhanVien(TreeNhanVien &rootNV){
 	if(rootNV != NULL){
 		testLNR_MA_NhanVien(rootNV->nvLeft);
 		cout << rootNV->nhanVien.maNhanVien << endl;
+		PTRHoaDon hoaDonFirst = new NodeHoaDon;
+		hoaDonFirst = rootNV->nhanVien.hoaDonFirst;
+		while(hoaDonFirst != NULL){
+			cout << "Ma Hoa Don :  "<< hoaDonFirst->hoaDon.soHoaDon << endl;
+			
+			PTR_CT_HoaDon ctHoaDon = new Node_ChiTiet_HD;
+			ctHoaDon = hoaDonFirst->hoaDon.CT_HD_First;
+			while(ctHoaDon != NULL){
+				cout << "Ma VT trong chi tiet HD : " << ctHoaDon->chiTietHD.maVT << endl;
+				ctHoaDon = ctHoaDon->CT_HD_Next;
+			}
+			hoaDonFirst = hoaDonFirst->HD_Next;	
+		}
+		
 		testLNR_MA_NhanVien(rootNV->nvRight);
 	}
 }
 
-
-
-int main(){
-	
-	TreeNhanVien rootNV;
-	InitNhanVien(rootNV);
-	
-	NhanVien nv1;
-	nv1.maNhanVien = "NV2";
-	nv1.ho = "Nguyen";
-	nv1.ten = "A";
-	nv1.phai = true;
-	nv1.hoaDonFirst = NULL;
-	Insert_Node(rootNV, nv1);
-	NhanVien nv2;
-	nv2.maNhanVien = "NV4";
-	nv2.ho = "Nguyen";
-	nv2.ten = "B";
-	nv2.phai = false;
-	nv2.hoaDonFirst = NULL;
-	Insert_Node(rootNV, nv2);
-	NhanVien nv3;
-	nv3.maNhanVien = "NV1";
-	nv3.ho = "Nguyen";
-	nv3.ten = "A";
-	nv3.phai = true;
-	nv3.hoaDonFirst = NULL;
-	Insert_Node(rootNV, nv3);
-	NhanVien nv4;
-	nv4.maNhanVien = "NV3";
-	nv4.ho = "Tran";
-	nv4.ten = "C";
-	nv4.phai = true;
-	nv4.hoaDonFirst = NULL;
-	Insert_Node(rootNV, nv4);
-	NhanVien nv5;
-	nv5.maNhanVien = "NV6";
-	nv5.ho = "Nguyen";
-	nv5.ten = "A";
-	nv5.phai = true;
-	nv5.hoaDonFirst = NULL;
-	Insert_Node(rootNV, nv5);
-	NhanVien nv6;
-	nv6.maNhanVien = "NV5";
-	nv6.ho = "Nguyen";
-	nv6.ten = "A";
-	nv6.phai = true;
-	nv6.hoaDonFirst = NULL;
-	Insert_Node(rootNV, nv6);
-	xoaNodeNhanVien(rootNV, "NV8");
-	testLNR_MA_NhanVien(rootNV);
-	return 0;
+void testInorder(TreeNhanVien &rootNV){
+	if(rootNV != NULL){
+		testInorder(rootNV->nvLeft);
+		cout << rootNV->nhanVien.maNhanVien << endl;
+		testInorder(rootNV->nvRight);
+	}
 }
+//  CHUYEN CAY NHI PHAN SANG STACK DSLKD
+//struct StackNhanVien{
+//	TreeNhanVien nodeNV;
+//	struct StackNhanVien *next;
+//};
+//typedef struct StackNhanVien *StackNV;
+
+void initStackNhanVien(StackNV &sp){
+	sp = NULL;
+}
+
+int push(StackNV &sp, TreeNhanVien nv){
+	StackNV p;
+	p = new StackNhanVien;
+	p->nodeNV = nv;
+	p->next = sp;
+	sp = p;
+	return 1;
+}
+
+int pop(StackNV &sp, TreeNhanVien &nv){
+	if(sp == NULL)
+		return 0;
+	StackNV p = sp;
+	nv = p->nodeNV;
+	sp = p->next;
+	delete p;
+	return 1; 
+}
+
 

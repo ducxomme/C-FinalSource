@@ -37,7 +37,7 @@ int themVatTuVaoViTri(DSVatTu &ds_VT, VatTu vatTu){
 	ds_VT.soLuongVatTu++;
 	return 1;
 }
-
+// Trc khi xoa vat tu: kiem tra xem co hoa don nao ton tai ma VT ko?
 int xoaVatTu(DSVatTu &ds_VT, string maVT){
 	int index = timViTriVatTuTrung(ds_VT, maVT);
 	if(index < 0 || index >= ds_VT.soLuongVatTu || kiemTraRongVatTu(ds_VT))
@@ -103,10 +103,10 @@ int loadFileVatTu(DSVatTu &ds_VT, char tenFile[]){
 
 int demSoLuongVatTu(DSVatTu &ds_VT){
 }
-int main(){
-	char tenFile[] = "dsVatTu.txt";
-	DSVatTu dsvt;
-	dsvt.soLuongVatTu = 0;
+//int main(){
+//	char tenFile[] = "dsVatTu.txt";
+//	DSVatTu dsvt;
+//	dsvt.soLuongVatTu = 0;
 //	VatTu vt1;
 //	vt1.maVatTu = "D01";
 //	vt1.tenVatTu = "Den Loai 1";
@@ -206,12 +206,12 @@ int main(){
 //	saveFileVatTu(dsvt, tenFile);
 //	xoaVatTu(dsvt, "A");
 //	sapXepTenVatTuTangDan(dsvt);
-	loadFileVatTu(dsvt, tenFile);
+//	loadFileVatTu(dsvt, tenFile);
 //	cout << dsvt.soLuongVatTu << endl;
 //	cout << "Ma" << "\tTen" << "\t\tDon Vi Tinh" << "\tSo Luong Ton" << endl;
 //	for(int i = 0; i < dsvt.soLuongVatTu; i++){
 //		cout << dsvt.nodesVT[i].maVatTu  << "\t" << dsvt.nodesVT[i].tenVatTu << "\t\t" << dsvt.nodesVT[i].donViTinh << "\t" << dsvt.nodesVT[i].soLuongTon << endl;
 //	}
 	
-	return 0;
-}
+//	return 0;
+//}

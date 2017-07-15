@@ -1,5 +1,5 @@
 #include "System.cpp"
-
+#define MAX_VT 100
 struct VatTu{
 	string maVatTu;
 	string tenVatTu;
@@ -9,7 +9,7 @@ struct VatTu{
 
 struct dsVatTu{
 	int soLuongVatTu;
-	VatTu nodesVT[MAX];
+	VatTu nodesVT[MAX_VT];
 };
 typedef struct dsVatTu DSVatTu;
 
@@ -17,14 +17,14 @@ struct ChiTiet_HD{
 	string maVT;
 	int soLuong;
 	int donGia;
-	double vat;
+	int vat;
 };
 
-struct ds_ChiTiet_HD{
+struct Node_ChiTiet_HD{
 	ChiTiet_HD chiTietHD;
-	struct ds_ChiTiet_HD *CT_HD_Next;	
+	struct Node_ChiTiet_HD *CT_HD_Next;	
 };
-typedef struct ds_ChiTiet_HD *PTR_CT_HoaDon;
+typedef struct Node_ChiTiet_HD *PTR_CT_HoaDon;
 
 
 struct HoaDon{
@@ -34,11 +34,11 @@ struct HoaDon{
 	PTR_CT_HoaDon CT_HD_First;
 };
 
-struct dsHoaDon{
+struct NodeHoaDon{
 	HoaDon hoaDon;
-	struct dsHoaDon *HD_Next;
+	struct NodeHoaDon *HD_Next;
 };
-typedef struct dsHoaDon *PTRHoaDon;
+typedef struct NodeHoaDon *PTRHoaDon;
 
 struct NhanVien{
 	string maNhanVien;
@@ -48,12 +48,75 @@ struct NhanVien{
 	PTRHoaDon hoaDonFirst;
 };
 
-struct dsNhanVien{
+struct NodeNhanVien{
 	NhanVien nhanVien;
-	struct dsNhanVien *nvLeft;
-	struct dsNhanVien *nvRight;
+	struct NodeNhanVien *nvLeft;
+	struct NodeNhanVien *nvRight;
 };
-typedef struct dsNhanVien *TreeNhanVien;
+typedef struct NodeNhanVien *TreeNhanVien;
+
+
+
+
+
+// Cac Functions cua ============= VAT TU
+int kiemTraRongVatTu(DSVatTu &ds_VT);
+int kiemTraDayVatTu(DSVatTu &ds_VT);
+int timViTriVatTuTrung(DSVatTu &ds_VT, string maVT);
+int timViTriThemVatTu(DSVatTu ds_VT, string maVT);
+int themVatTuVaoViTri(DSVatTu &ds_VT, VatTu vatTu);
+int xoaVatTu(DSVatTu &ds_VT, string maVT);
+void sapXepTenVatTuTangDan(DSVatTu &ds_VT);
+int saveFileVatTu(DSVatTu &ds_VT, char tenFile[]);
+int loadFileVatTu(DSVatTu &ds_VT, char tenFile[]);
+
+
+//  Cac Functions cua ========== NHAN VIEN
+
+// STACK CHUA DS TREENhanVien
+struct StackNhanVien{
+	TreeNhanVien nodeNV;
+	struct StackNhanVien *next;
+};
+typedef struct StackNhanVien *StackNV;
+
+int EmptyTreeNV(TreeNhanVien &rootNV);
+void InitNhanVien(TreeNhanVien &rootNV);
+void Insert_Node(TreeNhanVien &rootNV, NhanVien nv);
+void timNodeNVTheMang(TreeNhanVien &nodeNVRight);
+void xoaNodeNhanVien(TreeNhanVien &rootNV, string maNV);
+TreeNhanVien search_NhanVien(TreeNhanVien &rootNV, string maNV);
+void testLNR_MA_NhanVien(TreeNhanVien &rootNV);
+
+int push(StackNV &sp, TreeNhanVien nv);
+int pop(StackNV &sp, TreeNhanVien &nv);
+void LuuFile(StackNV &sp);
+
+
+// Cac Functions cua ============= HOA DON
+int emptyDSHoaDon(PTRHoaDon hoaDonFirst);
+void InitHoaDon(PTRHoaDon &hoaDonFirst);
+PTRHoaDon getNodeHoaDon(HoaDon hd);
+int insertNodeHoaDon(PTRHoaDon &hoaDonFirst, HoaDon hd);
+PTRHoaDon search_HD(PTRHoaDon &hoaDonFirst, string maHD);
+int deleteFirstHD(PTRHoaDon &hoaDonFirst);
+int deleteAfterHD(PTRHoaDon p);
+int deleteInfoHD(PTRHoaDon &hoaDonFirst, string maHD);
+
+
+
+// Cac Functions cua ============= CHI TIET HOA DON
+int kiemTraRongCTHoaDon(PTR_CT_HoaDon &ctHoaDonFirst);
+void InitCTHoaDon(PTR_CT_HoaDon &ctHoaDonFirst);
+PTR_CT_HoaDon getNodeCTHoaDon(ChiTiet_HD ctHD);
+int insertCTHoaDonLast(PTR_CT_HoaDon &ctHoaDonFirst, ChiTiet_HD ctHD);
+int insertCTHoaDonFirst(PTR_CT_HoaDon &ctHoaDonFirst, ChiTiet_HD ctHD);
+int deleteFirstCTHoaDon(PTR_CT_HoaDon &ctHoaDonFirst);
+int deleteAfterCTHoaDon(PTR_CT_HoaDon p);
+PTR_CT_HoaDon timViTriCoMaVT(PTR_CT_HoaDon ctHoaDonFirst, string maVT);
+int deleteCTHoaDonTheoMaVT(PTR_CT_HoaDon &ctHoaDonFirst, string maVT);
+int demSoChiTietHD(PTR_CT_HoaDon ctHoaDonFirst);
+void duyetDanhSach(PTR_CT_HoaDon first);
 
 
 
