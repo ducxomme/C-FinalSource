@@ -31,9 +31,12 @@
 #define GRAY 8
 #define YELLOW 14
 #define WHITE 15
-
+#define BG_HEADER 4
 
 //vi tri dat form
+#define so_item 8
+#define dong 11
+#define cot 40
 #define TOADOX 10
 #define TOADOY 2
 #define HEIGHT_HEADER 3
@@ -239,6 +242,60 @@ void veKhungDanhSach(int soCot, int soHang, int toaDoX, int toaDoY){
 	}
 }
 
+// Do rong cua STT la 6
+void veLaiGoc(int toaDoX, int toaDoY, int soDong){
+	for(int i = 0; i <= soDong * 2; i++){
+		if(i % 2 == 0){
+			if(i == 0)
+			{
+				gotoxy(toaDoX + 5, toaDoY);
+				cout << (char) 194;	
+			}
+			else if(i == soDong * 2){
+				gotoxy(toaDoX + 5, toaDoY + soDong * 2);
+				cout << (char )193;
+			}
+			else {
+				gotoxy(toaDoX + 5, toaDoY + i);
+				cout << (char) 197;
+			}
+			
+					
+		}
+	}
+}
+void veInputText(int toaDoX, int toaDoY){
+	// 218 --- 196 --- 191
+	// 179 ----------- 179
+	// 192 --- 196 --- 217
+	SetColor(WHITE);
+	SetBGColor(BLACK);
+	
+	gotoxy(toaDoX, toaDoY);
+	cout << char (218);
+	for (int i = 1; i < WIDTH_INPUT_TEXT; i++) cout << char (196);
+	cout << char (191);
+	
+	gotoxy(toaDoX, toaDoY + 1);
+	cout << char (179);
+	gotoxy(toaDoX + WIDTH_INPUT_TEXT, toaDoY + 1);
+	cout << char (179);
+	
+	gotoxy(toaDoX, toaDoY + 2);
+	cout << char (192);
+	for (int i = 1; i < WIDTH_INPUT_TEXT; i++) cout << char (196);
+	cout << char (217);
+}
+
+void veChuThich(){
+	gotoxy(0, 27);
+	for(int i = 0; i < 120; i++){
+		cout << (char)205;
+	}
+	gotoxy(13, 28);
+	cout << "\tINSERT : THEM" << "\t\t" << "DELETE : XOA" << "\t\t" << "F2 : HIEU CHINH" << "\t\t" << "<- : TRUOC" << "    -> : SAU"; 
+}
+
 Date HamTraVeCurrentTime(){
 	time_t theTime = time(NULL);
 	struct tm *aTime = localtime(&theTime);
@@ -405,6 +462,83 @@ string dinhDangChuoiNhapVao(string s){
 	if(temp.length() > 0)
 		return chuoi += temp;
 	else return chuoi.erase(chuoi.length()-1);
+}
+
+void Normal () {
+	SetColor(15);
+	SetBGColor(0);
+}
+void HighLight () {
+	SetColor(15);
+	SetBGColor(1);
+}
+bool kiemTraChuoiCoKhoangTrang(string s){
+	for(int i = 0; i < s.length(); i++){
+		if(s[i] == ' ') return true;
+	}
+	return false;
+}
+void thongBao(string message, int toaDoX, int toaDoY, int chieuDai, int chieuRong){
+	veHinhChuNhat(toaDoX, toaDoY, chieuDai, chieuRong, BG_HEADER);
+	gotoxy(toaDoX + (chieuDai - message.length())/2, toaDoY + chieuRong / 2);
+	SetBGColor(BG_HEADER);
+	SetColor(WHITE);
+	cout << message;
+	getch();
+}
+
+string chuyenChuoiThanhChuoiHoa(string s){
+	for(int i = 0; i < s.length(); i++){
+		s[i] = toupper(s[i]);
+	}
+	return s;
+}
+
+void veBangDanhSach(int toaDoX, int toaDoY, int soCot, int soDong, int kichThuocO){
+	SetColor(WHITE);
+	SetBGColor(BLACK);
+
+	// Tao bang
+	// 218 --- 196 --- 194 --- 196 --- 191
+	// 179             179             179
+	// 195 --- 196 --- 197 --- 196 --- 180
+	// 179             179             179
+	// 192 --- 196 --- 193 --- 196 --- 217
+	
+	for (int i = 0; i < soDong * 2 + 1; i++){
+		gotoxy(toaDoX, toaDoY + i);
+		for (int j = 0; j < soCot * 2 + 1; j++) {
+			// Dong dau
+			if (i == 0){
+				if (j == 0) cout << char (218);
+				else if (j == soCot * 2) cout << char (191);
+			 	else if (j % 2 == 0) cout << char (194);
+				else for (int k = 0; k < kichThuocO; k++) cout << char (196);
+			}	
+				
+			// Dong cuoi
+			else if (i == soDong * 2){
+				if (j == 0) cout << char (192);
+				else if (j == soCot * 2) cout << char (217);
+				else if (j % 2 == 0) cout << char (193);
+				else for (int k = 0; k < kichThuocO; k++) cout << char (196);
+			}
+			
+			// Dong Giua
+			else {
+				if (i % 2 == 0) {
+					if (j == 0) cout << char (195);
+					else if (j == soCot * 2) cout << char (180);
+					else if (j == 0 || j == soCot * 2) cout << char (179);
+					else if (j % 2 == 0) cout << char (197);
+					else for (int k = 0; k < kichThuocO; k++) cout << char (196);
+				}
+				else if (j % 2 == 0) cout << char (179);
+				else for (int k = 0; k < kichThuocO; k++) cout << " ";
+			}
+				
+		}	
+	}
 }
 //int main(){
 //	veHinhChuNhat(5, 10, 5, 5, 4);

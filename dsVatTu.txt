@@ -62,3 +62,7 @@ X04
 Xi Mang Loai 4
 Bao
 1000
+t01
+ton loai 1
+tam
+100

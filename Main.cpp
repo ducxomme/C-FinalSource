@@ -2,28 +2,21 @@
 
 string dsChucNang[]={"VAT TU", "NHAN VIEN", "IN HOA DON", "DANH SACH VAT TU XUAT CAO NHAT"};
 
-const int so_item = 6;
-const int dong = 11;
-const int cot = 40 ;
-char thucdon [so_item][50] = {"1. Vat Tu                        ",
-			                  "2. Nhan Vien                     ",
-			                  "3. In Hoa Don                    ",
-			                  "4. Thong Ke Hoa Don              ",
-			                  "5. Danh sach vat tu xuat cao nhat",
-			                  "6. Thoat                         "
+
+char thucdon [so_item][50] = {"1. Nhap Vat Tu                   ",
+							  "2. In danh sach vat tu ton kho   ",	
+			                  "3. Nhap Nhan Vien                ",
+			                  "4. In danh sach Nhan Vien        ",
+			                  "5. Lap Hoa Don                   ",
+			                  "6. Thong Ke Hoa Don              ",
+			                  "7. Danh sach vat tu xuat cao nhat",
+			                  "8. Thoat                         "
 			                  };
 
 
 
 
-void Normal () {
-	SetColor(15);
-	SetBGColor(0);
-}
-void HighLight () {
-	SetColor(15);
-	SetBGColor(1);
-}
+
 
 
 
@@ -225,6 +218,7 @@ void MenuDong(TreeNhanVien &rootNV, DSVatTu &dsVT, char td [so_item][50]){
 			{
 		  		case 0:
 		  			// VAT TU
+		  			veKhungDanhSachVatTu(dsVT);
 		  			break;
 		  		case 1:
 				  	// NHAN VIEN
@@ -251,7 +245,7 @@ void MenuDong(TreeNhanVien &rootNV, DSVatTu &dsVT, char td [so_item][50]){
 	}while (1);
 }
 
-int main(){
+//int main(){
 //	// Chi tiet HD
 //	PTR_CT_HoaDon ctHoaDonFirst1 = new Node_ChiTiet_HD;
 //	ctHoaDonFirst1 = NULL;
@@ -334,21 +328,21 @@ int main(){
 	
 	//LuuFile(treeNV);
 	
-	TreeNhanVien rootNV;
-	rootNV = NULL;
-	DocFile(rootNV);
-	
-	DSVatTu dsVT;
-	dsVT.soLuongVatTu = 0;
-	loadFileVatTu(dsVT);
-//	testInorder(root);
-
-  int chon;  
-    while  (1) {
-        MenuDong (rootNV, dsVT, thucdon);
-        
-        		
-    }
-}
+//	TreeNhanVien rootNV;
+//	rootNV = NULL;
+//	DocFile(rootNV);
+//	
+//	DSVatTu dsVT;
+//	dsVT.soLuongVatTu = 0;
+//	loadFileVatTu(dsVT);
+////	testInorder(root);
+//
+//  int chon;  
+//    while  (1) {
+//        MenuDong (rootNV, dsVT, thucdon);
+//        
+//        		
+//    }
+//}
 
 
