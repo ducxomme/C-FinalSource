@@ -293,7 +293,7 @@ void veChuThich(){
 		cout << (char)205;
 	}
 	gotoxy(13, 28);
-	cout << "\tINSERT : THEM" << "\t\t" << "DELETE : XOA" << "\t\t" << "F2 : HIEU CHINH" << "\t\t" << "<- : TRUOC" << "    -> : SAU"; 
+	cout << "ESC: Thoat \t INSERT: Hieu chinh \t DELETE: Xoa \t <-Trang truoc \t Trang sau->";
 }
 
 Date HamTraVeCurrentTime(){

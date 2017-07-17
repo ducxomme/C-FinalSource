@@ -171,14 +171,16 @@ CTHOADON:
 }
 
 void MenuDong(TreeNhanVien &rootNV, DSVatTu &dsVT, char td [so_item][50]){
-	Normal();
+X:	Normal();
 	system("cls");   int chon =0;
 	int i; 
-	  
 	veHinhChuNhat(cot, 7, 33, 3, 4);
 	gotoxy(cot + 10, 8);
 	SetBGColor(4);
 	cout << "QUAN LY VAT TU";
+	
+
+	while(true){ 
 	Normal();
 	for ( i=0; i< so_item ; i++){ 
 		gotoxy(cot, dong +i);
@@ -188,7 +190,7 @@ void MenuDong(TreeNhanVien &rootNV, DSVatTu &dsVT, char td [so_item][50]){
 	gotoxy(cot,dong+chon);
 	cout << td[chon];
 	int kytu;
-	do{
+	
 		kytu = keyPressed();
 		if (kytu == KEY_UP) 
 		{
@@ -217,20 +219,25 @@ void MenuDong(TreeNhanVien &rootNV, DSVatTu &dsVT, char td [so_item][50]){
 		  	switch(chon)
 			{
 		  		case 0:
-		  			// VAT TU
-		  			veKhungDanhSachVatTu(dsVT);
+		  			// NHAP VAT TU
+		  			themMoiVatTu(dsVT);
+		  			goto X;
 		  			break;
 		  		case 1:
 				  	// NHAN VIEN
+				  	goto X;
 					break;
 				case 2:
 					// HOA DON
+					goto X;
 					break;
 				case 3:
 					// THONG KE HOA DON
+					goto X;
 					break;
 				case 4:
 					// DS VAT TU XUAT CAO NHAT 	
+					goto X;
 					break;
 				case 5:
 					// THOAT
@@ -242,7 +249,7 @@ void MenuDong(TreeNhanVien &rootNV, DSVatTu &dsVT, char td [so_item][50]){
 					exit(1);
 			}
 		}
-	}while (1);
+	}
 }
 
 //int main(){
@@ -327,7 +334,7 @@ void MenuDong(TreeNhanVien &rootNV, DSVatTu &dsVT, char td [so_item][50]){
 //	Insert_Node(treeNV, nv2);
 	
 	//LuuFile(treeNV);
-	
+		
 //	TreeNhanVien rootNV;
 //	rootNV = NULL;
 //	DocFile(rootNV);
@@ -337,12 +344,11 @@ void MenuDong(TreeNhanVien &rootNV, DSVatTu &dsVT, char td [so_item][50]){
 //	loadFileVatTu(dsVT);
 ////	testInorder(root);
 //
-//  int chon;  
-//    while  (1) {
-//        MenuDong (rootNV, dsVT, thucdon);
+//  	int chon;  
+//    MenuDong (rootNV, dsVT, thucdon);
 //        
 //        		
-//    }
+//    return 0;
 //}
 
 

@@ -42,10 +42,6 @@ S03
 Son Loai 3
 Thung
 50
-S04
-Son Loai 4
-Thung
-50
 X01
 Xi Mang Loai 1
 Bao
@@ -58,11 +54,3 @@ X03
 Xi Mang Loai 3
 Bao
 3000
-X04
-Xi Mang Loai 4
-Bao
-1000
-t01
-ton loai 1
-tam
-100
