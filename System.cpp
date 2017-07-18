@@ -150,7 +150,7 @@ int nhapChuoiKiTuVaSo(string &s, int toaDoX, int toaDoY, int maxLengthText, int 
 		}
 		
 		
-	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT &&c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F5) ;
+	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT &&c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2) ;
 	return c;
 }
 
@@ -204,7 +204,31 @@ int nhapChuoiKiTuSo(string &s, int toaDoX, int toaDoY, int maxLengthText, int ma
 		}
 		
 		
-	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT && c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F5);
+	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT && c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2);
+	return c;
+}
+
+int nhapKyTu(string &s, int toaDoX, int toaDoY, int maxLengthText, int mauNen, int mauChu){
+	SetBGColor(mauNen);
+	SetColor(mauChu);
+	int chieuDai = s.length();
+	int c;
+	gotoxy(toaDoX, toaDoY);
+	cout << s;
+	do{
+		c= keyPressed();
+		if(c == '1' || c == '0' &&  chieuDai < maxLengthText){
+			gotoxy(toaDoX + chieuDai, toaDoY);
+			cout << (char)c;
+			chieuDai++;
+			s += char(c);
+		}else if(c == KEY_BACKSPACE && chieuDai != 0){
+			gotoxy(toaDoX + --chieuDai, toaDoY);
+			cout << " ";
+			s.erase(chieuDai);
+			gotoxy(toaDoX + chieuDai, toaDoY);
+		}
+	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT && c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2);
 	return c;
 }
 
@@ -398,43 +422,50 @@ int hopThoaiLuaChon(string message, int toaDoX, int toaDoY, int chieuDai, int ch
 	SetBGColor(RED);
 	SetColor(WHITE);
 	cout << message;
-	gotoxy(toaDoX + chieuDai / 4 - 2, toaDoY + chieuRong / 2 + 1);
-	cout << "CO";
-	gotoxy(toaDoX +(chieuDai / 4) * 3-chieuDai / 8, toaDoY + chieuRong / 2 + 1);
-	cout << "KHONG";
-	int c;
+	gotoxy(WIDTH_MENU_BAR + (WIDTH_BODY - message.length()) / 2 + message.length() + 5, toaDoY + chieuRong / 2 - 1);
+//	gotoxy(toaDoX + chieuDai / 4 - 2, toaDoY + chieuRong / 2 + 1);
+//	cout << "CO";
+//	gotoxy(toaDoX +(chieuDai / 4) * 3-chieuDai / 8, toaDoY + chieuRong / 2 + 1);
+//	cout << "KHONG";
+	char c;
 	int res = 0;
 	do{
-		if(res == 0){
-			veHinhChuNhat(toaDoX + chieuDai / 4 - 2, toaDoY + chieuRong / 2 + 1, 7, 1, RED);
-			gotoxy(toaDoX + chieuDai / 4, toaDoY + chieuRong / 2 + 1);
-			SetBGColor(RED);
-			SetColor(WHITE);
-			cout << "CO";
-			
-			veHinhChuNhat(toaDoX +(chieuDai / 4) * 3-chieuDai / 8 - 1, toaDoY + chieuRong / 2 + 1, 7, 1, WHITE);
-			gotoxy(toaDoX +(chieuDai / 4) * 3-chieuDai / 8, toaDoY + chieuRong / 2 + 1);
-			SetBGColor(WHITE);
-			SetColor(RED);
-			cout << "KHONG";
-		}else{
-			veHinhChuNhat(toaDoX +(chieuDai / 4) * 3-chieuDai / 8 - 1, toaDoY + chieuRong / 2 + 1, 7, 1, RED);
-			gotoxy(toaDoX +(chieuDai / 4) * 3-chieuDai / 8, toaDoY + chieuRong / 2 + 1);
-			SetBGColor(RED);
-			SetColor(WHITE);
-			cout << "KHONG";
-			
-			veHinhChuNhat(toaDoX + chieuDai / 4- 2, toaDoY + chieuRong / 2 + 1, 7, 1, WHITE);
-			gotoxy(toaDoX + chieuDai / 4, toaDoY + chieuRong / 2 + 1);
-			SetBGColor(WHITE);
-			SetColor(RED);
-			cout << "CO";
-			
+//		if(res == 0){
+//			veHinhChuNhat(toaDoX + chieuDai / 4 - 2, toaDoY + chieuRong / 2 + 1, 7, 1, RED);
+//			gotoxy(toaDoX + chieuDai / 4, toaDoY + chieuRong / 2 + 1);
+//			SetBGColor(RED);
+//			SetColor(WHITE);
+//			cout << "CO";
+//			
+//			veHinhChuNhat(toaDoX +(chieuDai / 4) * 3-chieuDai / 8 - 1, toaDoY + chieuRong / 2 + 1, 7, 1, WHITE);
+//			gotoxy(toaDoX +(chieuDai / 4) * 3-chieuDai / 8, toaDoY + chieuRong / 2 + 1);
+//			SetBGColor(WHITE);
+//			SetColor(RED);
+//			cout << "KHONG";
+//		}else{
+//			veHinhChuNhat(toaDoX +(chieuDai / 4) * 3-chieuDai / 8 - 1, toaDoY + chieuRong / 2 + 1, 7, 1, RED);
+//			gotoxy(toaDoX +(chieuDai / 4) * 3-chieuDai / 8, toaDoY + chieuRong / 2 + 1);
+//			SetBGColor(RED);
+//			SetColor(WHITE);
+//			cout << "KHONG";
+//			
+//			veHinhChuNhat(toaDoX + chieuDai / 4- 2, toaDoY + chieuRong / 2 + 1, 7, 1, WHITE);
+//			gotoxy(toaDoX + chieuDai / 4, toaDoY + chieuRong / 2 + 1);
+//			SetBGColor(WHITE);
+//			SetColor(RED);
+//			cout << "CO";
+//			
+//		}
+		c= keyPressed();
+		if((c == 'y') || c == 'Y' )  {
+			res = 1;
+			cout << c;
 		}
-		c = keyPressed();
-		if(c == KEY_LEFT) res = 1;
-		if(c == KEY_RIGHT) res = 0;
-	}while(c != KEY_ENTER && c != KEY_ESC);
+		else if((c == 'n') || c == 'N') {
+			res = 0;
+			cout << c;
+		}
+	}while(c != 'y' && c != 'Y' && c != 'n' && c != 'N' && c != KEY_ESC);
 	if(c == KEY_ESC) return 0;
 	return res;
 }

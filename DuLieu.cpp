@@ -71,6 +71,9 @@ void saveFileVatTu(DSVatTu &ds_VT);
 void loadFileVatTu(DSVatTu &ds_VT);
 
 
+void DocFile(TreeNhanVien &root);
+
+
 //  Cac Functions cua ========== NHAN VIEN
 
 // STACK CHUA DS TREENhanVien
@@ -82,7 +85,7 @@ typedef struct StackNhanVien *StackNV;
 
 int EmptyTreeNV(TreeNhanVien &rootNV);
 void InitNhanVien(TreeNhanVien &rootNV);
-void Insert_Node(TreeNhanVien &rootNV, NhanVien nv);
+bool Insert_Node(TreeNhanVien &rootNV, NhanVien nv);
 void timNodeNVTheMang(TreeNhanVien &nodeNVRight);
 void xoaNodeNhanVien(TreeNhanVien &rootNV, string maNV);
 TreeNhanVien search_NhanVien(TreeNhanVien &rootNV, string maNV);
@@ -90,7 +93,7 @@ void testLNR_MA_NhanVien(TreeNhanVien &rootNV);
 
 int push(StackNV &sp, TreeNhanVien nv);
 int pop(StackNV &sp, TreeNhanVien &nv);
-void LuuFile(StackNV &sp);
+
 
 
 // Cac Functions cua ============= HOA DON

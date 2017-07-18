@@ -1,7 +1,7 @@
 #include "DuLieu.cpp"
 
-string tenCotBangVatTu[SIZE_BANG_DANH_SACH_VT] = {"STT", "MA VAT TU", "TEN VAT TU", "DON VI TINH", "SO LUONG TON"};
-string thuocTinhVatTu[SIZE_THUOC_TINH_VT] = {"Ma Vat Tu", "Ten Vat Tu", "Don Vi Tinh", "So Luong Ton"};
+string tenCotBangVatTu[5] = {"STT", "MA VAT TU", "TEN VAT TU", "DON VI TINH", "SO LUONG TON"};
+string thuocTinhVatTu[4] = {"Ma Vat Tu", "Ten Vat Tu", "Don Vi Tinh", "So Luong Ton"};
 int kiemTraRongVatTu(DSVatTu &ds_VT){
 	return (ds_VT.soLuongVatTu == 0 ? 1 : 0);
 }
@@ -105,60 +105,52 @@ void loadFileVatTu(DSVatTu &ds_VT){
 int soLuongVatTuTonKho(DSVatTu &dsVT){
 	int dem = 0;
 	for(int i = 0; i < dsVT.soLuongVatTu; i++){
-		if(dsVT.nodesVT[i].soLuongTon == 0)
+		if(dsVT.nodesVT[i].soLuongTon > 0)
 			dem++;
 	}
 	return dem;
 }
 
 int tongSoTrangVatTu(DSVatTu &dsVT){
-	return dsVT.soLuongVatTu / SL_VAT_TU_TRONG_TRANG + (dsVT.soLuongVatTu % SL_VAT_TU_TRONG_TRANG == 0 ? 0 : 1);
+	return dsVT.soLuongVatTu / 10 + (dsVT.soLuongVatTu % 10 == 0 ? 0 : 1);
 }
 
 void veGiaoDienThemVatTu(){
 	Normal();
-	// Xoa noi dung trong body
-//	for (int i = 0; i < HEIGHT_BODY; i ++)
-//		for (int j = 0; j < WIDTH_BODY; j++){
-//			gotoxy(TOADOX+WIDTH_MENU_BAR + j, TOADOY + HEIGHT_HEADER + i);
-//			cout << " ";
-//		}
 		
-	// Tieu De
 	veHinhChuNhat(45, 4, 26, 3, RED);
 	SetBGColor(4);
 	gotoxy(52, 5);
 	cout << "THEM VAT TU";
 	Normal();
-	// Nhap thong tin vat tu
+
 	int toaDoXNhan = 25;
 	int toaDoYNhan = 9;
 	int toaDoXInputText = toaDoXNhan + 15;
 	int toaDoYInputText = toaDoYNhan - 1;
 	
-	for (int i = 0; i < SIZE_THUOC_TINH_VT; i++) {
+	for (int i = 0; i < 4; i++) {
 		gotoxy(toaDoXNhan, toaDoYNhan + 3 * i);
+		SetColor(YELLOW);
 		cout << thuocTinhVatTu[i];
+		Normal();
 		veInputText(toaDoXInputText, toaDoYInputText + 3 * i);
 	}
 	
-	// Ve Footer
 	gotoxy(0, 24);
 	for(int i = 0; i < 120; i++){
 		cout << (char)205;
 	}
-//	for (int i = 0; i < HEIGHT_FOOTER - 1; i++){
-//		gotoxy(TOADOX + WIDTH_MENU_BAR, TOADOY + HEIGHT_HEADER + HEIGHT_BODY + i + 1);
-//		for (int j = 0; j < WIDTH_BODY; j++){
-//			cout << " ";
-//		}
-//	}
+
 	gotoxy(46, 25);
-	cout << "ESC: Tro ve \t F5: Luu";
+	cout << "ESC: Tro ve \t F2: Luu";
 }
 
 void themMoiVatTu(DSVatTu &dsVatTu){
 First:	
+	SetBGColor(BLACK);
+	SetColor(WHITE);
+	system("cls");
 	veGiaoDienThemVatTu();
 	
 	VatTu vt;
@@ -168,8 +160,8 @@ First:
 	string errors [4] = {"", "", "", ""};
 	
 	
-	int toaDoXNhan = 25;//TOADOX + WIDTH_MENU_BAR + 30;
-	int toaDoYNhan = 9;//0OADOY + HEIGHT_HEADER + 5;
+	int toaDoXNhan = 25;
+	int toaDoYNhan = 9;
 	int toaDoXInputText = toaDoXNhan + 16;
 	int toaDoYInputText = toaDoYNhan ;
 	
@@ -179,21 +171,16 @@ First:
 			case 0:
 				c = nhapChuoiKiTuVaSo(vt.maVatTu, toaDoXInputText , toaDoYInputText + viTriNhapLieu * 3, WIDTH_INPUT_TEXT - 2, BLACK, WHITE);
 				
-				// Xoa thong bao nhap loi!!!
 				gotoxy(toaDoXInputText + WIDTH_INPUT_TEXT + 1, toaDoYInputText + viTriNhapLieu * 3);
 				for (int i = 0; i < errors[viTriNhapLieu].length(); i++) cout << " ";
 				
-				// Kiem tra MAVT: Rong & co ky tu khoang trang ko?
 				if (vt.maVatTu.length() <= 0) {
-					// Noi dung thong bao
 					errors[viTriNhapLieu] = "Khong duoc de trong!";
 					
-					// Thong bao Loi!!!
 					SetColor(TEXT_ERROR);
 					gotoxy(toaDoXInputText + WIDTH_INPUT_TEXT + 1, toaDoYInputText + viTriNhapLieu * 3);
 					cout << errors[viTriNhapLieu];
 					
-					//Kiem tra MAVT co trung ko?
 				}else if (timViTriVatTuTrung(dsVatTu, chuyenChuoiThanhChuoiHoa(vt.maVatTu)) > -1){
 					errors[viTriNhapLieu] = "Ma " + chuyenChuoiThanhChuoiHoa(vt.maVatTu) + " da ton tai!";
 					
@@ -289,7 +276,7 @@ First:
 		
 		if (c == KEY_UP && viTriNhapLieu > 0) viTriNhapLieu--;
 		
-		if(c == KEY_F5){
+		if(c == KEY_F2){
 			if (vt.maVatTu.length() > 0 && vt.tenVatTu.length() > 0 && vt.donViTinh.length() > 0 && soLuongStr.length() > 0) {
 				stringstream(soLuongStr) >> vt.soLuongTon;
 				vt.maVatTu = chuyenChuoiThanhChuoiHoa(vt.maVatTu);
@@ -388,7 +375,7 @@ void doDuLieuRaBangVatTu(DSVatTu &dsVT, int tongTrang, int trang){
 	int vtDau = (trang - 1) * 10;	
 	string str;
 	int hang = 7;
-
+	sapXepTenVatTuTangDan(dsVT);
 	// STT
 	for(int i = vtDau; i < trang * 10 && i < dsVT.soLuongVatTu; i++){
 		gotoxy(15, hang);
@@ -446,7 +433,7 @@ void suaVatTu(DSVatTu &dsVT, VatTu vt){
 
 	veGiaoDienThemVatTu();
 	
-	SetColor(RED);
+	SetColor(YELLOW);
 	gotoxy(41, 9);
 	cout << vt.maVatTu;
 	gotoxy(41, 18);
@@ -511,7 +498,7 @@ void suaVatTu(DSVatTu &dsVT, VatTu vt){
 		
 		if (c == KEY_UP) viTriNhapLieu = 1;
 		
-		if(c == KEY_F5){
+		if(c == KEY_F2){
 			int viTri = timViTriVatTuTrung(dsVT, vt.maVatTu);
 			if (viTri > -1 && vt.tenVatTu.length() > 0 && vt.donViTinh.length() > 0){
 				
@@ -521,7 +508,7 @@ void suaVatTu(DSVatTu &dsVT, VatTu vt){
 				
 				// Thong bao
 				string noiDungThongBao = "Cap nhat thanh cong: ";
-				thongBao(noiDungThongBao, TOADOX + WIDTH_MENU_BAR + (WIDTH_BODY - noiDungThongBao.length()) / 2, TOADOY + HEIGHT_HEADER + (HEIGHT_BODY - 5) / 2, noiDungThongBao.length() + 10, 5);
+				thongBao(noiDungThongBao, 24 + (86 - noiDungThongBao.length()) / 2, 5 + 7, noiDungThongBao.length() + 10, 5);
 				break;
 			}
 		}
@@ -529,11 +516,36 @@ void suaVatTu(DSVatTu &dsVT, VatTu vt){
 	
 }
 
-int thongBaoXoaVatTu(DSVatTu &dsVT, string maVT){
+int thongBaoXoaVatTu(DSVatTu &dsVT, TreeNhanVien &rootNV, string maVT){
+	StackNV stack = NULL;
+	while(rootNV != NULL){
+					
+		PTRHoaDon ptrHD = rootNV->nhanVien.hoaDonFirst;
+		while(ptrHD != NULL){
+			PTR_CT_HoaDon ptrCtHD = ptrHD->hoaDon.CT_HD_First;
+			while(ptrCtHD != NULL){
+				if(ptrCtHD->chiTietHD.maVT == maVT){
+					string noiDungThongBao2 = "Khong duoc phep xoa";
+					thongBao(noiDungThongBao2,  WIDTH_MENU_BAR + (WIDTH_BODY - noiDungThongBao2.length()) / 2, TOADOY + HEIGHT_HEADER + (HEIGHT_BODY - 5) / 2, noiDungThongBao2.length() + 10, 5);
+					return 0;			
+				}
+				ptrCtHD = ptrCtHD->CT_HD_Next;
+			}
+			ptrHD = ptrHD->HD_Next;
+		}
+		if(rootNV->nvRight != NULL)
+			push(stack, rootNV->nvRight);
+		if(rootNV->nvLeft != NULL)
+			rootNV = rootNV->nvLeft;
+		else if(stack == NULL)
+			break;
+			else pop(stack, rootNV);
+	}
+	
 	int vtVatTuXoa = timViTriVatTuTrung(dsVT, maVT);
 	if (vtVatTuXoa > -1){
 		VatTu vt = dsVT.nodesVT[vtVatTuXoa];
-		string noiDungThongBao1 = "Ban co muon xoa " + vt.maVatTu + " - " + vt.tenVatTu + " khong?";
+		string noiDungThongBao1 = "Ban co muon xoa " + vt.maVatTu + " - " + vt.tenVatTu + " khong?(y/n):";
 		
 		int xacNhanXoa = hopThoaiLuaChon(noiDungThongBao1,  WIDTH_MENU_BAR + (WIDTH_BODY - noiDungThongBao1.length()) / 2, TOADOY + HEIGHT_HEADER + (HEIGHT_BODY - 5)/2, noiDungThongBao1.length() + 10, 5 );
 		if(xacNhanXoa == 1){
@@ -551,7 +563,7 @@ int thongBaoXoaVatTu(DSVatTu &dsVT, string maVT){
 	
 }
 
-void giaoDienVatTu(DSVatTu &dsVT){	
+void giaoDienVatTu(DSVatTu &dsVT, TreeNhanVien &rootNV){	
 	if (kiemTraRongVatTu(dsVT)){
 		string noiDungThongBao = "Danh sach Vat Tu rong!";
 		thongBao(noiDungThongBao, 48, 2, noiDungThongBao.length() + 10, 3);	
@@ -653,7 +665,8 @@ void giaoDienVatTu(DSVatTu &dsVT){
 			// XOA VAT TU	
 			} else if (c == KEY_DELETE) {
 				int vtVatTuXoa = (trang - 1) * 10 + vtLuaChon - 1;
-				bool kqXoa = thongBaoXoaVatTu(dsVT, dsVT.nodesVT[vtVatTuXoa].maVatTu);
+				
+				bool kqXoa = thongBaoXoaVatTu(dsVT, rootNV, dsVT.nodesVT[vtVatTuXoa].maVatTu);
 				if (kqXoa) {
 					tongTrang = tongSoTrangVatTu(dsVT);		
 					if (trang > 1 && vtLuaChon == 1){
@@ -661,10 +674,9 @@ void giaoDienVatTu(DSVatTu &dsVT){
 						vtLuaChon = SL_VAT_TU_TRONG_TRANG;
 					} else if (vtLuaChon > 1) vtLuaChon--;
 				}
-				
 				// ve form danh sach
 				// Nap du lieu vao ban
-				giaoDienVatTu(dsVT);
+				giaoDienVatTu(dsVT, rootNV);
 				xoaDuLieuTrongBangVatTu();
 				doDuLieuRaBangVatTu(dsVT, tongTrang, trang);	
 					
@@ -683,12 +695,16 @@ void giaoDienVatTu(DSVatTu &dsVT){
 	}
 }
 int main(){
+	TreeNhanVien rootNV;
+	InitNhanVien(rootNV);
+	DocFile(rootNV);
 	DSVatTu dsVT;
 	dsVT.soLuongVatTu = 0;
 	loadFileVatTu(dsVT);
 //	veKhungDanhSachVatTu();
 //	doDuLieuRaBangVatTu(dsVT, 1, 1);
-	giaoDienVatTu(dsVT);
+	giaoDienVatTu(dsVT, rootNV);
 //	veGiaoDienThemVatTu();
+//	themMoiVatTu(dsVT);
 	return 0;
 }
