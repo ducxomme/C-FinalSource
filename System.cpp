@@ -34,7 +34,7 @@
 #define BG_HEADER 4
 
 //vi tri dat form
-#define so_item 8
+#define so_item 7
 #define dong 11
 #define cot 40
 #define TOADOX 10

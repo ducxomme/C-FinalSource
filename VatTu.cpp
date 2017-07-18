@@ -146,7 +146,7 @@ void veGiaoDienThemVatTu(){
 	cout << "ESC: Tro ve \t F2: Luu";
 }
 
-void themMoiVatTu(DSVatTu &dsVatTu){
+void themMotVatTu(DSVatTu &dsVatTu){
 First:	
 	SetBGColor(BLACK);
 	SetColor(WHITE);
@@ -516,6 +516,25 @@ void suaVatTu(DSVatTu &dsVT, VatTu vt){
 	
 }
 
+int push(StackNV &sp, TreeNhanVien nv){
+	StackNV p;
+	p = new StackNhanVien;
+	p->nodeNV = nv;
+	p->next = sp;
+	sp = p;
+	return 1;
+}
+
+int pop(StackNV &sp, TreeNhanVien &nv){
+	if(sp == NULL)
+		return 0;
+	StackNV p = sp;
+	nv = p->nodeNV;
+	sp = p->next;
+	delete p;
+	return 1; 
+}
+
 int thongBaoXoaVatTu(DSVatTu &dsVT, TreeNhanVien &rootNV, string maVT){
 	StackNV stack = NULL;
 	while(rootNV != NULL){
@@ -694,17 +713,17 @@ void giaoDienVatTu(DSVatTu &dsVT, TreeNhanVien &rootNV){
 		} while (c != KEY_ESC);
 	}
 }
-int main(){
-	TreeNhanVien rootNV;
-	InitNhanVien(rootNV);
-	DocFile(rootNV);
-	DSVatTu dsVT;
-	dsVT.soLuongVatTu = 0;
-	loadFileVatTu(dsVT);
-//	veKhungDanhSachVatTu();
-//	doDuLieuRaBangVatTu(dsVT, 1, 1);
-	giaoDienVatTu(dsVT, rootNV);
-//	veGiaoDienThemVatTu();
-//	themMoiVatTu(dsVT);
-	return 0;
-}
+//int main(){
+//	TreeNhanVien rootNV;
+////	InitNhanVien(rootNV);
+////	DocFile(rootNV);
+//	DSVatTu dsVT;
+//	dsVT.soLuongVatTu = 0;
+//	loadFileVatTu(dsVT);
+////	veKhungDanhSachVatTu();
+////	doDuLieuRaBangVatTu(dsVT, 1, 1);
+//	giaoDienVatTu(dsVT, rootNV);
+////	veGiaoDienThemVatTu();
+////	themMoiVatTu(dsVT);
+//	return 0;
+//}

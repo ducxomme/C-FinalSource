@@ -7,10 +7,9 @@ char thucdon [so_item][50] = {"1. Nhap Vat Tu                   ",
 							  "2. In danh sach vat tu ton kho   ",	
 			                  "3. Nhap Nhan Vien                ",
 			                  "4. In danh sach Nhan Vien        ",
-			                  "5. Lap Hoa Don                   ",
-			                  "6. Thong Ke Hoa Don              ",
-			                  "7. Danh sach vat tu xuat cao nhat",
-			                  "8. Thoat                         "
+			                  "5. Thong Ke Hoa Don              ",
+			                  "6. Danh sach vat tu xuat cao nhat",
+			                  "7. Thoat                         "
 			                  };
 
 
@@ -31,7 +30,7 @@ void LuuFile(TreeNhanVien &root){
 	PTR_CT_HoaDon ptrCTHD;
 	
 	while(p != NULL){
-		myFile << "+" << endl;
+		myFile << "===NV" << endl;
 		// Nhan Vien
 		myFile << p->nhanVien.maNhanVien << endl;
 		myFile << p->nhanVien.ho << endl;
@@ -41,7 +40,7 @@ void LuuFile(TreeNhanVien &root){
 		// Hoa Don
 		ptrHD = p->nhanVien.hoaDonFirst;
 		while(ptrHD != NULL){
-			myFile << "-" << endl;
+			myFile << "===HD" << endl;
 			myFile << ptrHD->hoaDon.soHoaDon << endl;
 			myFile << ptrHD->hoaDon.ngayLapHoaDon.ngay << endl;
 			myFile << ptrHD->hoaDon.ngayLapHoaDon.thang << endl;
@@ -51,7 +50,7 @@ void LuuFile(TreeNhanVien &root){
 			// Chi Tiet Hoa Don
 			PTR_CT_HoaDon ptrCTHD = ptrHD->hoaDon.CT_HD_First;
 			while(ptrCTHD != NULL){
-				myFile << "*" << endl;
+				myFile << "===CTHD" << endl;
 				myFile << ptrCTHD->chiTietHD.maVT << endl;
 				myFile << ptrCTHD->chiTietHD.soLuong << endl;
 				myFile << ptrCTHD->chiTietHD.donGia << endl;
@@ -71,7 +70,7 @@ void LuuFile(TreeNhanVien &root){
 				break;
 			else pop(sp, p);		
 	}
-	myFile << "=";
+	myFile << "===END";
 	myFile.close();
 }
 
@@ -90,7 +89,7 @@ void DocFile(TreeNhanVien &root){
 	int phai;
 	
 	getline(myFile, s);
-	if(s == "=")
+	if(s == "===END")
 		return;
 		
 	while(!myFile.eof()){
@@ -104,11 +103,11 @@ NHANVIEN:
 		nv.hoaDonFirst = NULL;
 			
 		getline(myFile, s);
-		if(s == "="){
+		if(s == "===END"){
 			Insert_Node(root, nv);
 			return;
 		}
-		else if(s == "+")
+		else if(s == "===NV")
 			goto NHANVIEN;	
 			
 HOADON:
@@ -125,13 +124,13 @@ HOADON:
 		
 		insertNodeHoaDon(nv.hoaDonFirst, hd);
 		getline(myFile, s);
-		if(s == "="){
+		if(s == "===END"){
 			Insert_Node(root, nv);
 			return;
 		}
-		else if(s == "-")
+		else if(s == "===HD")
 			goto HOADON;
-		else if(s == "+"){
+		else if(s == "===NV"){
 			Insert_Node(root, nv);
 			goto NHANVIEN;
 		}
@@ -148,19 +147,19 @@ CTHOADON:
 		
 		insertCTHoaDonLast(hd.CT_HD_First, ctHD);
 		getline(myFile, s);
-		if(s == "*"){
+		if(s == "===CTHD"){
 			goto CTHOADON;
 		}
-		else if(s == "+"){
+		else if(s == "===NV"){
 			insertNodeHoaDon(nv.hoaDonFirst, hd);
 			Insert_Node(root, nv);
 			goto NHANVIEN;
 		}
-		else if (s == "-"){
+		else if (s == "===HD"){
 			insertNodeHoaDon(nv.hoaDonFirst, hd);
 			goto HOADON;
 		}
-		else if(s == "="){
+		else if(s == "===END"){
 			insertNodeHoaDon(nv.hoaDonFirst, hd);
 			Insert_Node(root, nv);
 			return;			
@@ -220,26 +219,33 @@ X:	Normal();
 			{
 		  		case 0:
 		  			// NHAP VAT TU
-		  			themMoiVatTu(dsVT);
+		  			themMotVatTu(dsVT);
 		  			goto X;
 		  			break;
 		  		case 1:
-				  	// NHAN VIEN
+				  	// IN DANH SACH VAT TU
+				  	giaoDienVatTu(dsVT, rootNV);
 				  	goto X;
 					break;
 				case 2:
-					// HOA DON
+					// NHAP NHAN VIEN
+					themMotNhanVien(rootNV);
 					goto X;
 					break;
 				case 3:
-					// THONG KE HOA DON
+					// IN DS NHAN VIEN
+					giaoDienNhanVien(rootNV);
 					goto X;
 					break;
 				case 4:
-					// DS VAT TU XUAT CAO NHAT 	
+					// THONG KE HOA DON 	
 					goto X;
 					break;
 				case 5:
+					// LIET KE VAT TU BAN CHAY
+					goto X;
+					break;
+				case 6:
 					// THOAT
 					LuuFile(rootNV);
 					saveFileVatTu(dsVT);
@@ -342,7 +348,6 @@ X:	Normal();
 //	DSVatTu dsVT;
 //	dsVT.soLuongVatTu = 0;
 //	loadFileVatTu(dsVT);
-////	testInorder(root);
 //
 //  	int chon;  
 //    MenuDong (rootNV, dsVT, thucdon);

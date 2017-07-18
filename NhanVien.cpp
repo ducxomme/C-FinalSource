@@ -32,7 +32,6 @@ bool Insert_Node(TreeNhanVien &rootNV, NhanVien nv){
 			Insert_Node(rootNV->nvRight, nv);
 		else return false;
 	}
-	
 
 }
 //TreeNhanVien rp;
@@ -80,25 +79,22 @@ TreeNhanVien search_NhanVien(TreeNhanVien &rootNV, string maNV){
 }
 
 void testLNR_MA_NhanVien(TreeNhanVien &rootNV){
-	if(rootNV != NULL){
-		testLNR_MA_NhanVien(rootNV->nvLeft);
-		cout << rootNV->nhanVien.maNhanVien << endl;
-		PTRHoaDon hoaDonFirst = new NodeHoaDon;
-		hoaDonFirst = rootNV->nhanVien.hoaDonFirst;
-		while(hoaDonFirst != NULL){
-			cout << "Ma Hoa Don :  "<< hoaDonFirst->hoaDon.soHoaDon << endl;
-			
-			PTR_CT_HoaDon ctHoaDon = new Node_ChiTiet_HD;
-			ctHoaDon = hoaDonFirst->hoaDon.CT_HD_First;
-			while(ctHoaDon != NULL){
-				cout << "Ma VT trong chi tiet HD : " << ctHoaDon->chiTietHD.maVT << endl;
-				ctHoaDon = ctHoaDon->CT_HD_Next;
-			}
-			hoaDonFirst = hoaDonFirst->HD_Next;	
+	StackNV sp = NULL;
+	TreeNhanVien p = rootNV;
+	do{
+		while(p != NULL){
+			push(sp, p);
+			p=p->nvLeft;
 		}
 		
-		testLNR_MA_NhanVien(rootNV->nvRight);
-	}
+		if(sp != NULL){
+			pop(sp, p);
+			cout << p->nhanVien.maNhanVien << endl;
+			p=p->nvRight;
+		}
+		else break;
+	}while(1);
+	
 }
 
 void testInorder(TreeNhanVien &rootNV){
@@ -109,27 +105,30 @@ void testInorder(TreeNhanVien &rootNV){
 	}
 }
 
+int demSoNhanVien(TreeNhanVien &rootNV){
+	StackNV sp = NULL;
+	int dem = 0;
+	TreeNhanVien p = rootNV;
+	while(p != NULL){
+		dem++;
+		if(p->nvRight != NULL)
+			push(sp, p->nvRight);
+		if(p->nvLeft != NULL)
+			rootNV = p->nvLeft;
+		else if(sp == NULL)
+			break;
+		else pop(sp, p);
+	}
+	return dem;
+}
+
+int tongSoTrangNhanVien(TreeNhanVien &rootNV){
+	int tongNhanVien = demSoNhanVien(rootNV);
+	return (tongNhanVien / 10) + (tongNhanVien % 10 == 0 ? 0 : 1);
+}
+
 void initStackNhanVien(StackNV &sp){
 	sp = NULL;
-}
-
-int push(StackNV &sp, TreeNhanVien nv){
-	StackNV p;
-	p = new StackNhanVien;
-	p->nodeNV = nv;
-	p->next = sp;
-	sp = p;
-	return 1;
-}
-
-int pop(StackNV &sp, TreeNhanVien &nv){
-	if(sp == NULL)
-		return 0;
-	StackNV p = sp;
-	nv = p->nodeNV;
-	sp = p->next;
-	delete p;
-	return 1; 
 }
 
 void veGiaoDienThemNhanVien(){
@@ -287,7 +286,6 @@ THEMNHANVIEN:
 				nv.phai = (phai == "1" ? true : false);
 				nv.hoaDonFirst = NULL;
 				res = Insert_Node(rootNV, nv);
-				cout << res;getch();
 				if(res == true){
 					thongBao("Them thanh cong!!", 45, 12, 27, 3);
 				
@@ -304,43 +302,365 @@ THEMNHANVIEN:
 		}	
 	}while(1);
 }
-//int main(){
-//	TreeNhanVien rootNV;
-//	rootNV = NULL;
+
+void veKhungDanhSachNhanVien(){
+	Normal();
+	system("cls");
+	// In tieu de
+	veHinhChuNhat(cot, 1, 33, 3, 4);
+	gotoxy(cot + 8, 2);
+	SetBGColor(4);
+	cout << "DANH SACH NHAN VIEN";
+	veBangDanhSach(13, 4, 1, 11, 6);
+	veKhungDanhSach(4, 11, 18, 4);
+	veLaiGoc(13, 4, 11);
+	veChuThich();
+	Normal();
+	
+	SetColor(YELLOW);
+	SetBGColor(BLACK);
+	int toaDoXNhan;
+	for (int i = 0; i < 5; i++){
+		if(i == 0){
+			toaDoXNhan = 15;
+		}
+		else toaDoXNhan =  19 + (TABLE_COLUMN_WIDTH - tenCotBangNhanVien[i].length())/2 + 21 * (i-1);
+		gotoxy(toaDoXNhan, 5);
+		cout << tenCotBangNhanVien[i];
+	}
+	Normal();
+}
+
+void xoaDuLieuTrongBangNhanVien(){
+	SetColor(WHITE);
+	SetBGColor(BLACK);
+	int j = 7;
+	// XOA stt
+	for(int i = 0; i < 10; i++){
+		gotoxy(14, j);
+		cout << "    ";
+		j += 2;
+	}
+	// Xoa MA NV
+	j = 7;
+	for(int i = 0; i < 10; i++){
+		gotoxy(19, j);
+		cout << "                    ";
+		j += 2;
+	}
+	// Xoa ho NV
+	j = 7;
+	for(int i = 0; i < 10; i++){
+		gotoxy(40, j);
+		cout << "                    ";
+		j += 2;
+	}
+	// Xoa ten
+	j = 7;
+	for(int i = 0; i < 10; i++){
+		gotoxy(82, j);
+		cout << "                    ";
+		j += 2;
+	}
+	// Xoa Phai
+	j = 7;
+	for(int i = 0; i < 10; i++){
+		gotoxy(61, j);
+		cout << "                    ";
+		j += 2;
+	}
+}
+
+void doDuLieuRaBangNhanVien(TreeNhanVien &rootNV, int tongTrang, int trang){
+	xoaDuLieuTrongBangNhanVien();
+	StackNV sp = NULL;
+	TreeNhanVien p = rootNV;
+	int soNhanVien = demSoNhanVien(rootNV);
+	int dem = 0;
+	// Ghi du lieu moi vao bang
+	SetColor(WHITE);	
+	int toaDoXCuaConTro;
+	int toaDoYCuaConTro;	
+	int vtDau = (trang - 1) * 10;	
+	string str;
+	int hang = 7;
+	// STT
+	for(int i = vtDau; i < trang * 10 && i < soNhanVien; i++){
+		gotoxy(15, hang);
+		str = chuyenSoThanhChuoi(i + 1);
+		cout << str;
+		hang += 2;
+	}
+	do{
+		while(p != NULL){
+			push(sp, p);
+			p = p->nvLeft;
+		}
+		
+		if(sp != NULL){
+			pop(sp, p);
+			if(dem >= (trang - 1) * SO_DONG_MOT_TRANG && dem < trang   * SO_DONG_MOT_TRANG){
+					
+				gotoxy(18 + 0 * 21 + (20 - p->nhanVien.maNhanVien.length())/2, 7+ (dem % 10) * 2);
+				SetBGColor(BLACK);
+				SetColor(WHITE);
+				cout << p->nhanVien.maNhanVien;
+					
+				gotoxy(18 + 1 * 21 + (20 - p->nhanVien.ho.length())/2, 7+ (dem % 10) * 2);
+				SetBGColor(BLACK);
+				SetColor(WHITE);
+				cout << p->nhanVien.ho;
+					
+				gotoxy(18 + 2 * 21 + (20 - p->nhanVien.ten.length())/2, 7 + (dem % 10) * 2);
+				SetBGColor(BLACK);
+				SetColor(WHITE);
+				cout << p->nhanVien.ten;
+					
+				gotoxy(18 + 3 * 21 + (20 - 3)/2,  7 + (dem % 10) * 2);
+				SetBGColor(BLACK);
+				SetColor(WHITE);
+				if(p->nhanVien.phai == true) cout << "Nam";
+				else cout << "Nu";
+			}
+				
+			dem++;
+			p = p->nvRight;
+		}else break;
+		
+	}while(true);
+	
+	string page = "Trang: " + chuyenSoThanhChuoi(trang) + "/" + chuyenSoThanhChuoi(tongTrang);	
+	gotoxy(81,2);
+	cout << page;
+}
+
+void giaoDienNhanVien(TreeNhanVien &rootNV){
+	if(EmptyTreeNV(rootNV)){
+		string noiDungThongBao = "Danh sach Vat Tu rong!";
+		thongBao(noiDungThongBao, 48, 2, noiDungThongBao.length() + 10, 3);			
+	}else{
+		int trang = 1;
+		int tongTrang = tongSoTrangNhanVien(rootNV);
+		int vtLuaChon = 1;
+		int c;
+		string s;
+		int dem = demSoNhanVien(rootNV);
+		int soCot = 5;
+		int soDong = 10 ;
+		int toaDoX = 10;
+		int toaDoY = 7;
+		
+		veKhungDanhSachNhanVien();
+		doDuLieuRaBangNhanVien(rootNV, tongTrang, trang);	
+		// Ve con tro
+		gotoxy(toaDoX, toaDoY);
+		cout << "->";
+		
+		do {
+			c = keyPressed();
+			
+			// CHUYEN VI TRI CON TRO
+			if (c == KEY_UP){
+				if (vtLuaChon > 1){
+					// Xoa con tro
+					gotoxy(toaDoX, toaDoY + (vtLuaChon - 1) * 2);
+					cout << "  ";
+					// Gan vi tri moi cho con tro
+					vtLuaChon--;
+					// Ve con tro
+					gotoxy(toaDoX, toaDoY + (vtLuaChon - 1) * 2);
+					cout << "->";
+				}
+			} else if (c == KEY_DOWN){
+				if (vtLuaChon < 10 && (vtLuaChon + (trang - 1) * 10) < dem) 
+				{
+					// Xoa con tro
+					gotoxy(toaDoX, toaDoY + (vtLuaChon - 1) * 2);
+					cout << "  ";
+					// Gan vi tri moi cho con tro
+					vtLuaChon++;
+					// Ve con tro
+					gotoxy(toaDoX, toaDoY + (vtLuaChon - 1) * 2);
+					cout << "->";
+				}
+			
+			// CHUYEN TRANG
+			} else if(c == KEY_LEFT) {
+				if (trang > 1){
+					trang--;	
+
+					// Nap du lieu vao ban
+					veKhungDanhSachNhanVien();
+					doDuLieuRaBangNhanVien(rootNV, tongTrang, trang);	
+					
+					// Xoa con tro
+					gotoxy(toaDoX, toaDoY + (vtLuaChon - 1) * 2);
+					cout << "  ";
+					// Gan vi tri moi cho con tro
+					vtLuaChon = 1;	
+					// Ve con tro
+					gotoxy(toaDoX, toaDoY + (vtLuaChon - 1) * 2);
+					cout << "->";
+				} 
+			} else if(c == KEY_RIGHT){
+				if (trang < tongTrang){
+					trang++;
+						
+					// Nap du lieu vao ban
+					veKhungDanhSachNhanVien();
+					doDuLieuRaBangNhanVien(rootNV, tongTrang, trang);	
+					
+					// Xoa con tro
+					gotoxy(toaDoX, toaDoY + (vtLuaChon - 1) * 2);
+					cout << "  ";
+					// Gan vi tri moi cho con tro
+					vtLuaChon = 1;	
+					// Ve con tro
+					gotoxy(toaDoX, toaDoY + (vtLuaChon - 1) * 2);
+					cout << "->";
+				} 
+			
+			// CAP NHAT THONG TIN VAT TU
+			} else if (c == KEY_INSERT){
+				int vtVatTu = (trang - 1) * 10 + vtLuaChon - 1;
+				//suaVatTu(dsVT, dsVT.nodesVT[vtVatTu]);
+												
+				veKhungDanhSachNhanVien();
+				xoaDuLieuTrongBangNhanVien();
+				doDuLieuRaBangNhanVien(rootNV, tongTrang, trang);	
+	
+				gotoxy(toaDoX, toaDoY + (vtLuaChon - 1) * 2);
+				cout << "->";
+						
+			// XOA VAT TU	
+			} else if (c == KEY_DELETE) {
+				int vtVatTuXoa = (trang - 1) * 10 + vtLuaChon - 1;
+				
+//				bool kqXoa = thongBaoXoaVatTu(dsVT, rootNV, dsVT.nodesVT[vtVatTuXoa].maVatTu);
+//				if (kqXoa) {
+//					tongTrang = tongSoTrangVatTu(dsVT);		
+//					if (trang > 1 && vtLuaChon == 1){
+//						trang--;
+//						vtLuaChon = 10;
+//					} else if (vtLuaChon > 1) vtLuaChon--;
+//				}
+				// ve form danh sach
+				// Nap du lieu vao ban
+				veKhungDanhSachNhanVien();
+				xoaDuLieuTrongBangNhanVien();
+				doDuLieuRaBangNhanVien(rootNV, tongTrang, trang);
+					
+				// Xoa con tro
+				gotoxy(toaDoX , toaDoY + (vtLuaChon - 1) * 2);
+				cout << "  ";
+				// Gan vi tri moi cho con tro
+				vtLuaChon = 1;	
+				// Ve con tro
+				gotoxy(toaDoX, toaDoY + (vtLuaChon - 1) * 2);
+				cout << "->";
+	
+			} 
+	
+		} while (c != KEY_ESC);		
+	}
+}
+
+int main(){
+	TreeNhanVien rootNV;
+	rootNV = NULL;
 //	themMotNhanVien(rootNV);
-//		themMotNhanVien(rootNV);
-//	NhanVien nv1;
-//	nv1.maNhanVien = "NV1";
-//	nv1.ho = "nguyen";
-//	nv1.ten ="a";
-//	nv1.phai = 1;
-//	nv1.hoaDonFirst = NULL;
-//	
-//	NhanVien nv4;
-//	nv4.maNhanVien = "NV4";
-//	nv4.ho = "tran";
-//	nv4.ten ="b";
-//	nv4.phai = 0;
-//	nv4.hoaDonFirst = NULL;
-//	 //THEM OK
-//	NhanVien nv3;
-//	nv3.maNhanVien = "NV3";
-//	nv3.ho = "nguyen";
-//	nv3.ten ="t";
-//	nv3.phai = 1;
-//	nv3.hoaDonFirst = NULL;
-//	
-//	NhanVien nv2;
-//	nv2.maNhanVien = "NV2";
-//	nv2.ho = "nguyen";
-//	nv2.ten ="g";
-//	nv2.phai = 1;
-//	nv2.hoaDonFirst = NULL;
-//	
-//	Insert_Node(rootNV, nv1);
-//	Insert_Node(rootNV, nv2);
-//	Insert_Node(rootNV, nv3);
-//	Insert_Node(rootNV, nv4);
-//	
-//	return 0;
-//}
+	NhanVien nv1;
+	nv1.maNhanVien = "NV1";
+	nv1.ho = "nguyen";
+	nv1.ten ="a";
+	nv1.phai = 1;
+	nv1.hoaDonFirst = NULL;
+	
+	NhanVien nv4;
+	nv4.maNhanVien = "NV4";
+	nv4.ho = "tran";
+	nv4.ten ="b";
+	nv4.phai = 0;
+	nv4.hoaDonFirst = NULL;
+	 
+	NhanVien nv3;
+	nv3.maNhanVien = "NV3";
+	nv3.ho = "nguyen";
+	nv3.ten ="t";
+	nv3.phai = 1;
+	nv3.hoaDonFirst = NULL;
+	
+	NhanVien nv2;
+	nv2.maNhanVien = "NV2";
+	nv2.ho = "nguyen";
+	nv2.ten ="g";
+	nv2.phai = 1;
+	nv2.hoaDonFirst = NULL;
+	
+	NhanVien nv6;
+	nv6.maNhanVien = "NV6";
+	nv6.ho = "nguyen";
+	nv6.ten ="a";
+	nv6.phai = 1;
+	nv6.hoaDonFirst = NULL;
+	
+	NhanVien nv5;
+	nv5.maNhanVien = "NV5";
+	nv5.ho = "tran";
+	nv5.ten ="b";
+	nv5.phai = 0;
+	nv5.hoaDonFirst = NULL;
+
+	NhanVien nv7;
+	nv7.maNhanVien = "NV7";
+	nv7.ho = "nguyen";
+	nv7.ten ="t";
+	nv7.phai = 1;
+	nv7.hoaDonFirst = NULL;
+	
+	NhanVien nv8;
+	nv8.maNhanVien = "NV8";
+	nv8.ho = "nguyen";
+	nv8.ten ="g";
+	nv8.phai = 1;
+	nv8.hoaDonFirst = NULL;	
+
+	NhanVien nv11;
+	nv11.maNhanVien = "NV11";
+	nv11.ho = "tran";
+	nv11.ten ="b";
+	nv11.phai = 0;
+	nv11.hoaDonFirst = NULL;
+	 //THEM OK
+	NhanVien nv10;
+	nv10.maNhanVien = "NV10";
+	nv10.ho = "nguyen";
+	nv10.ten ="t";
+	nv10.phai = 1;
+	nv10.hoaDonFirst = NULL;
+	
+	NhanVien nv9;
+	nv9.maNhanVien = "NV9";
+	nv9.ho = "nguyen";
+	nv9.ten ="g";
+	nv9.phai = 1;
+	nv9.hoaDonFirst = NULL;	
+	Insert_Node(rootNV, nv1);
+	Insert_Node(rootNV, nv2);
+	Insert_Node(rootNV, nv3);
+	Insert_Node(rootNV, nv4);
+	
+	Insert_Node(rootNV, nv5);
+	Insert_Node(rootNV, nv6);
+	Insert_Node(rootNV, nv7);
+	Insert_Node(rootNV, nv8);
+
+	Insert_Node(rootNV, nv9);
+	Insert_Node(rootNV, nv10);
+	Insert_Node(rootNV, nv11);
+	//veKhungDanhSachNhanVien();
+//	doDuLieuRaBangNhanVien(rootNV, tongSoTrangNhanVien(rootNV), 1);
+	
+	cout << demSoNhanVien(rootNV);
+	return 0;
+}

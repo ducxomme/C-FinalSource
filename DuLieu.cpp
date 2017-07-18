@@ -90,7 +90,6 @@ void timNodeNVTheMang(TreeNhanVien &nodeNVRight);
 void xoaNodeNhanVien(TreeNhanVien &rootNV, string maNV);
 TreeNhanVien search_NhanVien(TreeNhanVien &rootNV, string maNV);
 void testLNR_MA_NhanVien(TreeNhanVien &rootNV);
-
 int push(StackNV &sp, TreeNhanVien nv);
 int pop(StackNV &sp, TreeNhanVien &nv);
 
