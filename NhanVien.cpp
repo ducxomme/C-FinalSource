@@ -78,6 +78,25 @@ TreeNhanVien search_NhanVien(TreeNhanVien &rootNV, string maNV){
 	return p;
 }
 
+TreeNhanVien timKiemNhanVienTheoViTri(TreeNhanVien & rootNV, int viTri){
+	TreeNhanVien p = rootNV;
+	StackNV sp = NULL;
+	int dem = 0;
+	do{
+		while(p != NULL){
+			push(sp, p);
+			p = p->nvLeft;
+		}
+		if(sp != NULL && dem < viTri+1){
+			pop(sp, p);
+			dem++;
+			if(dem - 1 == viTri) return p;
+			p=p->nvRight;
+		}
+		else break;
+	}while(1);
+}
+
 void testLNR_MA_NhanVien(TreeNhanVien &rootNV){
 	StackNV sp = NULL;
 	TreeNhanVien p = rootNV;
@@ -114,7 +133,7 @@ int demSoNhanVien(TreeNhanVien &rootNV){
 		if(p->nvRight != NULL)
 			push(sp, p->nvRight);
 		if(p->nvLeft != NULL)
-			rootNV = p->nvLeft;
+			p = p->nvLeft;
 		else if(sp == NULL)
 			break;
 		else pop(sp, p);
@@ -163,7 +182,6 @@ void themMotNhanVien(TreeNhanVien &rootNV){
 THEMNHANVIEN:	
 	veGiaoDienThemNhanVien();
 	NhanVien nv;
-	TreeNhanVien p;
 	int c;
 	string errors[4] = {"", "", "", ""};
 	string phai;
@@ -311,7 +329,7 @@ void veKhungDanhSachNhanVien(){
 	gotoxy(cot + 8, 2);
 	SetBGColor(4);
 	cout << "DANH SACH NHAN VIEN";
-	veBangDanhSach(13, 4, 1, 11, 6);
+	veBangDanhSach(13, 4, 1, 11, 4);
 	veKhungDanhSach(4, 11, 18, 4);
 	veLaiGoc(13, 4, 11);
 	veChuThich();
@@ -434,10 +452,127 @@ void doDuLieuRaBangNhanVien(TreeNhanVien &rootNV, int tongTrang, int trang){
 	cout << page;
 }
 
+void suaNhanVien(NhanVien &nv){
+	system("cls");
+	int c;
+	string phai;
+	int toaDoXNhan = 25;
+	int toaDoYNhan = 9;
+	int toaDoXInputText = 46;
+	int toaDoYInputText = toaDoYNhan;
+
+	veGiaoDienThemNhanVien();
+	
+	SetColor(YELLOW);
+	gotoxy(46, 9);
+	cout << nv.maNhanVien;
+
+	
+	SetColor(WHITE);
+	gotoxy(46, 12);
+	cout << nv.ho;
+	gotoxy(46, 15);
+	cout << nv.ten;
+	gotoxy(46, 18);
+	if(nv.phai = true)
+		phai = "1";
+	else phai = "0";
+	cout << phai;
+	
+	string errors[4] = {"", "", "", ""};
+	int viTriNhapLieu = 1;
+	
+	do {
+		switch (viTriNhapLieu){
+							
+			// Nhap hoNV
+			case 1:	
+				c = nhapChuoiKiTuVaSo(nv.ho, toaDoXInputText , toaDoYInputText + viTriNhapLieu * 3,WIDTH_INPUT_TEXT - 2, BLACK, WHITE);
+				
+				// Xoa thong bao nhap loi!!!
+				gotoxy(toaDoXInputText + WIDTH_INPUT_TEXT + 1, toaDoYInputText + viTriNhapLieu * 3);
+				for (int i = 0; i < errors[viTriNhapLieu].length(); i++) cout << " ";
+					
+					// Kiem tra rong
+				if (nv.ho.length() <= 0) {	
+					// Noi dung thong bao
+					errors[viTriNhapLieu] = "Khong duoc de trong!";
+					
+					// Thong bao Loi!!!
+					SetColor(TEXT_ERROR);
+					gotoxy(toaDoXInputText + WIDTH_INPUT_TEXT + 1, toaDoYInputText + viTriNhapLieu * 3);
+					cout << errors[viTriNhapLieu];
+
+				} else errors[viTriNhapLieu] = "";
+					
+				break;
+				
+			// Nhap tenNV
+			case 2:	
+				c = nhapChuoiKiTuVaSo(nv.ten, toaDoXInputText , toaDoYInputText + viTriNhapLieu * 3,WIDTH_INPUT_TEXT - 2, BLACK, WHITE);
+				
+				// Xoa thong bao nhap loi!!!
+				gotoxy(toaDoXInputText + WIDTH_INPUT_TEXT + 1, toaDoYInputText + viTriNhapLieu * 3);
+				for (int i = 0; i < errors[viTriNhapLieu].length(); i++) cout << " ";
+					
+				if (nv.ten.length() <= 0) {
+					errors[viTriNhapLieu] = "Khong duoc de trong!";
+					SetColor(TEXT_ERROR);
+					gotoxy(toaDoXInputText + WIDTH_INPUT_TEXT + 1, toaDoYInputText + viTriNhapLieu * 3);
+					cout << errors[viTriNhapLieu];
+
+				} else errors[viTriNhapLieu] = "";
+				
+				break;
+			
+			//Nhap phai	
+			case 3:
+				c = nhapKyTu(phai, toaDoXInputText, toaDoYInputText + 3 * viTriNhapLieu, 1, BLACK, WHITE);
+				
+				gotoxy(toaDoXInputText + WIDTH_INPUT_TEXT + 1, toaDoYInputText + viTriNhapLieu * 3);
+				for (int i = 0; i < errors[viTriNhapLieu].length(); i++) cout << " ";
+				
+				if(phai.length() <= 0){
+					errors[viTriNhapLieu] = "Khong duoc de trong!";
+					SetColor(TEXT_ERROR);
+					gotoxy(toaDoXInputText + WIDTH_INPUT_TEXT + 1, toaDoYInputText + viTriNhapLieu * 3);
+					cout << errors[viTriNhapLieu];					
+				
+				}else if(!kiemTraChuoiNhapVao(phai)){
+					errors[viTriNhapLieu] = "Khong hop le";
+					SetColor(TEXT_ERROR);
+					gotoxy(toaDoXInputText + WIDTH_INPUT_TEXT + 1, toaDoYInputText + viTriNhapLieu * 3);
+					cout << errors[viTriNhapLieu];					
+				}else
+					errors[viTriNhapLieu] = "";
+				break;	
+			
+		}
+		
+		if ((c == KEY_DOWN || c == KEY_ENTER) && viTriNhapLieu < 3) viTriNhapLieu++;
+		
+		if (c == KEY_UP && viTriNhapLieu > 1) viTriNhapLieu--;
+		
+		if(c == KEY_F2){
+			if (nv.ho.length() > 0 && nv.ten.length() > 0 && phai.length() > 0){
+				
+				nv.ho = dinhDangChuoiNhapVao(nv.ho);
+				nv.ten = dinhDangChuoiNhapVao(nv.ten);
+				nv.phai = (phai == "1" ? true : false);
+		
+				string noiDungThongBao = "Cap nhat thanh cong: ";
+				thongBao(noiDungThongBao, 24 + (86 - noiDungThongBao.length()) / 2, 5 + 7, noiDungThongBao.length() + 10, 5);
+				break;
+			}
+		}
+	} while (c != KEY_ESC);	
+		
+}
+
 void giaoDienNhanVien(TreeNhanVien &rootNV){
 	if(EmptyTreeNV(rootNV)){
 		string noiDungThongBao = "Danh sach Vat Tu rong!";
-		thongBao(noiDungThongBao, 48, 2, noiDungThongBao.length() + 10, 3);			
+		thongBao(noiDungThongBao, 43, 2, noiDungThongBao.length() + 10, 3);			
 	}else{
 		int trang = 1;
 		int tongTrang = tongSoTrangNhanVien(rootNV);
@@ -520,10 +655,10 @@ void giaoDienNhanVien(TreeNhanVien &rootNV){
 					cout << "->";
 				} 
 			
-			// CAP NHAT THONG TIN VAT TU
+			// CAP NHAT THONG TIN NHAN VIEN
 			} else if (c == KEY_INSERT){
-				int vtVatTu = (trang - 1) * 10 + vtLuaChon - 1;
-				//suaVatTu(dsVT, dsVT.nodesVT[vtVatTu]);
+				int vtNhanVien = (trang - 1) * 10 + vtLuaChon - 1;
+				suaNhanVien(timKiemNhanVienTheoViTri(rootNV, vtNhanVien)->nhanVien);
 												
 				veKhungDanhSachNhanVien();
 				xoaDuLieuTrongBangNhanVien();
@@ -532,7 +667,7 @@ void giaoDienNhanVien(TreeNhanVien &rootNV){
 				gotoxy(toaDoX, toaDoY + (vtLuaChon - 1) * 2);
 				cout << "->";
 						
-			// XOA VAT TU	
+			// XOA NV
 			} else if (c == KEY_DELETE) {
 				int vtVatTuXoa = (trang - 1) * 10 + vtLuaChon - 1;
 				
@@ -568,7 +703,7 @@ void giaoDienNhanVien(TreeNhanVien &rootNV){
 int main(){
 	TreeNhanVien rootNV;
 	rootNV = NULL;
-//	themMotNhanVien(rootNV);
+
 	NhanVien nv1;
 	nv1.maNhanVien = "NV1";
 	nv1.ho = "nguyen";
@@ -631,7 +766,7 @@ int main(){
 	nv11.ten ="b";
 	nv11.phai = 0;
 	nv11.hoaDonFirst = NULL;
-	 //THEM OK
+
 	NhanVien nv10;
 	nv10.maNhanVien = "NV10";
 	nv10.ho = "nguyen";
@@ -658,9 +793,11 @@ int main(){
 	Insert_Node(rootNV, nv9);
 	Insert_Node(rootNV, nv10);
 	Insert_Node(rootNV, nv11);
-	//veKhungDanhSachNhanVien();
+//	veKhungDanhSachNhanVien();
 //	doDuLieuRaBangNhanVien(rootNV, tongSoTrangNhanVien(rootNV), 1);
-	
-	cout << demSoNhanVien(rootNV);
+//	themMotNhanVien(rootNV);
+//	cout << tongSoTrangNhanVien(rootNV);
+	giaoDienNhanVien(rootNV);
+
 	return 0;
 }

@@ -445,7 +445,7 @@ void suaVatTu(DSVatTu &dsVT, VatTu vt){
 	gotoxy(41, 15);
 	cout << vt.donViTinh;
 	
-	string errors[3] = {"", ""};
+	string errors[2] = {"", ""};
 	
 	do {
 		switch (viTriNhapLieu){

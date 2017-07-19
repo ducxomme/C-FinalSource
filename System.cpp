@@ -177,7 +177,7 @@ int nhapChuoiKiTu(string &s, int toaDoX, int toaDoY, int maxLengthText, int mauN
 		}
 		
 		
-	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT && c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F5);
+	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT && c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2);
 	return c;
 }
 
