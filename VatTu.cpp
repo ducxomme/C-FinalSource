@@ -537,9 +537,10 @@ int pop(StackNV &sp, TreeNhanVien &nv){
 
 int thongBaoXoaVatTu(DSVatTu &dsVT, TreeNhanVien &rootNV, string maVT){
 	StackNV stack = NULL;
-	while(rootNV != NULL){
+	TreeNhanVien p = rootNV;
+	while(p != NULL){
 					
-		PTRHoaDon ptrHD = rootNV->nhanVien.hoaDonFirst;
+		PTRHoaDon ptrHD = p->nhanVien.hoaDonFirst;
 		while(ptrHD != NULL){
 			PTR_CT_HoaDon ptrCtHD = ptrHD->hoaDon.CT_HD_First;
 			while(ptrCtHD != NULL){
@@ -552,13 +553,13 @@ int thongBaoXoaVatTu(DSVatTu &dsVT, TreeNhanVien &rootNV, string maVT){
 			}
 			ptrHD = ptrHD->HD_Next;
 		}
-		if(rootNV->nvRight != NULL)
-			push(stack, rootNV->nvRight);
-		if(rootNV->nvLeft != NULL)
-			rootNV = rootNV->nvLeft;
+		if(p->nvRight != NULL)
+			push(stack, p->nvRight);
+		if(p->nvLeft != NULL)
+			p = p->nvLeft;
 		else if(stack == NULL)
 			break;
-			else pop(stack, rootNV);
+			else pop(stack, p);
 	}
 	
 	int vtVatTuXoa = timViTriVatTuTrung(dsVT, maVT);
@@ -566,7 +567,7 @@ int thongBaoXoaVatTu(DSVatTu &dsVT, TreeNhanVien &rootNV, string maVT){
 		VatTu vt = dsVT.nodesVT[vtVatTuXoa];
 		string noiDungThongBao1 = "Ban co muon xoa " + vt.maVatTu + " - " + vt.tenVatTu + " khong?(y/n):";
 		
-		int xacNhanXoa = hopThoaiLuaChon(noiDungThongBao1,  WIDTH_MENU_BAR + (WIDTH_BODY - noiDungThongBao1.length()) / 2, TOADOY + HEIGHT_HEADER + (HEIGHT_BODY - 5)/2, noiDungThongBao1.length() + 10, 5 );
+		int xacNhanXoa = hopThoaiLuaChon(noiDungThongBao1,  WIDTH_MENU_BAR + (WIDTH_BODY - noiDungThongBao1.length()) / 2, TOADOY + HEIGHT_HEADER + (HEIGHT_BODY - 5)/2, noiDungThongBao1.length() + 10, 4 );
 		if(xacNhanXoa == 1){
 			xoaVatTu(dsVT, vt.maVatTu);
 			saveFileVatTu(dsVT);

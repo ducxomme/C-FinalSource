@@ -569,9 +569,6 @@ void suaNhanVien(NhanVien &nv){
 		
 }
 
-void xoaNhanVien(TreeNhanVien &rootNV, NhanVien sv){
-	
-}
 
 void giaoDienNhanVien(TreeNhanVien &rootNV){
 	if(EmptyTreeNV(rootNV)){
@@ -719,104 +716,101 @@ void giaoDienNhanVien(TreeNhanVien &rootNV){
 	}
 }
 
-int main(){
-	TreeNhanVien rootNV;
-	rootNV = NULL;
-
-	NhanVien nv1;
-	nv1.maNhanVien = "NV1";
-	nv1.ho = "nguyen";
-	nv1.ten ="a";
-	nv1.phai = 1;
-	nv1.hoaDonFirst = NULL;
-	
-	NhanVien nv4;
-	nv4.maNhanVien = "NV4";
-	nv4.ho = "tran";
-	nv4.ten ="b";
-	nv4.phai = 0;
-	nv4.hoaDonFirst = NULL;
-	 
-	NhanVien nv3;
-	nv3.maNhanVien = "NV3";
-	nv3.ho = "nguyen";
-	nv3.ten ="t";
-	nv3.phai = 1;
-	nv3.hoaDonFirst = NULL;
-	
-	NhanVien nv2;
-	nv2.maNhanVien = "NV2";
-	nv2.ho = "nguyen";
-	nv2.ten ="g";
-	nv2.phai = 1;
-	nv2.hoaDonFirst = NULL;
-	
-	NhanVien nv6;
-	nv6.maNhanVien = "NV6";
-	nv6.ho = "nguyen";
-	nv6.ten ="a";
-	nv6.phai = 1;
-	nv6.hoaDonFirst = NULL;
-	
-	NhanVien nv5;
-	nv5.maNhanVien = "NV5";
-	nv5.ho = "tran";
-	nv5.ten ="b";
-	nv5.phai = 0;
-	nv5.hoaDonFirst = NULL;
-
-	NhanVien nv7;
-	nv7.maNhanVien = "NV7";
-	nv7.ho = "nguyen";
-	nv7.ten ="t";
-	nv7.phai = 1;
-	nv7.hoaDonFirst = NULL;
-	
-	NhanVien nv8;
-	nv8.maNhanVien = "NV8";
-	nv8.ho = "nguyen";
-	nv8.ten ="g";
-	nv8.phai = 1;
-	nv8.hoaDonFirst = NULL;	
-
-	NhanVien nv11;
-	nv11.maNhanVien = "NV11";
-	nv11.ho = "tran";
-	nv11.ten ="b";
-	nv11.phai = 0;
-	nv11.hoaDonFirst = NULL;
-
-	NhanVien nv10;
-	nv10.maNhanVien = "NV10";
-	nv10.ho = "nguyen";
-	nv10.ten ="t";
-	nv10.phai = 1;
-	nv10.hoaDonFirst = NULL;
-	
-	NhanVien nv9;
-	nv9.maNhanVien = "NV9";
-	nv9.ho = "nguyen";
-	nv9.ten ="g";
-	nv9.phai = 1;
-	nv9.hoaDonFirst = NULL;	
-	Insert_Node(rootNV, nv1);
-	Insert_Node(rootNV, nv2);
-	Insert_Node(rootNV, nv3);
-	Insert_Node(rootNV, nv4);
-	
-	Insert_Node(rootNV, nv5);
-	Insert_Node(rootNV, nv6);
-	Insert_Node(rootNV, nv7);
-	Insert_Node(rootNV, nv8);
-
-	Insert_Node(rootNV, nv9);
-	Insert_Node(rootNV, nv10);
-	Insert_Node(rootNV, nv11);
-//	veKhungDanhSachNhanVien();
-//	doDuLieuRaBangNhanVien(rootNV, tongSoTrangNhanVien(rootNV), 1);
-//	themMotNhanVien(rootNV);
-//	cout << tongSoTrangNhanVien(rootNV);
-	giaoDienNhanVien(rootNV);
-
-	return 0;
-}
+//int main(){
+//	TreeNhanVien rootNV;
+//	rootNV = NULL;
+//
+//	NhanVien nv1;
+//	nv1.maNhanVien = "NV1";
+//	nv1.ho = "nguyen";
+//	nv1.ten ="a";
+//	nv1.phai = 1;
+//	nv1.hoaDonFirst = NULL;
+//	
+//	NhanVien nv4;
+//	nv4.maNhanVien = "NV4";
+//	nv4.ho = "tran";
+//	nv4.ten ="b";
+//	nv4.phai = 0;
+//	nv4.hoaDonFirst = NULL;
+//	 
+//	NhanVien nv3;
+//	nv3.maNhanVien = "NV3";
+//	nv3.ho = "nguyen";
+//	nv3.ten ="t";
+//	nv3.phai = 1;
+//	nv3.hoaDonFirst = NULL;
+//	
+//	NhanVien nv2;
+//	nv2.maNhanVien = "NV2";
+//	nv2.ho = "nguyen";
+//	nv2.ten ="g";
+//	nv2.phai = 1;
+//	nv2.hoaDonFirst = NULL;
+//	
+//	NhanVien nv6;
+//	nv6.maNhanVien = "NV6";
+//	nv6.ho = "nguyen";
+//	nv6.ten ="a";
+//	nv6.phai = 1;
+//	nv6.hoaDonFirst = NULL;
+//	
+//	NhanVien nv5;
+//	nv5.maNhanVien = "NV5";
+//	nv5.ho = "tran";
+//	nv5.ten ="b";
+//	nv5.phai = 0;
+//	nv5.hoaDonFirst = NULL;
+//
+//	NhanVien nv7;
+//	nv7.maNhanVien = "NV7";
+//	nv7.ho = "nguyen";
+//	nv7.ten ="t";
+//	nv7.phai = 1;
+//	nv7.hoaDonFirst = NULL;
+//	
+//	NhanVien nv8;
+//	nv8.maNhanVien = "NV8";
+//	nv8.ho = "nguyen";
+//	nv8.ten ="g";
+//	nv8.phai = 1;
+//	nv8.hoaDonFirst = NULL;	
+//
+//	NhanVien nv11;
+//	nv11.maNhanVien = "NV11";
+//	nv11.ho = "tran";
+//	nv11.ten ="b";
+//	nv11.phai = 0;
+//	nv11.hoaDonFirst = NULL;
+//
+//	NhanVien nv10;
+//	nv10.maNhanVien = "NV10";
+//	nv10.ho = "nguyen";
+//	nv10.ten ="t";
+//	nv10.phai = 1;
+//	nv10.hoaDonFirst = NULL;
+//	
+//	NhanVien nv9;
+//	nv9.maNhanVien = "NV9";
+//	nv9.ho = "nguyen";
+//	nv9.ten ="g";
+//	nv9.phai = 1;
+//	nv9.hoaDonFirst = NULL;	
+//	Insert_Node(rootNV, nv1);
+//	Insert_Node(rootNV, nv2);
+//	Insert_Node(rootNV, nv3);
+//	Insert_Node(rootNV, nv4);
+//	
+//	Insert_Node(rootNV, nv5);
+//	Insert_Node(rootNV, nv6);
+//	Insert_Node(rootNV, nv7);
+//	Insert_Node(rootNV, nv8);
+//
+//	Insert_Node(rootNV, nv9);
+//	Insert_Node(rootNV, nv10);
+//	Insert_Node(rootNV, nv11);
+//	
+//	giaoDienNhanVien(rootNV);
+//
+//	return 0;
+//}

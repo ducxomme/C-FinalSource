@@ -122,15 +122,20 @@ HOADON:
 		hd.loai = s[0];
 		hd.CT_HD_First = NULL;
 		
-		insertNodeHoaDon(nv.hoaDonFirst, hd);
+		
 		getline(myFile, s);
 		if(s == "===END"){
+			insertNodeHoaDon(nv.hoaDonFirst, hd);
 			Insert_Node(root, nv);
 			return;
 		}
-		else if(s == "===HD")
+		else if(s == "===HD"){
+			insertNodeHoaDon(nv.hoaDonFirst, hd);
 			goto HOADON;
+			
+		}
 		else if(s == "===NV"){
+			insertNodeHoaDon(nv.hoaDonFirst, hd);
 			Insert_Node(root, nv);
 			goto NHANVIEN;
 		}
@@ -258,7 +263,7 @@ X:	Normal();
 	}
 }
 
-//int main(){
+int main(){
 //	// Chi tiet HD
 //	PTR_CT_HoaDon ctHoaDonFirst1 = new Node_ChiTiet_HD;
 //	ctHoaDonFirst1 = NULL;
@@ -341,19 +346,49 @@ X:	Normal();
 	
 	//LuuFile(treeNV);
 		
-//	TreeNhanVien rootNV;
-//	rootNV = NULL;
-//	DocFile(rootNV);
-//	
-//	DSVatTu dsVT;
-//	dsVT.soLuongVatTu = 0;
-//	loadFileVatTu(dsVT);
-//
-//  	int chon;  
-//    MenuDong (rootNV, dsVT, thucdon);
+	TreeNhanVien rootNV;
+	rootNV = NULL;
+	DocFile(rootNV);
+	
+	DSVatTu dsVT;
+	dsVT.soLuongVatTu = 0;
+	loadFileVatTu(dsVT);
+
+  	int chon;  
+    MenuDong (rootNV, dsVT, thucdon);
 //        
-//        		
-//    return 0;
-//}
+//	StackNV sp = NULL;
+//	TreeNhanVien p = rootNV;
+//	if(p == NULL) return 0;
+//	do{
+//		while(p != NULL){
+//			push(sp, p);
+//			p=p->nvLeft;
+//		}
+//		
+//		if(sp != NULL){
+//			pop(sp, p);
+//			cout << "======NV" << endl;
+//			cout << p->nhanVien.maNhanVien << endl;
+//			PTRHoaDon ptrHD = p->nhanVien.hoaDonFirst;
+//			
+//			while(ptrHD != NULL){
+//				cout << "===HD" << endl;
+//				cout << ptrHD->hoaDon.soHoaDon << endl;
+//				PTR_CT_HoaDon ptrCtHD = ptrHD->hoaDon.CT_HD_First;
+//				while(ptrCtHD != NULL){
+//					cout << "=CTHD" << endl;
+//					cout << ptrCtHD->chiTietHD.maVT << endl;
+//					ptrCtHD = ptrCtHD->CT_HD_Next;
+//				}
+//				ptrHD = ptrHD->HD_Next;
+//			}
+//			p=p->nvRight;
+//		}
+//		else break;
+//	}while(1);
+//	//LuuFile(rootNV);        		
+	return 0;
+}
 
 

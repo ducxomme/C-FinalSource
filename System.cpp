@@ -232,6 +232,30 @@ int nhapKyTu(string &s, int toaDoX, int toaDoY, int maxLengthText, int mauNen, i
 	return c;
 }
 
+int nhapKyTuNhapXuat(string &s, int toaDoX, int toaDoY, int maxLengthText, int mauNen, int mauChu){
+	SetBGColor(mauNen);
+	SetColor(mauChu);
+	int chieuDai = s.length();
+	int c;
+	gotoxy(toaDoX, toaDoY);
+	cout << s;
+	do{
+		c= keyPressed();
+		if(c == 'n' || c == 'N' || c == 'x' || c == 'X' &&  chieuDai < maxLengthText){
+			gotoxy(toaDoX + chieuDai, toaDoY);
+			cout << (char)c;
+			chieuDai++;
+			s += char(c);
+		}else if(c == KEY_BACKSPACE && chieuDai != 0){
+			gotoxy(toaDoX + --chieuDai, toaDoY);
+			cout << " ";
+			s.erase(chieuDai);
+			gotoxy(toaDoX + chieuDai, toaDoY);
+		}
+	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT && c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2);
+	return c;
+}
+
 int kiemTraHopLeChuoiSoThuc(string s){
 	int dem = 0;
 	for(int i = 0; i < s.length(); i++)
@@ -320,15 +344,6 @@ void veChuThich(){
 	cout << "ESC: Thoat \t INSERT: Hieu chinh \t DELETE: Xoa \t <-Trang truoc \t Trang sau->";
 }
 
-Date HamTraVeCurrentTime(){
-	time_t theTime = time(NULL);
-	struct tm *aTime = localtime(&theTime);
-	Date d;
-	d.ngay = aTime->tm_mday;
-	d.thang = aTime->tm_mon + 1;
-	d.nam = aTime->tm_year + 1900;
-	return d;
-}
 
 string chuyenSoThanhChuoi(int num){
     string s = "";
@@ -423,39 +438,9 @@ int hopThoaiLuaChon(string message, int toaDoX, int toaDoY, int chieuDai, int ch
 	SetColor(WHITE);
 	cout << message;
 	gotoxy(WIDTH_MENU_BAR + (WIDTH_BODY - message.length()) / 2 + message.length() + 5, toaDoY + chieuRong / 2 - 1);
-//	gotoxy(toaDoX + chieuDai / 4 - 2, toaDoY + chieuRong / 2 + 1);
-//	cout << "CO";
-//	gotoxy(toaDoX +(chieuDai / 4) * 3-chieuDai / 8, toaDoY + chieuRong / 2 + 1);
-//	cout << "KHONG";
 	char c;
 	int res = 0;
 	do{
-//		if(res == 0){
-//			veHinhChuNhat(toaDoX + chieuDai / 4 - 2, toaDoY + chieuRong / 2 + 1, 7, 1, RED);
-//			gotoxy(toaDoX + chieuDai / 4, toaDoY + chieuRong / 2 + 1);
-//			SetBGColor(RED);
-//			SetColor(WHITE);
-//			cout << "CO";
-//			
-//			veHinhChuNhat(toaDoX +(chieuDai / 4) * 3-chieuDai / 8 - 1, toaDoY + chieuRong / 2 + 1, 7, 1, WHITE);
-//			gotoxy(toaDoX +(chieuDai / 4) * 3-chieuDai / 8, toaDoY + chieuRong / 2 + 1);
-//			SetBGColor(WHITE);
-//			SetColor(RED);
-//			cout << "KHONG";
-//		}else{
-//			veHinhChuNhat(toaDoX +(chieuDai / 4) * 3-chieuDai / 8 - 1, toaDoY + chieuRong / 2 + 1, 7, 1, RED);
-//			gotoxy(toaDoX +(chieuDai / 4) * 3-chieuDai / 8, toaDoY + chieuRong / 2 + 1);
-//			SetBGColor(RED);
-//			SetColor(WHITE);
-//			cout << "KHONG";
-//			
-//			veHinhChuNhat(toaDoX + chieuDai / 4- 2, toaDoY + chieuRong / 2 + 1, 7, 1, WHITE);
-//			gotoxy(toaDoX + chieuDai / 4, toaDoY + chieuRong / 2 + 1);
-//			SetBGColor(WHITE);
-//			SetColor(RED);
-//			cout << "CO";
-//			
-//		}
 		c= keyPressed();
 		if((c == 'y') || c == 'Y' )  {
 			cout << c;
