@@ -569,6 +569,10 @@ void suaNhanVien(NhanVien &nv){
 		
 }
 
+void xoaNhanVien(TreeNhanVien &rootNV, NhanVien sv){
+	
+}
+
 void giaoDienNhanVien(TreeNhanVien &rootNV){
 	if(EmptyTreeNV(rootNV)){
 		string noiDungThongBao = "Danh sach Vat Tu rong!";
@@ -669,16 +673,31 @@ void giaoDienNhanVien(TreeNhanVien &rootNV){
 						
 			// XOA NV
 			} else if (c == KEY_DELETE) {
-				int vtVatTuXoa = (trang - 1) * 10 + vtLuaChon - 1;
+				int vtNhanVien = (trang - 1) * 10 + vtLuaChon - 1;
 				
-//				bool kqXoa = thongBaoXoaVatTu(dsVT, rootNV, dsVT.nodesVT[vtVatTuXoa].maVatTu);
-//				if (kqXoa) {
-//					tongTrang = tongSoTrangVatTu(dsVT);		
-//					if (trang > 1 && vtLuaChon == 1){
-//						trang--;
-//						vtLuaChon = 10;
-//					} else if (vtLuaChon > 1) vtLuaChon--;
-//				}
+				TreeNhanVien p = timKiemNhanVienTheoViTri(rootNV, vtNhanVien);
+				if(p != NULL){
+					if(p->nhanVien.hoaDonFirst != NULL){
+						string mess = "Khong duoc phep xoa";
+						thongBao(mess,  WIDTH_MENU_BAR + (WIDTH_BODY - mess.length()) / 2, TOADOY + HEIGHT_HEADER + (HEIGHT_BODY - 5) / 2, mess.length() + 10, 5);
+						break;
+					}else{
+						
+						string mess = "Ban co muon xoa " + p->nhanVien.maNhanVien + " khong?(y/n): ";
+						int xacNhanXoa = hopThoaiLuaChon(mess,  WIDTH_MENU_BAR + (WIDTH_BODY - mess.length()) / 2, TOADOY + HEIGHT_HEADER + (HEIGHT_BODY - 5)/2, mess.length() + 10, 5 );
+						if(xacNhanXoa == 1){
+							xoaNodeNhanVien(rootNV, p->nhanVien.maNhanVien);
+							string mess2 = "Da xoa Nhan Vien!";
+							thongBao(mess2,  WIDTH_MENU_BAR + (WIDTH_BODY - mess.length()) / 2, TOADOY + HEIGHT_HEADER + (HEIGHT_BODY - 5) / 2, mess.length() + 10, 5);
+							
+							tongTrang = tongSoTrangNhanVien(rootNV);		
+							if (trang > 1 && vtLuaChon == 1){
+								trang--;
+								vtLuaChon = 10;
+							} else if (vtLuaChon > 1) vtLuaChon--;
+						}
+					}
+				}
 				// ve form danh sach
 				// Nap du lieu vao ban
 				veKhungDanhSachNhanVien();

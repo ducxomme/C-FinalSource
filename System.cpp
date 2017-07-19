@@ -458,16 +458,15 @@ int hopThoaiLuaChon(string message, int toaDoX, int toaDoY, int chieuDai, int ch
 //		}
 		c= keyPressed();
 		if((c == 'y') || c == 'Y' )  {
-			res = 1;
 			cout << c;
+			return 1;
 		}
 		else if((c == 'n') || c == 'N') {
-			res = 0;
 			cout << c;
+			return 0;
 		}
 	}while(c != 'y' && c != 'Y' && c != 'n' && c != 'N' && c != KEY_ESC);
 	if(c == KEY_ESC) return 0;
-	return res;
 }
 
 int kiemTraChuoiNhapVao(string s){
