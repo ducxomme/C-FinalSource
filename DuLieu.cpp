@@ -100,7 +100,7 @@ int emptyDSHoaDon(PTRHoaDon hoaDonFirst);
 void InitHoaDon(PTRHoaDon &hoaDonFirst);
 PTRHoaDon getNodeHoaDon(HoaDon hd);
 int insertNodeHoaDon(PTRHoaDon &hoaDonFirst, HoaDon hd);
-PTRHoaDon search_HD(PTRHoaDon &hoaDonFirst, string maHD);
+PTRHoaDon timKiemHoaDonTheoMa(PTRHoaDon &hoaDonFirst, string maHD);
 int deleteFirstHD(PTRHoaDon &hoaDonFirst);
 int deleteAfterHD(PTRHoaDon p);
 int deleteInfoHD(PTRHoaDon &hoaDonFirst, string maHD);

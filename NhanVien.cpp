@@ -1,8 +1,8 @@
- #include "HoaDon.cpp"
+#include "HoaDon.cpp"
 
-
-string tenCotBangNhanVien[] = {"STT", "MA NHAN VIEN", "HO NHAN VIEN", "TEN NHAN VIEN", "PHAI"};
 string tenThuocTinhNhanVien[] = {"Ma Nhan Vien", "Ho Nhan Vien", "Ten Nhan Vien", "Phai(1: NAM; 0: NU)"};
+string tenCotBangNhanVien[] = {"STT", "MA NHAN VIEN", "HO NHAN VIEN", "TEN NHAN VIEN", "PHAI"};
+
 
 int EmptyTreeNV(TreeNhanVien &rootNV){
 	return (rootNV == NULL ? 1 : 0);
@@ -332,7 +332,14 @@ void veKhungDanhSachNhanVien(){
 	veBangDanhSach(13, 4, 1, 11, 4);
 	veKhungDanhSach(4, 11, 18, 4);
 	veLaiGoc(13, 4, 11);
-	veChuThich();
+	
+	//veChuThich();
+	gotoxy(0, 27);
+	for(int i = 0; i < 120; i++){
+		cout << (char)205;
+	}
+	gotoxy(9, 28);
+	cout << "ESC: Thoat   \tF5: DS Hoa Don  \t INSERT: Hieu chinh \t DELETE: Xoa \t <-Trang truoc \t Trang sau->";
 	Normal();
 	
 	SetColor(YELLOW);
@@ -417,7 +424,7 @@ void doDuLieuRaBangNhanVien(TreeNhanVien &rootNV, int tongTrang, int trang){
 		
 		if(sp != NULL){
 			pop(sp, p);
-			if(dem >= (trang - 1) * SO_DONG_MOT_TRANG && dem < trang   * SO_DONG_MOT_TRANG){
+			if(dem >= (trang - 1) * SO_DONG_MOT_TRANG && dem < trang * SO_DONG_MOT_TRANG){
 					
 				gotoxy(18 + 0 * 21 + (20 - p->nhanVien.maNhanVien.length())/2, 7+ (dem % 10) * 2);
 				SetBGColor(BLACK);
@@ -569,8 +576,7 @@ void suaNhanVien(NhanVien &nv){
 		
 }
 
-
-void giaoDienNhanVien(TreeNhanVien &rootNV){
+void giaoDienNhanVien(TreeNhanVien &rootNV, DSVatTu &dsVT){
 	if(EmptyTreeNV(rootNV)){
 		string noiDungThongBao = "Danh sach Vat Tu rong!";
 		thongBao(noiDungThongBao, 43, 2, noiDungThongBao.length() + 10, 3);			
@@ -710,8 +716,24 @@ void giaoDienNhanVien(TreeNhanVien &rootNV){
 				gotoxy(toaDoX, toaDoY + (vtLuaChon - 1) * 2);
 				cout << "->";
 	
-			} 
-	
+			}else if(c == KEY_F5){
+				int vtNhanVien = (trang - 1) * 10 + vtLuaChon - 1;
+				TreeNhanVien p = timKiemNhanVienTheoViTri(rootNV, vtNhanVien);
+				giaoDienHoaDon(rootNV, p->nhanVien, dsVT);
+			
+				veKhungDanhSachNhanVien();
+				xoaDuLieuTrongBangNhanVien();
+				doDuLieuRaBangNhanVien(rootNV, tongTrang, trang);
+					
+				// Xoa con tro
+				gotoxy(toaDoX , toaDoY + (vtLuaChon - 1) * 2);
+				cout << "  ";
+				// Gan vi tri moi cho con tro
+				vtLuaChon = 1;	
+				// Ve con tro
+				gotoxy(toaDoX, toaDoY + (vtLuaChon - 1) * 2);
+				cout << "->";
+			}	
 		} while (c != KEY_ESC);		
 	}
 }

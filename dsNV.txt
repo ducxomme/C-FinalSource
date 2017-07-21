@@ -1,5 +1,5 @@
 ===NV
-NV51
+NV01
 Nguyen Van
 Nam
 1
@@ -36,7 +36,7 @@ HD02
 2016
 N
 ===NV
-NV22
+NV02
 Nguyen Thi
 Hoa
 0
@@ -67,12 +67,12 @@ K01
 7000
 2
 ===NV
-NV02
+NV03
 Vu Hai
 Nam
 1
 ===NV
-NV01
+NV04
 Tran Thi
 Cuc
 0
@@ -251,37 +251,37 @@ HD14
 2017
 X
 ===NV
-NV03
+NV05
 Pham Dinh
 Thi
 1
 ===NV
-NV04
+NV06
 Do Thi Minh
 Thu
 0
 ===NV
-NV05
+NV07
 Pham Thi Hong
 Loan
 0
 ===NV
-NV06
+NV08
 Le Anh
 Thang
 1
 ===NV
-NV07
+NV09
 Pham Bich
 Tram
 0
 ===NV
-NV08
+NV10
 Nguyen Thien
 An
 0
 ===NV
-NV09
+NV11
 Bui Minh
 Tri
 1
@@ -291,7 +291,7 @@ Nguyen Thi Ngoc
 Hue
 0
 ===NV
-NV11
+NV13
 Nguyen Thi
 Mai
 0
@@ -301,12 +301,12 @@ Nguyen Thi Phuong
 Uyen
 0
 ===NV
-NV33
+NV15
 Nguyen Van
 Teo
 1
 ===NV
-NV44
+NV16
 Nguyen Hoang
 Hon
 1
@@ -337,7 +337,7 @@ K01
 7000
 2
 ===NV
-NV55
+NV17
 Nguyen Thi
 Lan
 0
@@ -368,7 +368,7 @@ K02
 7000
 2
 ===NV
-NV66
+NV18
 Tran Van
 Dung
 1
@@ -399,16 +399,16 @@ K03
 7000
 2
 ===NV
-NV77
+NV19
 Nguyen Thi
 Sai
 0
 ===NV
-NV88
+NV20
 Le Thi
 Rieng
 0
--
+===HD
 HD05
 30
 4
@@ -426,7 +426,7 @@ HD06
 2016
 N
 ===NV
-NV99
+NV21
 Vo Hoang
 De
 1
@@ -441,4 +441,4 @@ D02
 50
 5000
 2
-=
+===END

@@ -4,6 +4,7 @@
 #include <cstring>
 #include <fstream>
 #include <sstream>
+#include <string>
 
 // ma phim
 #define KEY_BACKSPACE 8
@@ -241,7 +242,7 @@ int nhapKyTuNhapXuat(string &s, int toaDoX, int toaDoY, int maxLengthText, int m
 	cout << s;
 	do{
 		c= keyPressed();
-		if(c == 'n' || c == 'N' || c == 'x' || c == 'X' &&  chieuDai < maxLengthText){
+		if((c == 'n' || c == 'N' || c == 'x' || c == 'X')&&  chieuDai < maxLengthText){
 			gotoxy(toaDoX + chieuDai, toaDoY);
 			cout << (char)c;
 			chieuDai++;
@@ -252,7 +253,7 @@ int nhapKyTuNhapXuat(string &s, int toaDoX, int toaDoY, int maxLengthText, int m
 			s.erase(chieuDai);
 			gotoxy(toaDoX + chieuDai, toaDoY);
 		}
-	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT && c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2);
+	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT && c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2 && c != KEY_F5);
 	return c;
 }
 
@@ -367,23 +368,28 @@ string chuyenNgayThanhChuoi(Date d){
 	return s;
 }
 
-void HamTraVeCurrentTime(Date &d){
+Date HamTraVeCurrentTime(){
 	time_t theTime = time(NULL);
 	struct tm *aTime = localtime(&theTime);
+	Date d;
 	d.ngay = aTime->tm_mday;
 	d.thang = aTime->tm_mon + 1;
 	d.nam = aTime->tm_year + 1900;
+	return d;
 }
 
-int kiemTraHopLeNgayThangNhapVao(int ngay, int thang, int nam, int namHienTai, int &viTriKhongHopLe){
-	if(nam > namHienTai || nam <= 0){
-		viTriKhongHopLe = 2;
+int kiemTraHopLeNgayThangNhapVao(int ngay, int thang, int nam){
+	Date tgHienTai;
+	tgHienTai = HamTraVeCurrentTime();
+	
+	if (nam > tgHienTai.nam) {
 		return 0;
-	} 
-	if(thang <= 0 || thang > 12) {
-		viTriKhongHopLe = 1;
+	} else if (thang <= 0 || thang > 12 || (nam == tgHienTai.nam && thang > tgHienTai.thang)) {
+		return 0;
+	} else if (nam == tgHienTai.nam && thang == tgHienTai.thang && ngay > tgHienTai.ngay) {
 		return 0;
 	}
+	
 	switch(thang){
 		case 1:
 		case 3:
@@ -392,27 +398,25 @@ int kiemTraHopLeNgayThangNhapVao(int ngay, int thang, int nam, int namHienTai, i
 		case 8:
 		case 10:
 		case 12:
-			if(ngay <=0 || ngay > 31){
-				viTriKhongHopLe = 0;
+			if(ngay <=0 || ngay > 31) {
 				return 0;
-			} 
+			}
 			break;
 		case 4:
 		case 6:
 		case 9:
 		case 11:
-			if(ngay <= 0 || ngay > 30){
-				viTriKhongHopLe = 0;
+			if(ngay <= 0 || ngay > 30) {
 				return 0;
-			} 
+			}
 			break;
 		case 2:
-			if((nam % 4 == 0 && (ngay <=0 || ngay > 29))||(nam % 4 != 0 &&(ngay <=0 || ngay > 28))){
-				viTriKhongHopLe = 0;
+			if((nam % 4 == 0 && (ngay <= 0 || ngay > 29)) || (nam % 4 != 0 && (ngay <= 0 || ngay > 28))) {
 				return 0;
 			}
 			break;	
 	}
+	
 	return 1;
 }
 

@@ -12,14 +12,6 @@ char thucdon [so_item][50] = {"1. Nhap Vat Tu                   ",
 			                  "7. Thoat                         "
 			                  };
 
-
-
-
-
-
-
-
-
 void LuuFile(TreeNhanVien &root){
 	ofstream myFile;
 	myFile.open("dsNV.txt");
@@ -91,15 +83,13 @@ void DocFile(TreeNhanVien &root){
 	getline(myFile, s);
 	if(s == "===END")
 		return;
-		
 	while(!myFile.eof()){
 NHANVIEN:	
 		getline(myFile, nv.maNhanVien);
 		getline(myFile, nv.ho);
 		getline(myFile, nv.ten);
 		getline(myFile, s);
-		stringstream(s) >> phai;
-		nv.phai = (phai == 1) ? 1 : 0;		
+		stringstream(s) >> nv.phai;
 		nv.hoaDonFirst = NULL;
 			
 		getline(myFile, s);
@@ -107,8 +97,11 @@ NHANVIEN:
 			Insert_Node(root, nv);
 			return;
 		}
-		else if(s == "===NV")
+		else if(s == "===NV"){
+			Insert_Node(root, nv);
 			goto NHANVIEN;	
+			
+		}
 			
 HOADON:
 		getline(myFile, hd.soHoaDon);
@@ -239,7 +232,7 @@ X:	Normal();
 					break;
 				case 3:
 					// IN DS NHAN VIEN
-					giaoDienNhanVien(rootNV);
+					giaoDienNhanVien(rootNV, dsVT);
 					goto X;
 					break;
 				case 4:
@@ -264,7 +257,7 @@ X:	Normal();
 }
 
 int main(){
-//	// Chi tiet HD
+//	 //Chi tiet HD
 //	PTR_CT_HoaDon ctHoaDonFirst1 = new Node_ChiTiet_HD;
 //	ctHoaDonFirst1 = NULL;
 //	
@@ -354,40 +347,8 @@ int main(){
 	dsVT.soLuongVatTu = 0;
 	loadFileVatTu(dsVT);
 
-  	int chon;  
     MenuDong (rootNV, dsVT, thucdon);
-//        
-//	StackNV sp = NULL;
-//	TreeNhanVien p = rootNV;
-//	if(p == NULL) return 0;
-//	do{
-//		while(p != NULL){
-//			push(sp, p);
-//			p=p->nvLeft;
-//		}
-//		
-//		if(sp != NULL){
-//			pop(sp, p);
-//			cout << "======NV" << endl;
-//			cout << p->nhanVien.maNhanVien << endl;
-//			PTRHoaDon ptrHD = p->nhanVien.hoaDonFirst;
-//			
-//			while(ptrHD != NULL){
-//				cout << "===HD" << endl;
-//				cout << ptrHD->hoaDon.soHoaDon << endl;
-//				PTR_CT_HoaDon ptrCtHD = ptrHD->hoaDon.CT_HD_First;
-//				while(ptrCtHD != NULL){
-//					cout << "=CTHD" << endl;
-//					cout << ptrCtHD->chiTietHD.maVT << endl;
-//					ptrCtHD = ptrCtHD->CT_HD_Next;
-//				}
-//				ptrHD = ptrHD->HD_Next;
-//			}
-//			p=p->nvRight;
-//		}
-//		else break;
-//	}while(1);
-//	//LuuFile(rootNV);        		
+	
 	return 0;
 }
 
