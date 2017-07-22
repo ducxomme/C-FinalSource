@@ -194,7 +194,6 @@ THEMNHANVIEN:
 	
 	int viTriNhapLieu = 0;
 	do{
-		
 		switch(viTriNhapLieu){
 			case 0:
 				c = nhapChuoiKiTuVaSo(nv.maNhanVien, toaDoXInput, toaDoYInput + 3 * viTriNhapLieu, WIDTH_INPUT_TEXT, BLACK, WHITE);

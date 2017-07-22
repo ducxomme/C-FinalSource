@@ -14,18 +14,6 @@ G03
 Gach Loai 3
 Vien
 2000
-SA1
-Sat Loai 1
-m3
-5000
-SA2
-Sat Loai 2
-m3
-450
-SA3
-Sat Loai 3
-m3
-500
 S01
 Son Loai 1
 Thung
@@ -38,6 +26,18 @@ S03
 Son Loai 3
 Thung
 50
+SA1
+Sat Loai 1
+m3
+5000
+SA2
+Sat Loai 2
+m3
+450
+SA3
+Sat Loai 3
+m3
+500
 X02
 Xi Mang Loai 2
 Bao

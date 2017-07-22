@@ -207,7 +207,7 @@ LAPHOADON:
 		switch(viTriNhapLieu){
 			case 0:
 				c = nhapChuoiKiTuVaSo(hoaDon.soHoaDon, toaDoXInput, toaDoYInput , WIDTH_INPUT_TEXT, BLACK, WHITE);
-				if(c == KEY_ESC) break;
+				
 				gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
 				for (int i = 0; i < errors[viTriNhapLieu].length(); i++) cout << " ";
 				
@@ -255,7 +255,7 @@ LAPHOADON:
 					}
 									
 				
-				}while(c != KEY_UP && c != KEY_DOWN && c != KEY_ESC && c != KEY_INSERT && c != KEY_F5 && c != KEY_TAB && c!= KEY_F2);
+				}while(c != KEY_UP && c != KEY_DOWN && c == KEY_ENTER && c != KEY_ESC && c != KEY_INSERT && c != KEY_F5 && c != KEY_TAB && c!= KEY_F2);
 				
 				if(ngay.length() <= 0 || thang.length() <= 0 || nam.length() <= 0){
 					errors[viTriNhapLieu] = "Khong duoc de trong";
@@ -278,6 +278,7 @@ LAPHOADON:
 				}else  errors[viTriNhapLieu] = "";
 					
 				break;
+			
 			case 2:
 				c = nhapKyTuNhapXuat(nhapXuat, toaDoXInput, toaDoYInput + 3 * viTriNhapLieu, 1, BLACK, WHITE);
 				
@@ -310,7 +311,7 @@ LAPHOADON:
 			stringstream(nam) >> hoaDon.ngayLapHoaDon.nam;
 			if(hoaDon.soHoaDon.length() > 0 && kiemTraHopLeNgayThangNhapVao(hoaDon.ngayLapHoaDon.ngay, hoaDon.ngayLapHoaDon.thang, hoaDon.ngayLapHoaDon.nam) && nhapXuat.length() >0){
 				hoaDon.soHoaDon = chuyenChuoiThanhChuoiHoa(hoaDon.soHoaDon);
-				hoaDon.loai = nhapXuat[0];
+				hoaDon.loai = (chuyenChuoiThanhChuoiHoa(nhapXuat))[0];
 		
 		
 				if(!kiemTraMaHoaDonTrung(rootNV, hoaDon.soHoaDon)) {
@@ -324,8 +325,138 @@ LAPHOADON:
 				}
 			}
 		}
-		if(c == KEY_ESC)	break;
+		if(c == KEY_ESC){
+			system("cls");
+			break;
+		}
 	}while(1);
+}
+
+void suaHoaDon(HoaDon &hoaDon, NhanVien &nv, DSVatTu &dsVT){
+	veGiaoDienLapHoaDon(nv);
+	
+	string ngay = "", thang = "", nam = "";
+//	Date d = HamTraVeCurrentTime();
+	
+//	hoaDon.ngayLapHoaDon.ngay = d.ngay;
+//	hoaDon.ngayLapHoaDon.thang = d.thang;
+//	hoaDon.ngayLapHoaDon.nam = d.nam;
+	
+	
+	ngay = chuyenSoThanhChuoi(hoaDon.ngayLapHoaDon.ngay);
+	thang = chuyenSoThanhChuoi(hoaDon.ngayLapHoaDon.thang);
+	nam = chuyenSoThanhChuoi(hoaDon.ngayLapHoaDon.nam);
+	
+	SetColor(RED);
+	gotoxy(41, 9);
+	cout << hoaDon.soHoaDon;
+	Normal();
+	gotoxy(41, 15);
+	cout << hoaDon.loai;
+	
+	gotoxy(41, 12);	cout << ngay;
+	gotoxy(48, 12); cout << thang;
+	gotoxy(55, 12); cout << nam;
+	int c;
+	string errors[2] = {"", ""};
+	int sttDate = 0;
+	bool res;
+	int toaDoXNhan = 25;
+	int toaDoYNhan = 9;
+	int toaDoXInput = 41;
+	int toaDoYInput = 9;
+	string nhapXuat = "";
+	
+	int viTriNhapLieu = 1;	
+	do{
+		switch(viTriNhapLieu){
+
+			case 1:
+				do{
+					gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
+					for (int i = 0; i < errors[viTriNhapLieu].length(); i++) cout << " ";
+					if(sttDate == 0){
+						c = nhapChuoiKiTuSo(ngay, toaDoXInput + sttDate * 7, toaDoYInput + viTriNhapLieu * 3 ,2 , BLACK, WHITE);
+						stringstream(ngay) >> hoaDon.ngayLapHoaDon.ngay;
+					}else if(sttDate == 1){
+						c = nhapChuoiKiTuSo(thang, toaDoXInput + sttDate * 7, toaDoYInput + viTriNhapLieu * 3 ,2 , BLACK, WHITE);
+						stringstream(thang) >> hoaDon.ngayLapHoaDon.thang;
+					}else{
+						c = nhapChuoiKiTuSo(nam, toaDoXInput + sttDate * 7, toaDoYInput + viTriNhapLieu * 3 ,4 , BLACK, WHITE);
+						stringstream(nam) >> hoaDon.ngayLapHoaDon.nam;
+					}
+					if(c == KEY_RIGHT){
+						if(sttDate < 2) sttDate++;
+					}
+						if(c == KEY_LEFT){
+						if(sttDate > 0) sttDate--;
+					}
+									
+				
+				}while(c != KEY_UP && c != KEY_DOWN && c == KEY_ENTER && c != KEY_ESC && c != KEY_INSERT && c != KEY_F5 && c != KEY_TAB && c!= KEY_F2);
+				
+				if(ngay.length() <= 0 || thang.length() <= 0 || nam.length() <= 0){
+					errors[viTriNhapLieu] = "Khong duoc de trong";
+					SetColor(TEXT_ERROR);
+					gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1 ,toaDoYInput + viTriNhapLieu * 3);
+					cout << errors[viTriNhapLieu];
+				
+				}else if(!kiemTraChuoiNhapVao(ngay) || !kiemTraChuoiNhapVao(thang) || !kiemTraChuoiNhapVao(nam)){
+					errors[viTriNhapLieu] = "DATE khong hop le";
+					SetColor(TEXT_ERROR);
+					gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1 ,toaDoYInput + viTriNhapLieu * 3);
+					cout << errors[viTriNhapLieu];
+					
+				}else if(!kiemTraHopLeNgayThangNhapVao(hoaDon.ngayLapHoaDon.ngay, hoaDon.ngayLapHoaDon.thang, hoaDon.ngayLapHoaDon.nam)){
+					errors[viTriNhapLieu] = "Thoi gian khong hop le";
+					SetColor(TEXT_ERROR);
+					gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1 ,toaDoYInput + viTriNhapLieu * 3);
+					cout << errors[viTriNhapLieu];
+					
+				}else  errors[viTriNhapLieu] = "";
+					
+				break;
+			
+			case 2:
+				c = nhapKyTuNhapXuat(nhapXuat, toaDoXInput, toaDoYInput + 3 * viTriNhapLieu, 1, BLACK, WHITE);
+				
+				gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
+				for (int i = 0; i < errors[viTriNhapLieu].length(); i++) cout << " ";
+				
+				if(nhapXuat.length() <= 0){
+					errors[viTriNhapLieu] = "Khong duoc de trong!";
+					SetColor(TEXT_ERROR);
+					gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
+					cout << errors[viTriNhapLieu];					
+				
+				}else if(!kiemTraChuoiNhapVao(nhapXuat)){
+					errors[viTriNhapLieu] = "Khong hop le";
+					SetColor(TEXT_ERROR);
+					gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
+					cout << errors[viTriNhapLieu];					
+				}else
+					errors[viTriNhapLieu] = "";
+				
+				break;			
+			}
+		if((c == KEY_DOWN || c == KEY_ENTER) && viTriNhapLieu < 2)  viTriNhapLieu++;
+		
+		if(c == KEY_UP && viTriNhapLieu > 0) viTriNhapLieu--;
+		
+		if(c == KEY_F2){
+			stringstream(ngay) >> hoaDon.ngayLapHoaDon.ngay;
+			stringstream(thang) >> hoaDon.ngayLapHoaDon.thang;
+			stringstream(nam) >> hoaDon.ngayLapHoaDon.nam;
+			if(kiemTraHopLeNgayThangNhapVao(hoaDon.ngayLapHoaDon.ngay, hoaDon.ngayLapHoaDon.thang, hoaDon.ngayLapHoaDon.nam) && nhapXuat.length() >0){
+				hoaDon.loai = (chuyenChuoiThanhChuoiHoa(nhapXuat))[0];
+		
+				string noiDungThongBao = "Cap nhat thanh cong: ";
+				thongBao(noiDungThongBao, 24 + (86 - noiDungThongBao.length()) / 2, 5 + 7, noiDungThongBao.length() + 10, 5);
+				break;
+				}
+			}
+	
+	}while(c != KEY_ESC);	
 }
 
 void veKhungDanhSachHoaDon(NhanVien &nv){
@@ -508,11 +639,42 @@ void giaoDienHoaDon(TreeNhanVien &rootNV, NhanVien &nv, DSVatTu &dsVT){
 		}else if(c == KEY_INSERT){
 			int viTriHD = (trang - 1) * 10 + vtLuaChon - 1;
 			lapMotHoaDon(rootNV, nv, dsVT);
+
+			soLuongHoaDon = soLuongHoaDonCuaMotNV(nv.hoaDonFirst);
 			tongTrang = soTrangDanhSachHoaDon(nv.hoaDonFirst);
-			if(trang > 1 && vtLuaChon == 1){
-				trang--;
-				vtLuaChon = 10;
-			}else if(vtLuaChon > 1) vtLuaChon--;
+
+			gotoxy(toaDoX, toaDoY + (vtLuaChon - 1) * 2);
+			cout << "  ";
+			
+			if(vtLuaChon == 10){
+				trang++;
+				vtLuaChon = 1;
+			}else vtLuaChon++;
+			
+			veKhungDanhSachHoaDon(nv);
+			doDuLieuRaBangHoaDon(nv, tongTrang, trang);
+			gotoxy(toaDoX, toaDoY + (vtLuaChon - 1) * 2);
+			cout << "->";
+			
+		// SUA HOA DON: Chi cho phep sua khi ko co chi tiet hoa don	
+		}else if(c == KEY_F2){
+			int viTriHD = (trang - 1) * 10 + vtLuaChon - 1;
+			
+			PTRHoaDon p = timKiemHoaDonTheoViTri(nv.hoaDonFirst, viTriHD);
+			PTR_CT_HoaDon ctHD = p->hoaDon.CT_HD_First;
+			if(ctHD != NULL){
+				string mess = "Khong duoc phep sua";
+				thongBao(mess,  WIDTH_MENU_BAR + (WIDTH_BODY - mess.length()) / 2, TOADOY + HEIGHT_HEADER + (HEIGHT_BODY - 5) / 2, mess.length() + 10, 5);
+			}else{
+				suaHoaDon(p->hoaDon, nv, dsVT);
+			}
+				
+			
+			veKhungDanhSachHoaDon(nv);
+			doDuLieuRaBangHoaDon(nv, tongTrang, trang);
+			gotoxy(toaDoX, toaDoY);
+			cout << "->";
+			
 		}
 	}
 	while(c != KEY_ESC);
