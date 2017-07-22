@@ -336,12 +336,8 @@ void suaHoaDon(HoaDon &hoaDon, NhanVien &nv, DSVatTu &dsVT){
 	veGiaoDienLapHoaDon(nv);
 	
 	string ngay = "", thang = "", nam = "";
-//	Date d = HamTraVeCurrentTime();
-	
-//	hoaDon.ngayLapHoaDon.ngay = d.ngay;
-//	hoaDon.ngayLapHoaDon.thang = d.thang;
-//	hoaDon.ngayLapHoaDon.nam = d.nam;
-	
+	string nhapXuat = "";	
+	nhapXuat = (hoaDon.loai == 'N' ? "N" : "X");
 	
 	ngay = chuyenSoThanhChuoi(hoaDon.ngayLapHoaDon.ngay);
 	thang = chuyenSoThanhChuoi(hoaDon.ngayLapHoaDon.thang);
@@ -352,20 +348,19 @@ void suaHoaDon(HoaDon &hoaDon, NhanVien &nv, DSVatTu &dsVT){
 	cout << hoaDon.soHoaDon;
 	Normal();
 	gotoxy(41, 15);
-	cout << hoaDon.loai;
+	cout << nhapXuat;
 	
 	gotoxy(41, 12);	cout << ngay;
 	gotoxy(48, 12); cout << thang;
 	gotoxy(55, 12); cout << nam;
 	int c;
-	string errors[2] = {"", ""};
+	string errors[3] = {"", "", ""};
 	int sttDate = 0;
 	bool res;
 	int toaDoXNhan = 25;
 	int toaDoYNhan = 9;
 	int toaDoXInput = 41;
 	int toaDoYInput = 9;
-	string nhapXuat = "";
 	
 	int viTriNhapLieu = 1;	
 	do{
@@ -674,6 +669,33 @@ void giaoDienHoaDon(TreeNhanVien &rootNV, NhanVien &nv, DSVatTu &dsVT){
 			doDuLieuRaBangHoaDon(nv, tongTrang, trang);
 			gotoxy(toaDoX, toaDoY);
 			cout << "->";
+			
+		}else if(c == KEY_DELETE){
+			int viTriHD = (trang - 1) * 10 + vtLuaChon - 1;
+			
+			PTRHoaDon p = timKiemHoaDonTheoViTri(nv.hoaDonFirst, viTriHD);
+			PTR_CT_HoaDon ctHD = p->hoaDon.CT_HD_First;
+			if(ctHD != NULL){
+				string mess = "Khong duoc phep xoa";
+				thongBao(mess,  WIDTH_MENU_BAR + (WIDTH_BODY - mess.length()) / 2, TOADOY + HEIGHT_HEADER + (HEIGHT_BODY - 5) / 2, mess.length() + 10, 5);
+			}else{
+				string mess = "Ban co muon xoa " + p->hoaDon.soHoaDon + " khong ?(Y/N) :";
+				int xacNhanXoa = hopThoaiLuaChon(mess,  WIDTH_MENU_BAR + (WIDTH_BODY - mess.length()) / 2, TOADOY + HEIGHT_HEADER + (HEIGHT_BODY - 5)/2, mess.length() + 10, 4 );
+				if(xacNhanXoa == 1){
+					deleteInfoHD(nv.hoaDonFirst, p->hoaDon.soHoaDon);
+					string mess2 = "Xoa thanh cong";
+					thongBao(mess2,  WIDTH_MENU_BAR + (WIDTH_BODY - mess.length()) / 2, TOADOY + HEIGHT_HEADER + (HEIGHT_BODY - 5) / 2, mess.length() + 10, 5);
+							
+					tongTrang = soTrangDanhSachHoaDon(p);		
+					if (trang > 1 && vtLuaChon == 1){
+						trang--;
+						vtLuaChon = 10;
+					} else if (vtLuaChon > 1) vtLuaChon--;
+				}
+			}
+			veKhungDanhSachHoaDon(nv);
+			xoaDuLieuTrongBangHoaDon();
+			doDuLieuRaBangHoaDon(nv, tongTrang, trang);
 			
 		}
 	}
