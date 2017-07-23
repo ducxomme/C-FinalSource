@@ -1,5 +1,8 @@
 #include "VatTu.cpp"
 
+string tenCotBangCTHoaDon[5] = {"STT", "MA VAT TU", "SO LUONG", "DON GIA", "VAT"};
+string thuocTinhCTHoaDon[4] = {"Ma Vat Tu", "So Luong", "Don Gia", "VAT"};
+
 int kiemTraRongCTHoaDon(PTR_CT_HoaDon &ctHoaDonFirst){
 	return (ctHoaDonFirst == NULL ? 1 : 0);
 }
@@ -104,6 +107,157 @@ void duyetDanhSach(PTR_CT_HoaDon first){
 	
 }
 
+void veGiaoDienThemCTHoaDon(){
+	Normal();
+	system("cls");
+		
+	veHinhChuNhat(45, 4, 30, 3, RED);
+	SetBGColor(4);
+	gotoxy(49, 5);
+	cout << "NHAP CHI TIET HOA DON";
+	Normal();
+
+	int toaDoXNhan = 25;
+	int toaDoYNhan = 9;
+	int toaDoXInputText = toaDoXNhan + 15;
+	int toaDoYInputText = toaDoYNhan - 1;
+	
+	for (int i = 0; i < 4; i++) {
+		gotoxy(toaDoXNhan, toaDoYNhan + 3 * i);
+		SetColor(YELLOW);
+		cout << thuocTinhCTHoaDon[i];
+		Normal();
+		veInputText(toaDoXInputText, toaDoYInputText + 3 * i);
+	}
+	
+	gotoxy(0, 24);
+	for(int i = 0; i < 120; i++){
+		cout << (char)205;
+	}
+
+	gotoxy(32, 25);
+	cout << "ESC: Tro ve \t F2: Luu \t DELETE: Xoa Vat Tu vua nhap";	
+}
+
+void themMotChiTietHoaDon(DSVatTu &dsVT, HoaDon &hd){
+NHAPCTHOADON:
+	veGiaoDienThemCTHoaDon();
+	
+	ChiTiet_HD ctHD;
+	string donGia = "";
+	string vat = "";
+	string soLuong = "";
+	
+	string errors[4] = {"", "", "", ""};
+	int c;
+	bool res;
+	int toaDoXNhan = 25;
+	int toaDoYNhan = 9;
+	int toaDoXInput = 41;
+	int toaDoYInput = 9;
+	
+	int viTriNhapLieu = 0;
+	
+	do{
+		switch(viTriNhapLieu){
+			case 0:
+				c = nhapChuoiKiTuVaSo(ctHD.maVT, toaDoXInput, toaDoYInput , WIDTH_INPUT_TEXT, BLACK, WHITE);
+				
+				gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
+				for (int i = 0; i < errors[viTriNhapLieu].length(); i++) cout << " ";
+				
+				if(ctHD.maVT.length() <= 0){
+					errors[viTriNhapLieu] = "Khong duoc de trong";
+					SetColor(TEXT_ERROR);
+					gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
+					cout << errors[viTriNhapLieu]; 
+				
+				}else if(timViTriVatTuTrung(dsVT, chuyenChuoiThanhChuoiHoa(ctHD.maVT)) == -1){
+					errors[viTriNhapLieu] = "Vat Tu khong ton tai";
+					SetColor(TEXT_ERROR);
+					gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
+					cout << errors[viTriNhapLieu];
+				
+				}else errors[viTriNhapLieu] = "";
+				
+				break;
+			case 1:	
+				c = nhapChuoiKiTuSo(soLuong, toaDoXInput, toaDoYInput + viTriNhapLieu * 3, 10 , BLACK, WHITE);
+				
+				gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
+				for (int i = 0; i < errors[viTriNhapLieu].length(); i++) cout << " ";
+					
+				if (soLuong.length() <= 0) {	
+					errors[viTriNhapLieu] = "Khong duoc de trong!";
+					SetColor(TEXT_ERROR);
+					gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
+					cout << errors[viTriNhapLieu];
+
+				} else errors[viTriNhapLieu] = "";
+					
+				break;
+			case 2:	
+				c = nhapChuoiKiTuSo(donGia, toaDoXInput , toaDoYInput + viTriNhapLieu * 3, 20, BLACK, WHITE);
+				
+				gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
+				for (int i = 0; i < errors[viTriNhapLieu].length(); i++) cout << " ";
+				
+				if (donGia.length() <= 0) {
+					errors[viTriNhapLieu] = "Khong duoc de trong!";
+					SetColor(TEXT_ERROR);
+					gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
+					cout << errors[viTriNhapLieu];
+
+				} else errors[viTriNhapLieu] = "";
+				
+				break;
+			case 3:	
+				c = nhapChuoiKiTuSo(vat, toaDoXInput , toaDoYInput + viTriNhapLieu * 3, 2, BLACK, WHITE);
+				
+				gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
+				for (int i = 0; i < errors[viTriNhapLieu].length(); i++) cout << " ";
+				
+				if (vat.length() <= 0) {
+					errors[viTriNhapLieu] = "Khong duoc de trong!";
+					SetColor(TEXT_ERROR);
+					gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
+					cout << errors[viTriNhapLieu];
+
+				} else errors[viTriNhapLieu] = "";
+				
+				break;
+		}
+		
+		if((c == KEY_DOWN || c == KEY_ENTER) && viTriNhapLieu < 3) viTriNhapLieu++;
+		
+		if(c == KEY_UP && viTriNhapLieu > 0) viTriNhapLieu--;
+		
+		if(c == KEY_F2){
+			cout << ctHD.maVT.length() << soLuong.length() << donGia.length() << vat.length(); getch();
+			if(ctHD.maVT.length() > 0 && soLuong.length() > 0 && donGia.length() > 0 && vat.length() > 0){
+				if(timViTriVatTuTrung(dsVT, chuyenChuoiThanhChuoiHoa(ctHD.maVT)) != -1){
+					ctHD.maVT = chuyenChuoiThanhChuoiHoa(ctHD.maVT);
+					stringstream(soLuong) >> ctHD.soLuong;
+					stringstream(donGia) >> ctHD.donGia;
+					stringstream(vat) >> ctHD.vat;
+					
+					res = insertCTHoaDonLast(hd.CT_HD_First, ctHD);
+					if(res == true){
+						thongBao("Them vat tu thanh cong!!", 45, 12, 27, 3);
+					}else
+						thongBao("That bai", 45, 12, 27, 3);
+					goto NHAPCTHOADON;
+				}
+			}
+		}
+		
+		// Xoa Chi Tiet HOa Don vua nhap
+//		if(c == KEY_DELETE)
+		
+	}while (c != KEY_ESC);
+	
+}
+
 //int main(){
 	
 //	PTR_CT_HoaDon ctHoaDonFirst;
@@ -146,5 +300,10 @@ void duyetDanhSach(PTR_CT_HoaDon first){
 //	
 //	deleteCTHoaDonTheoMaVT(ctHoaDonFirst, "VT8");
 //	duyetDanhSach(ctHoaDonFirst);
+//	DSVatTu dsVT;
+//	dsVT.soLuongVatTu = 0;
+//	HoaDon hd;
+//
+//	themMotChiTietHoaDon(dsVT, hd);
 //	return 0;
 //}

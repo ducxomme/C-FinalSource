@@ -425,7 +425,7 @@ void doDuLieuRaBangNhanVien(TreeNhanVien &rootNV, int tongTrang, int trang){
 			pop(sp, p);
 			if(dem >= (trang - 1) * SO_DONG_MOT_TRANG && dem < trang * SO_DONG_MOT_TRANG){
 					
-				gotoxy(18 + 0 * 21 + (20 - p->nhanVien.maNhanVien.length())/2, 7+ (dem % 10) * 2);
+				gotoxy(19 + 0 * 21 + (20 - p->nhanVien.maNhanVien.length())/2, 7+ (dem % 10) * 2);
 				SetBGColor(BLACK);
 				SetColor(WHITE);
 				cout << p->nhanVien.maNhanVien;
@@ -724,12 +724,9 @@ void giaoDienNhanVien(TreeNhanVien &rootNV, DSVatTu &dsVT){
 				xoaDuLieuTrongBangNhanVien();
 				doDuLieuRaBangNhanVien(rootNV, tongTrang, trang);
 					
-				// Xoa con tro
 				gotoxy(toaDoX , toaDoY + (vtLuaChon - 1) * 2);
 				cout << "  ";
-				// Gan vi tri moi cho con tro
 				vtLuaChon = 1;	
-				// Ve con tro
 				gotoxy(toaDoX, toaDoY + (vtLuaChon - 1) * 2);
 				cout << "->";
 			}	

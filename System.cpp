@@ -151,7 +151,7 @@ int nhapChuoiKiTuVaSo(string &s, int toaDoX, int toaDoY, int maxLengthText, int 
 		}
 		
 		
-	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT &&c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2) ;
+	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT &&c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2 && c != KEY_F5) ;
 	return c;
 }
 
@@ -178,7 +178,7 @@ int nhapChuoiKiTu(string &s, int toaDoX, int toaDoY, int maxLengthText, int mauN
 		}
 		
 		
-	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT && c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2);
+	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT && c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2 && c != KEY_F5) ;
 	return c;
 }
 

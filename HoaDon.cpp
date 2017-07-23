@@ -1,3 +1,4 @@
+
 #include "ChiTietHoaDon.cpp"
 
 string tenCotBangHoaDon[] = {"STT", "SO HOA DON", "NGAY LAP", "LOAI"};
@@ -312,7 +313,7 @@ LAPHOADON:
 			if(hoaDon.soHoaDon.length() > 0 && kiemTraHopLeNgayThangNhapVao(hoaDon.ngayLapHoaDon.ngay, hoaDon.ngayLapHoaDon.thang, hoaDon.ngayLapHoaDon.nam) && nhapXuat.length() >0){
 				hoaDon.soHoaDon = chuyenChuoiThanhChuoiHoa(hoaDon.soHoaDon);
 				hoaDon.loai = (chuyenChuoiThanhChuoiHoa(nhapXuat))[0];
-		
+				hoaDon.CT_HD_First = NULL;
 		
 				if(!kiemTraMaHoaDonTrung(rootNV, hoaDon.soHoaDon)) {
 					res = insertNodeHoaDon(nv.hoaDonFirst, hoaDon);
@@ -325,11 +326,23 @@ LAPHOADON:
 				}
 			}
 		}
-		if(c == KEY_ESC){
-			system("cls");
-			break;
+		
+		if(c == KEY_F5){
+			stringstream(ngay) >> hoaDon.ngayLapHoaDon.ngay;
+			stringstream(thang) >> hoaDon.ngayLapHoaDon.thang;
+			stringstream(nam) >> hoaDon.ngayLapHoaDon.nam;
+			if(hoaDon.soHoaDon.length() > 0 && kiemTraHopLeNgayThangNhapVao(hoaDon.ngayLapHoaDon.ngay, hoaDon.ngayLapHoaDon.thang, hoaDon.ngayLapHoaDon.nam) && nhapXuat.length() >0){
+				hoaDon.soHoaDon = chuyenChuoiThanhChuoiHoa(hoaDon.soHoaDon);
+				hoaDon.loai = (chuyenChuoiThanhChuoiHoa(nhapXuat))[0];
+				hoaDon.CT_HD_First = NULL;		
+				
+				if(!kiemTraMaHoaDonTrung(rootNV, hoaDon.soHoaDon)){
+					themMotChiTietHoaDon(dsVT, hoaDon);
+					insertNodeHoaDon(nv.hoaDonFirst, hoaDon);
+				}
+			}
 		}
-	}while(1);
+	}while(c != KEY_ESC);
 }
 
 void suaHoaDon(HoaDon &hoaDon, NhanVien &nv, DSVatTu &dsVT){
@@ -444,12 +457,17 @@ void suaHoaDon(HoaDon &hoaDon, NhanVien &nv, DSVatTu &dsVT){
 			stringstream(nam) >> hoaDon.ngayLapHoaDon.nam;
 			if(kiemTraHopLeNgayThangNhapVao(hoaDon.ngayLapHoaDon.ngay, hoaDon.ngayLapHoaDon.thang, hoaDon.ngayLapHoaDon.nam) && nhapXuat.length() >0){
 				hoaDon.loai = (chuyenChuoiThanhChuoiHoa(nhapXuat))[0];
+				hoaDon.CT_HD_First = NULL;
 		
 				string noiDungThongBao = "Cap nhat thanh cong: ";
 				thongBao(noiDungThongBao, 24 + (86 - noiDungThongBao.length()) / 2, 5 + 7, noiDungThongBao.length() + 10, 5);
 				break;
-				}
 			}
+		}
+		
+		if(c == KEY_F5){
+			themMotChiTietHoaDon(dsVT, hoaDon);
+		}
 	
 	}while(c != KEY_ESC);	
 }
@@ -667,7 +685,7 @@ void giaoDienHoaDon(TreeNhanVien &rootNV, NhanVien &nv, DSVatTu &dsVT){
 			
 			veKhungDanhSachHoaDon(nv);
 			doDuLieuRaBangHoaDon(nv, tongTrang, trang);
-			gotoxy(toaDoX, toaDoY);
+			gotoxy(toaDoX, toaDoY + (vtLuaChon - 1) * 2);
 			cout << "->";
 			
 		}else if(c == KEY_DELETE){
