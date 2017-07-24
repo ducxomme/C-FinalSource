@@ -11,6 +11,16 @@ void InitCTHoaDon(PTR_CT_HoaDon &ctHoaDonFirst){
 	ctHoaDonFirst = NULL;
 }
 
+int tonTaiMaHoaDonTrongDSCtHD(PTR_CT_HoaDon &ctHDFirst, ChiTiet_HD ctHD){
+	if(ctHDFirst == NULL)
+		return 0;
+	for(PTR_CT_HoaDon p = ctHDFirst; p != NULL; p = p->CT_HD_Next){
+		if(p->chiTietHD.maVT == ctHD.maVT)
+			return 1;
+	}
+	return 0;
+}
+
 PTR_CT_HoaDon getNodeCTHoaDon(ChiTiet_HD ctHD){
 	PTR_CT_HoaDon p = new Node_ChiTiet_HD;
 	p->chiTietHD = ctHD;
@@ -62,6 +72,18 @@ int deleteAfterCTHoaDon(PTR_CT_HoaDon p){
 	return 1;
 }
 
+int deleteLast(PTR_CT_HoaDon &ctHDFirst){
+	if(kiemTraRongCTHoaDon(ctHDFirst)) return 0;
+	PTR_CT_HoaDon p = ctHDFirst;
+	PTR_CT_HoaDon q;
+	if(p->CT_HD_Next == NULL){
+		ctHDFirst = NULL;	
+		return 1;
+	}
+	for(p; p->CT_HD_Next != NULL; q=p, p=p->CT_HD_Next);
+	return deleteAfterCTHoaDon(q);
+}
+
 PTR_CT_HoaDon timViTriCoMaVT(PTR_CT_HoaDon ctHoaDonFirst, string maVT){
 	if(ctHoaDonFirst == NULL)
 		return NULL;
@@ -105,6 +127,30 @@ void duyetDanhSach(PTR_CT_HoaDon first){
 		p = p->CT_HD_Next;
 	}
 	
+}
+
+void capNhapSoLuongTonKho(DSVatTu &dsVT, char loai, ChiTiet_HD ctHD){
+	for(int i = 0; i < dsVT.soLuongVatTu; i++){
+		if(dsVT.nodesVT[i].maVatTu == ctHD.maVT){
+			if(loai == 'N'){
+				dsVT.nodesVT[i].soLuongTon += ctHD.soLuong;
+				return;
+			}else{
+				dsVT.nodesVT[i].soLuongTon -= ctHD.soLuong;
+				return;
+			}
+		}
+	}
+}
+
+void congDonSoLuongNeuTrungMa(PTR_CT_HoaDon &ctHDFirst, ChiTiet_HD ctHD){
+	PTR_CT_HoaDon p = ctHDFirst;
+	for(p; p != NULL; p = p->CT_HD_Next){
+		if(p->chiTietHD.maVT == ctHD.maVT){
+			p->chiTietHD.soLuong += ctHD.soLuong;
+			return;
+		}
+	}
 }
 
 void veGiaoDienThemCTHoaDon(){
@@ -151,6 +197,8 @@ NHAPCTHOADON:
 	string errors[4] = {"", "", "", ""};
 	int c;
 	bool res;
+	int soLuongXuat;
+		
 	int toaDoXNhan = 25;
 	int toaDoYNhan = 9;
 	int toaDoXInput = 41;
@@ -186,15 +234,31 @@ NHAPCTHOADON:
 				
 				gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
 				for (int i = 0; i < errors[viTriNhapLieu].length(); i++) cout << " ";
-					
-				if (soLuong.length() <= 0) {	
-					errors[viTriNhapLieu] = "Khong duoc de trong!";
-					SetColor(TEXT_ERROR);
-					gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
-					cout << errors[viTriNhapLieu];
+				stringstream(soLuong) >> soLuongXuat;
+				if(hd.loai == 'X'){
+					if (soLuong.length() <= 0) {	
+						errors[viTriNhapLieu] = "Khong duoc de trong!";
+						SetColor(TEXT_ERROR);
+						gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
+						cout << errors[viTriNhapLieu];
+					}
+					else if(soLuongXuat > soLuongVatTuTonKhoCuaMaVT(dsVT, chuyenChuoiThanhChuoiHoa(ctHD.maVT))){
+						errors[viTriNhapLieu] = "SL ton cua " + ctHD.maVT + " : " + to_string(soLuongVatTuTonKhoCuaMaVT(dsVT, chuyenChuoiThanhChuoiHoa(ctHD.maVT)));
+						SetColor(TEXT_ERROR);
+						gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
+						cout << errors[viTriNhapLieu];
+					}
+					else errors[viTriNhapLieu] = "";
+				}
+				else{
+					if (soLuong.length() <= 0) {	
+						errors[viTriNhapLieu] = "Khong duoc de trong!";
+						SetColor(TEXT_ERROR);
+						gotoxy(toaDoXInput + WIDTH_INPUT_TEXT + 1, toaDoYInput + viTriNhapLieu * 3);
+						cout << errors[viTriNhapLieu];
 
-				} else errors[viTriNhapLieu] = "";
-					
+					}else errors[viTriNhapLieu] = "";
+				}
 				break;
 			case 2:	
 				c = nhapChuoiKiTuSo(donGia, toaDoXInput , toaDoYInput + viTriNhapLieu * 3, 20, BLACK, WHITE);
@@ -233,33 +297,74 @@ NHAPCTHOADON:
 		if(c == KEY_UP && viTriNhapLieu > 0) viTriNhapLieu--;
 		
 		if(c == KEY_F2){
-			cout << ctHD.maVT.length() << soLuong.length() << donGia.length() << vat.length(); getch();
 			if(ctHD.maVT.length() > 0 && soLuong.length() > 0 && donGia.length() > 0 && vat.length() > 0){
 				if(timViTriVatTuTrung(dsVT, chuyenChuoiThanhChuoiHoa(ctHD.maVT)) != -1){
-					ctHD.maVT = chuyenChuoiThanhChuoiHoa(ctHD.maVT);
-					stringstream(soLuong) >> ctHD.soLuong;
-					stringstream(donGia) >> ctHD.donGia;
-					stringstream(vat) >> ctHD.vat;
-					
-					res = insertCTHoaDonLast(hd.CT_HD_First, ctHD);
-					if(res == true){
-						thongBao("Them vat tu thanh cong!!", 45, 12, 27, 3);
-					}else
-						thongBao("That bai", 45, 12, 27, 3);
-					goto NHAPCTHOADON;
+					if(hd.loai == 'X'){
+						if (soLuongXuat <= soLuongVatTuTonKhoCuaMaVT(dsVT, ctHD.maVT)){
+							ctHD.maVT = chuyenChuoiThanhChuoiHoa(ctHD.maVT);
+							stringstream(soLuong) >> ctHD.soLuong;
+							stringstream(donGia) >> ctHD.donGia;
+							stringstream(vat) >> ctHD.vat;
+							if(tonTaiMaHoaDonTrongDSCtHD(hd.CT_HD_First, ctHD)){
+								congDonSoLuongNeuTrungMa(hd.CT_HD_First, ctHD);
+								thongBao("Them vat tu thanh cong!!", 45, 12, 27, 3);
+							}
+							else {
+								res = insertCTHoaDonLast(hd.CT_HD_First, ctHD);	
+								if(res == true){
+									thongBao("Them vat tu thanh cong!!", 45, 12, 27, 3);
+								}else
+									thongBao("That bai", 45, 12, 27, 3);
+							}
+							capNhapSoLuongTonKho(dsVT, hd.loai, ctHD);
+							goto NHAPCTHOADON;
+						}
+					}
+					else {
+						ctHD.maVT = chuyenChuoiThanhChuoiHoa(ctHD.maVT);
+						stringstream(soLuong) >> ctHD.soLuong;
+						stringstream(donGia) >> ctHD.donGia;
+						stringstream(vat) >> ctHD.vat;
+						if(tonTaiMaHoaDonTrongDSCtHD(hd.CT_HD_First, ctHD)){
+							congDonSoLuongNeuTrungMa(hd.CT_HD_First, ctHD);
+							thongBao("Them vat tu thanh cong!!", 45, 12, 27, 3);
+						}
+						else {
+							res = insertCTHoaDonLast(hd.CT_HD_First, ctHD);	
+							if(res == true){
+								thongBao("Them vat tu thanh cong!!", 45, 12, 27, 3);
+							}else
+								thongBao("That bai", 45, 12, 27, 3);
+						}
+						capNhapSoLuongTonKho(dsVT, hd.loai, ctHD);
+						goto NHAPCTHOADON;						
+					}
 				}
 			}
 		}
 		
 		// Xoa Chi Tiet HOa Don vua nhap
-//		if(c == KEY_DELETE)
+		if(c == KEY_DELETE){
+			if(hd.CT_HD_First == NULL){
+				thongBao("Chua co CTHD nao!", 45, 12, 27, 3);
+			}else{
+				res = deleteLast(hd.CT_HD_First);
+				if(res == 1){
+					thongBao("Xoa thanh cong", 45, 20, 27, 3);
+				}else{
+					thongBao("That bai", 45, 20, 27, 3);
+				}
+			}
+			goto NHAPCTHOADON;
+			
+		}
 		
 	}while (c != KEY_ESC);
 	
 }
-
+//
 //int main(){
-	
+//	
 //	PTR_CT_HoaDon ctHoaDonFirst;
 //	InitCTHoaDon(ctHoaDonFirst);
 //	
@@ -305,5 +410,6 @@ NHAPCTHOADON:
 //	HoaDon hd;
 //
 //	themMotChiTietHoaDon(dsVT, hd);
+	
 //	return 0;
 //}

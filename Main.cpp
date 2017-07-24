@@ -337,7 +337,6 @@ int main(){
 //	
 //	Insert_Node(treeNV, nv2);
 	
-	//LuuFile(treeNV);
 		
 	TreeNhanVien rootNV;
 	rootNV = NULL;
@@ -348,7 +347,6 @@ int main(){
 	loadFileVatTu(dsVT);
 
     MenuDong (rootNV, dsVT, thucdon);
-	
 	return 0;
 }
 

@@ -61,6 +61,15 @@ void sapXepTenVatTuTangDan(DSVatTu &ds_VT){
 	}
 }
 
+int soLuongVatTuTonKhoCuaMaVT(DSVatTu &dsVT, string maVT){
+	for(int i = 0; i < dsVT.soLuongVatTu; i++){
+		if(dsVT.nodesVT[i].maVatTu == maVT)
+			return dsVT.nodesVT[i].soLuongTon;
+	}
+	return 9999999999;
+}
+
+
 void saveFileVatTu(DSVatTu &ds_VT){
 	ofstream myFile;
 	myFile.open("dsVatTu.txt", ios::out);

@@ -1,7 +1,7 @@
 D04
 Den Loai 4
 Cai
-301
+300
 G01
 Gach Loai 1
 Vien

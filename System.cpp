@@ -1,10 +1,11 @@
 #include <mylib.h>
 #include <iostream>
+#include <string>
 #include <ctime>
 #include <cstring>
 #include <fstream>
 #include <sstream>
-#include <string>
+
 
 // ma phim
 #define KEY_BACKSPACE 8
@@ -151,7 +152,7 @@ int nhapChuoiKiTuVaSo(string &s, int toaDoX, int toaDoY, int maxLengthText, int 
 		}
 		
 		
-	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT &&c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2 && c != KEY_F5) ;
+	}while(c != KEY_ENTER && c != KEY_DELETE && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT &&c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2 && c != KEY_F5) ;
 	return c;
 }
 
@@ -178,7 +179,7 @@ int nhapChuoiKiTu(string &s, int toaDoX, int toaDoY, int maxLengthText, int mauN
 		}
 		
 		
-	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT && c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2 && c != KEY_F5) ;
+	}while(c != KEY_ENTER && c != KEY_DELETE && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT && c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2 && c != KEY_F5) ;
 	return c;
 }
 
@@ -205,7 +206,7 @@ int nhapChuoiKiTuSo(string &s, int toaDoX, int toaDoY, int maxLengthText, int ma
 		}
 		
 		
-	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT && c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2);
+	}while(c != KEY_ENTER && c != KEY_DELETE && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT && c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2);
 	return c;
 }
 
@@ -229,7 +230,7 @@ int nhapKyTu(string &s, int toaDoX, int toaDoY, int maxLengthText, int mauNen, i
 			s.erase(chieuDai);
 			gotoxy(toaDoX + chieuDai, toaDoY);
 		}
-	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT && c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2);
+	}while(c != KEY_ENTER && c != KEY_DELETE && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT && c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2);
 	return c;
 }
 
@@ -253,7 +254,7 @@ int nhapKyTuNhapXuat(string &s, int toaDoX, int toaDoY, int maxLengthText, int m
 			s.erase(chieuDai);
 			gotoxy(toaDoX + chieuDai, toaDoY);
 		}
-	}while(c != KEY_ENTER && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT && c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2 && c != KEY_F5);
+	}while(c != KEY_ENTER && c != KEY_DELETE && c != KEY_UP && c != KEY_DOWN && c != KEY_LEFT && c != KEY_RIGHT && c != KEY_TAB && c!= KEY_INSERT && c!= KEY_ESC && c != KEY_F2 && c != KEY_F5);
 	return c;
 }
 
@@ -353,6 +354,15 @@ string chuyenSoThanhChuoi(int num){
 		num = num / 10;
 	}
 	if (s.length() < 2) s = '0' + s;
+	return s;
+}
+
+string to_string(int num){
+	string s = "";
+	while(num != 0){
+		s = char((num % 10) + 48) + s;
+		num /= 10;
+	}
 	return s;
 }
 
