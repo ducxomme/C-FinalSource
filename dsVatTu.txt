@@ -1,7 +1,15 @@
+D02
+Den Loai 2
+Cai
+3200
+D03
+Den Loai 3
+Cai
+3200
 D04
 Den Loai 4
 Cai
-300
+147
 G01
 Gach Loai 1
 Vien
@@ -14,10 +22,18 @@ G03
 Gach Loai 3
 Vien
 2000
+K01
+Kim loai 1
+Tam
+3000
+K02
+Kim loai 2
+Tam
+3000
 S01
 Son Loai 1
 Thung
-50
+27
 S02
 Son Loai 2
 Thung
@@ -38,11 +54,15 @@ SA3
 Sat Loai 3
 m3
 500
+TEST
+test
+cai
+31232
+TH04
+Thep loai 4
+M3
+34543
 X02
 Xi Mang Loai 2
 Bao
-300
-X03
-Xi Mang Loai 3
-Bao
-3000
+0

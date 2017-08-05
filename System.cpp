@@ -7,7 +7,6 @@
 #include <sstream>
 
 
-// ma phim
 #define KEY_BACKSPACE 8
 #define KEY_ENTER 13
 #define KEY_SPACE 32
@@ -17,14 +16,13 @@
 #define KEY_UP 72+256
 #define KEY_LEFT 75+256
 #define KEY_RIGHT 77+256
-#define KEY_PAGEUP 73
-#define KEY_PAGEDOWN 81
 #define KEY_DELETE 83+256
 #define KEY_INSERT 82+256
 #define KEY_F2 60+256
 #define KEY_F5 63+256
+#define KEY_PAGEUP 73
+#define KEY_PAGEDOWN 81
 
-// Mau
 #define BLACK 0
 #define BLUE 1
 #define GREEEN 2
@@ -35,8 +33,7 @@
 #define WHITE 15
 #define BG_HEADER 4
 
-//vi tri dat form
-#define so_item 7
+#define so_item 8
 #define dong 11
 #define cot 40
 #define TOADOX 10
@@ -51,57 +48,16 @@
 
 //vi tri dat form input
 #define TOADOY_FORM 12
-#define WIDTH_TEXT 30
-#define WIDTH_LABEL 15
-#define TOADOX_LABLE  TOADOX+WIDTH_MENU_BAR+(SCREEN_WIDTH-WIDTH_MENU_BAR-WIDTH_TEXT-WIDTH_LABEL)/2
-#define TOADOX_TEXT  TOADOX_LABLE + WIDTH_LABEL
-
 #define WIDTH_MESSAGE 50
-
 #define TABLE_COLUMN_WIDTH 20
-
-//NHAN VIEN
-#define TOADOX_CB_NAM TOADOX_TEXT 
-#define TOADOX_CB_NU TOADOX_TEXT+15
-#define SO_DONG_MOT_TRANG 10
-
-#define SIZE_FORM_NHAN_VIEN 4
-#define SIZE_MENU_NHAN_VIEN 3
-//HOA DON
-
-#define SIZE_FORM_HOA_DON 3
-#define SO_COT_BANG_HOA_DON 5
-#define SO_HANG_BANG_HOA_DON 10
-
-#define WIDTH_INPUT_NGAY 17
-
-//CHI TIET HOA DON
-
-#define SO_COT_BANG_CT_HOA_DON 4
-#define SO_COT_BANG_XUAT_CT_HOA_DON 5
-#define SO_CT_HOA_DON_MOT_TRANG 5
-#define SO_HANG_XUAT_CT_HOA_DON_MOT_TRANG 10
-#define TOADOY_KHUNG_CT_HOA_DON 20
-#define TOADOY_KHUNG_XUAT_CT_HOA_DON 10
-#define MAX_LINE 250
 
 
 //KICH THUOC BANG
 #define MAX 100
 #define MAX_TEXT_INPUT 40
-#define MAX_SO_LUONG 1000000
-
-#define TEXT_WHITE 15
 #define TEXT_ERROR 12
-
-#define HEIGHT_ITEM_MENU_BAR 3
 #define WIDTH_INPUT_TEXT 42
 
-#define SIZE_MENU 3
-#define SIZE_THUOC_TINH_VT 4
-#define SIZE_BANG_DANH_SACH_VT 5
-
-#define SL_VAT_TU_TRONG_TRANG 10
 
 
 struct Date{
@@ -292,7 +248,6 @@ void veKhungDanhSach(int soCot, int soHang, int toaDoX, int toaDoY){
 	}
 }
 
-// Do rong cua STT la 6
 void veLaiGoc(int toaDoX, int toaDoY, int soDong){
 	for(int i = 0; i <= soDong * 2; i++){
 		if(i % 2 == 0){
@@ -314,6 +269,7 @@ void veLaiGoc(int toaDoX, int toaDoY, int soDong){
 		}
 	}
 }
+
 void veInputText(int toaDoX, int toaDoY){
 	// 218 --- 196 --- 191
 	// 179 ----------- 179
@@ -346,7 +302,6 @@ void veChuThich(){
 	cout << "ESC: Thoat \t INSERT: Hieu chinh \t DELETE: Xoa \t <-Trang truoc \t Trang sau->";
 }
 
-
 string chuyenSoThanhChuoi(int num){
     string s = "";
 	while (num != 0){
@@ -358,6 +313,7 @@ string chuyenSoThanhChuoi(int num){
 }
 
 string to_string(int num){
+	if(num == 0) return "0";
 	string s = "";
 	while(num != 0){
 		s = char((num % 10) + 48) + s;
@@ -445,6 +401,20 @@ int kiemTraNgayGiua2Ngay(Date ngayBatDau, Date ngayKetThuc, Date ngayKiemTra){
 		return 1;
 }
 
+int soSanhThoiGian(Date BD, Date KT){
+	if (BD.nam > KT.nam) return 1;
+	else if (BD.nam < KT.nam) return -1;
+	else {
+		if (BD.thang > KT.thang) return 1;
+		else if (BD.thang < KT.thang) return -1;
+		else {
+			if (BD.ngay > KT.ngay) return 1;
+			else if (BD.ngay < KT.ngay) return -1;
+			else return 0;
+		}
+	}
+}
+
 int hopThoaiLuaChon(string message, int toaDoX, int toaDoY, int chieuDai, int chieuRong){
 	veHinhChuNhat(toaDoX, toaDoY, chieuDai, chieuRong, RED);
 	gotoxy(toaDoX + (chieuDai - message.length())/2, toaDoY + chieuRong / 2 - 1);
@@ -497,16 +467,19 @@ void Normal () {
 	SetColor(15);
 	SetBGColor(0);
 }
+
 void HighLight () {
 	SetColor(15);
 	SetBGColor(1);
 }
+
 bool kiemTraChuoiCoKhoangTrang(string s){
 	for(int i = 0; i < s.length(); i++){
 		if(s[i] == ' ') return true;
 	}
 	return false;
 }
+
 void thongBao(string message, int toaDoX, int toaDoY, int chieuDai, int chieuRong){
 	veHinhChuNhat(toaDoX, toaDoY, chieuDai, chieuRong, BG_HEADER);
 	gotoxy(toaDoX + (chieuDai - message.length())/2, toaDoY + chieuRong / 2);
@@ -569,8 +542,15 @@ void veBangDanhSach(int toaDoX, int toaDoY, int soCot, int soDong, int kichThuoc
 		}	
 	}
 }
-//int main(){
-//	veHinhChuNhat(5, 10, 5, 5, 4);
-//	return 0;
-//}
+void BaoLoi(string s){
+	int x = wherex();
+	int y = wherey();
+	gotoxy(45, y + 3);
+	cout << s;
+	Sleep(2000);
+	gotoxy(45, y + 3);
+	for(int i = 0; i <s.length(); i++)
+		cout << " ";
+	gotoxy(x, y);
+}
 

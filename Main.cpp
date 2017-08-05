@@ -6,10 +6,11 @@ string dsChucNang[]={"VAT TU", "NHAN VIEN", "IN HOA DON", "DANH SACH VAT TU XUAT
 char thucdon [so_item][50] = {"1. Nhap Vat Tu                   ",
 							  "2. In danh sach vat tu ton kho   ",	
 			                  "3. Nhap Nhan Vien                ",
-			                  "4. In danh sach Nhan Vien        ",
-			                  "5. Thong Ke Hoa Don              ",
-			                  "6. Danh sach vat tu xuat cao nhat",
-			                  "7. Thoat                         "
+			                  "4. Danh sach Nhan Vien           ",
+			                  "5. In Hoa Don                    ",
+			                  "6. Thong ke Hoa Don              ",
+			                  "7. Danh sach vat tu xuat cao nhat",
+			                  "8. Thoat                         "
 			                  };
 
 void LuuFile(TreeNhanVien &root){
@@ -236,14 +237,18 @@ X:	Normal();
 					goto X;
 					break;
 				case 4:
-					// THONG KE HOA DON 	
+					nhapSoHoaDonTimKiem(rootNV, dsVT);	
 					goto X;
 					break;
 				case 5:
-					// LIET KE VAT TU BAN CHAY
+					nhapNgayThangThongKe(rootNV);
 					goto X;
 					break;
 				case 6:
+					nhapThoiGianThongKeTop10(rootNV, dsVT);
+					goto X;
+					break;
+				case 7:
 					// THOAT
 					LuuFile(rootNV);
 					saveFileVatTu(dsVT);
@@ -255,89 +260,8 @@ X:	Normal();
 		}
 	}
 }
-
-int main(){
-//	 //Chi tiet HD
-//	PTR_CT_HoaDon ctHoaDonFirst1 = new Node_ChiTiet_HD;
-//	ctHoaDonFirst1 = NULL;
-//	
-//	// Chi Tiet HD1
-//	ChiTiet_HD cthd1;
-//	cthd1.maVT = "VT2";
-//	cthd1.soLuong = 100;
-//	cthd1.donGia = 200000;
-//	cthd1.vat = 3;
-//	insertCTHoaDonLast(ctHoaDonFirst1, cthd1);
-//	
-//	// Chi tiet HD2
-//	ChiTiet_HD cthd2;
-//	cthd2.maVT = "VT1";
-//	cthd2.soLuong = 500;
-//	cthd2.donGia = 200;
-//	cthd2.vat = 6;
-//	insertCTHoaDonLast(ctHoaDonFirst1, cthd2);
-//	
-//	// Hoa Don
-//	PTRHoaDon hoaDonFirst1 = new NodeHoaDon;
-//	hoaDonFirst1 = NULL;
-//	
-//	Date d;
-//	HamTraVeCurrentTime(d);
-//		
-//	HoaDon hd1;
-//	hd1.soHoaDon = "HD1";
-//	hd1.loai = 'N';
-//	hd1.ngayLapHoaDon = d;
-//	hd1.CT_HD_First = ctHoaDonFirst1;
-//	insertNodeHoaDon(hoaDonFirst1, hd1);	
-//	
-//	// Nhan Vien
-//	TreeNhanVien treeNV = new NodeNhanVien;
-//	treeNV = NULL;
-//	
-//	// NV1
-//	NhanVien nv1;
-//	nv1.maNhanVien = "NV1";
-//	nv1.ho = "Nguyen";
-//	nv1.ten = "Duc";
-//	nv1.phai = 1;
-//	nv1.hoaDonFirst = hoaDonFirst1;
-//	Insert_Node(treeNV, nv1);
-//	
-//	
-//	// Chi tiet HD cua NV2
-//	PTR_CT_HoaDon ctHoaDonFirst2 = new Node_ChiTiet_HD;
-//	ctHoaDonFirst2 = NULL;
-//	
-//	// Chi Tiet HD1
-//	ChiTiet_HD cthd3;
-//	cthd3.maVT = "VT2";
-//	cthd3.soLuong = 100;
-//	cthd3.donGia = 200000;
-//	cthd3.vat = 3;
-//	insertCTHoaDonLast(ctHoaDonFirst2, cthd3);	
-//	
-//	PTRHoaDon hoaDonFirst2 = new NodeHoaDon;
-//	hoaDonFirst2 = NULL;
-//	
-//	HoaDon hd5;
-//	hd5.soHoaDon = "HD5";
-//	hd5.loai = 'N';
-//	hd5.ngayLapHoaDon = d;
-//	hd5.CT_HD_First = ctHoaDonFirst2;
-//	insertNodeHoaDon(hoaDonFirst2, hd5);
-//	//NV2
-//	NhanVien nv2;
-//	nv2.maNhanVien = "NV7";
-//	nv2.ho = "Tran";
-//	nv2.ten = "Khang";
-//	nv2.phai = 1;
-//	nv2.hoaDonFirst = hoaDonFirst2;
-//	
-//	
-//	Insert_Node(treeNV, nv2);
 	
-		
+int main(){		
 	TreeNhanVien rootNV;
 	rootNV = NULL;
 	DocFile(rootNV);
@@ -347,6 +271,7 @@ int main(){
 	loadFileVatTu(dsVT);
 
     MenuDong (rootNV, dsVT, thucdon);
+
 	return 0;
 }
 

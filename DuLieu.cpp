@@ -59,7 +59,7 @@ typedef struct NodeNhanVien *TreeNhanVien;
 
 
 
-// Cac Functions cua ============= VAT TU
+// Functions cua ============= VAT TU
 int kiemTraRongVatTu(DSVatTu &ds_VT);
 int kiemTraDayVatTu(DSVatTu &ds_VT);
 int timViTriVatTuTrung(DSVatTu &ds_VT, string maVT);
@@ -99,12 +99,14 @@ int pop(StackNV &sp, TreeNhanVien &nv);
 int emptyDSHoaDon(PTRHoaDon hoaDonFirst);
 void InitHoaDon(PTRHoaDon &hoaDonFirst);
 PTRHoaDon getNodeHoaDon(HoaDon hd);
-int insertNodeHoaDon(PTRHoaDon &hoaDonFirst, HoaDon hd);
+bool insertNodeHoaDon(PTRHoaDon &hoaDonFirst, HoaDon hd);
 PTRHoaDon timKiemHoaDonTheoMa(PTRHoaDon &hoaDonFirst, string maHD);
 int deleteFirstHD(PTRHoaDon &hoaDonFirst);
 int deleteAfterHD(PTRHoaDon p);
 int deleteInfoHD(PTRHoaDon &hoaDonFirst, string maHD);
-
+void veGiaoDienThongKeHoaDon();
+void xoaDuLieuTrongBangThongKe();
+void doDuLieuRaBangThongKeHoaDon(TreeNhanVien &rootNV, PTRHoaDon &ptrHD, int tongTrang, int trang);
 
 
 // Cac Functions cua ============= CHI TIET HOA DON
@@ -119,6 +121,6 @@ PTR_CT_HoaDon timViTriCoMaVT(PTR_CT_HoaDon ctHoaDonFirst, string maVT);
 int deleteCTHoaDonTheoMaVT(PTR_CT_HoaDon &ctHoaDonFirst, string maVT);
 int demSoChiTietHD(PTR_CT_HoaDon ctHoaDonFirst);
 void duyetDanhSach(PTR_CT_HoaDon first);
-
-
-
+void danhSachCacVatTuDaNhap(PTRHoaDon ptrHD);
+void giaoDienCacVatTuDaNhap(PTR_CT_HoaDon &ptrCTHD);
+void veKhungChiTietHoaDonDaLap(TreeNhanVien &rootNV, PTRHoaDon ptrHD);
